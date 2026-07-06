@@ -4,7 +4,7 @@ A single-page "LMS to launch an EOR business" that fuses the investment case (op
 
 ## What this is (technically)
 
-A **single, standalone `index.html`** — plain HTML + CSS + vanilla JS. No framework, no build step, no design-runtime. It opens by double-clicking the file and works fully offline **except** for Chart.js, which loads from cdnjs at view time.
+A **single, standalone `index.html`** — plain HTML + CSS + vanilla JS. No framework, no build step, no design-runtime, **no external dependencies**. Chart.js 4.4.3 (MIT) is vendored inline, so the file opens by double-clicking and works **fully offline** — nothing loads from a CDN at view time.
 
 - 14 content modules in 3 groups (**The Case** 1–4, **The Machine** 5–10, **Execute** 11–13) plus a Dashboard home.
 - Sidebar nav + group tabs, hash-based deep-linking (e.g. `#compliance`), and a mobile drawer under ~760px.
