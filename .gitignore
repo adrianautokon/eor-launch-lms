@@ -1,0 +1,16 @@
+# Design-canvas sources — kept locally, never shipped
+_design-source/
+Internal LMS platform design.zip
+*.dc.html
+support.js
+.thumbnail
+uploads/
+
+# OS / editor / local tooling
+.DS_Store
+.vercel/
+node_modules/
+.claude/
+
+# OMC local state
+.omc/

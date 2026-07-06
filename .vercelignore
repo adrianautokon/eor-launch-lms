@@ -1,0 +1,7 @@
+_design-source/
+Internal LMS platform design.zip
+*.dc.html
+support.js
+.thumbnail
+uploads/
+.DS_Store
