@@ -66,6 +66,19 @@ nav.modnav{padding:8px 0 40px;}
 .navlink .done{margin-left:auto;color:var(--green);font-size:12px;opacity:0;}
 .navlink.completed .done{opacity:1;}
 .navlink.completed .ix{box-shadow:inset 0 0 0 1.5px rgba(52,211,153,.5);}
+.navgroup{margin:1px 10px 4px;}
+.navhead{width:100%;display:flex;align-items:center;gap:10px;padding:9px 9px;border:0;border-radius:11px;background:transparent;color:var(--text2);cursor:pointer;font:inherit;text-align:left;transition:.14s;}
+.navhead:hover{background:var(--glass2);color:var(--text);}
+.navhead.active{background:linear-gradient(135deg,rgba(224,184,74,.18),rgba(224,184,74,.06));color:#fff;box-shadow:inset 0 0 0 1px rgba(224,184,74,.28);}
+.navhead .chev{margin-left:auto;color:var(--muted);transition:transform .16s;}
+.navhead[aria-expanded="true"] .chev{transform:rotate(90deg);}
+.navhead .count{font-size:10px;color:var(--muted);margin-left:4px;}
+.navkids{display:none;margin:2px 0 7px 35px;border-left:1px solid var(--gline);padding-left:7px;}
+.navgroup.open .navkids{display:block;}
+.navchild{display:flex;align-items:center;gap:8px;width:100%;padding:6px 8px;margin:1px 0;border-radius:9px;color:var(--muted);font-size:12.5px;cursor:pointer;border:0;background:transparent;text-align:left;font-family:inherit;}
+.navchild:hover{background:var(--glass2);color:var(--text);}
+.navchild.active{background:rgba(224,184,74,.12);color:#fff;}
+.navchild.completed::after{content:'✓';margin-left:auto;color:var(--green);font-size:11px;}
 
 /* MAIN */
 .main{min-width:0;}
@@ -151,6 +164,7 @@ tr:hover td{background:rgba(255,255,255,.04);}
 
 .chartbox{background:var(--glass);border:1px solid var(--gline);border-radius:14px;padding:17px 19px;margin:14px 0;backdrop-filter:blur(var(--blur)) saturate(1.3);-webkit-backdrop-filter:blur(var(--blur)) saturate(1.3);box-shadow:0 10px 30px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.06);}
 .chartbox h4{margin-top:0;}
+.chartbox canvas{display:block;width:100%;min-height:220px;}
 canvas{max-width:100%;}
 .src{font-size:11.5px;color:var(--muted);margin-top:8px;}
 .src a{color:var(--text2);}
@@ -223,7 +237,9 @@ canvas{max-width:100%;}
   .sidebar{position:fixed;left:0;top:0;z-index:60;width:280px;max-width:86vw;height:100vh;transform:translateX(-100%);transition:transform .25s cubic-bezier(.2,.7,.2,1);}
   .sidebar.open{transform:none;box-shadow:0 0 60px rgba(0,0,0,.6);}
   .menubtn{display:inline-flex;}
-  .tabbar{display:none;}
+  .tabbar{display:flex;margin-left:0;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;max-width:100%;}
+  .tabbar .tab{flex:0 0 auto;}
+  .topbar{gap:10px;}
   .grid2,.grid3,.grid4{grid-template-columns:1fr;}
   .content{padding:26px 18px 90px;}
   .topbar{padding:12px 18px;}
@@ -286,6 +302,112 @@ const MODS = [
   {id:'roadmap', ix:'12', group:'Execute', nav:'Launch Roadmap', title:'The Launch Roadmap'},
   {id:'resources', ix:'13', group:'Execute', nav:'Resources & Learn', title:'Resources & Learn'},
 ];
+
+const SUBS = {
+  opportunity:[
+    {id:'sequoia', nav:'The thesis'},
+    {id:'intel-judgement', nav:'Intelligence vs judgement'},
+    {id:'copilot-autopilot', nav:'Copilot vs autopilot'},
+    {id:'why-eor', nav:'Why EOR specifically'},
+    {id:'autokon-lessons', nav:'AutoKon lessons applied'}
+  ],
+  'why-now':[
+    {id:'salary-arbitrage', nav:'The salary arbitrage'},
+    {id:'sg-wage-inflation', nav:'SG wage inflation'},
+    {id:'three-tailwinds', nav:'The three tailwinds'},
+    {id:'aspire-tell', nav:'The Aspire tell'}
+  ],
+  market:[
+    {id:'method', nav:'How we size it'},
+    {id:'tam', nav:'TAM — Indonesia-inbound'},
+    {id:'sam', nav:'SAM — SG employers'},
+    {id:'som', nav:'SOM — 3-yr obtainable'},
+    {id:'assumptions', nav:'Assumption register'},
+    {id:'corridor-map', nav:'Corridor map'}
+  ],
+  competition:[
+    {id:'landscape', nav:'The landscape'},
+    {id:'small-player-wins', nav:'How a small player wins'},
+    {id:'profiles', nav:'Profiles'},
+    {id:'status-quo', nav:'Status quo'},
+    {id:'remofirst', nav:'Remofirst'},
+    {id:'skuad', nav:'Skuad / Payoneer'},
+    {id:'emerhub', nav:'Emerhub'},
+    {id:'recruitgo', nav:'RecruitGo'},
+    {id:'raintech', nav:'RainTech'},
+    {id:'glints', nav:'Glints'},
+    {id:'incorp', nav:'InCorp / Cekindo'},
+    {id:'aspire-eor', nav:'Aspire'},
+    {id:'multiplier', nav:'Multiplier'},
+    {id:'deel', nav:'Deel'},
+    {id:'remote', nav:'Remote'},
+    {id:'oyster', nav:'Oyster'},
+    {id:'atlas', nav:'Atlas'}
+  ],
+  'what-eor':[
+    {id:'definition', nav:'Definition + the one test'},
+    {id:'taxonomy', nav:'EOR vs PEO vs the rest'},
+    {id:'holds-keeps', nav:'What EOR holds vs client keeps'},
+    {id:'value-chain', nav:'The value chain'},
+    {id:'liability-myths', nav:'Liability reality'}
+  ],
+  setup:[
+    {id:'sequence', nav:'The setup sequence'},
+    {id:'entity', nav:'Entity: PT vs PT PMA'},
+    {id:'licences', nav:'Licences & registrations'},
+    {id:'permenaker-risk', nav:'Permenaker 7/2026 risk'},
+    {id:'checklist', nav:'Setup checklist'}
+  ],
+  operations:[
+    {id:'overview', nav:'Lifecycle overview'},
+    {id:'quote-sign', nav:'Stage 0 · Quote & sign'},
+    {id:'onboard', nav:'Stage 1 · Onboard'},
+    {id:'payroll-loop', nav:'Stage 2 · Payroll loop'},
+    {id:'file-remit', nav:'Stage 3 · File & remit'},
+    {id:'support-changes', nav:'Stage 4 · Support & changes'},
+    {id:'offboard', nav:'Stage 5 · Offboard'},
+    {id:'internal-run', nav:"How it's run internally"}
+  ],
+  compliance:[
+    {id:'calendar', nav:'Deadline calendar'},
+    {id:'cost-stack', nav:'Employer cost stack'},
+    {id:'bpjs', nav:'BPJS'},
+    {id:'pph21-ter', nav:'PPh 21 & TER'},
+    {id:'thr', nav:'THR'},
+    {id:'severance', nav:'Severance'}
+  ],
+  economics:[
+    {id:'pl-shape', nav:'The ops P&L shape'},
+    {id:'break-even', nav:'Break-even'},
+    {id:'staffing', nav:'Staffing ladder'},
+    {id:'setup-capital', nav:'Setup capital'},
+    {id:'minimum-viable-client', nav:'Minimum viable client'},
+    {id:'cost-calculator', nav:'The cost calculator'}
+  ],
+  risk:[
+    {id:'failure-modes', nav:'Failure modes'},
+    {id:'benchmark-numbers', nav:'The benchmark numbers'},
+    {id:'controls', nav:'The controls'},
+    {id:'trust-vs-reliability', nav:'Local trust vs platform reliability'}
+  ],
+  gtm:[
+    {id:'wedges', nav:'The three wedges'},
+    {id:'reframe', nav:'The reframe'},
+    {id:'pricing', nav:'Pricing posture'},
+    {id:'checklist', nav:'GTM checklist'}
+  ],
+  roadmap:[
+    {id:'four-phases', nav:'The four phases'},
+    {id:'gates', nav:'The gates'},
+    {id:'checklist', nav:'Execution checklist'}
+  ],
+  resources:[
+    {id:'videos', nav:'Videos'},
+    {id:'thesis', nav:'The thesis'},
+    {id:'regulation-payroll', nav:'Regulation & payroll'},
+    {id:'competitors-market', nav:'Competitors & market'}
+  ]
+};
 
 /* progress persistence */
 const LS='eorLaunchOS.v1';
@@ -404,6 +526,20 @@ C.market = ()=>`
 <div class="chartbox"><h4>The funnel</h4><canvas id="ch_funnel" height="150"></canvas>
 <div class="src">TAM ≈ 250k Indonesians working for foreign employers × $150/mo blended fee. SAM ≈ 9k SG companies × 2.2 seats × $179 × 12. SOM ≈ ~2% of SAM seats (Y1 100 · Y2 250 · Y3 450). Excludes wholesale + non-SG employers — both upside.</div></div>
 
+<h3 id="sec-som">Interactive SOM model — feel the sensitivity</h3>
+<div class="grid2">
+  <div class="calc">
+    <label for="somCompanies">SG companies reached</label>
+    <input id="somCompanies" type="range" min="50" max="500" step="10" value="205" oninput="updateSom()">
+    <label for="somSeats">Average seats per client</label>
+    <input id="somSeats" type="range" min="1" max="5" step=".1" value="2.2" oninput="updateSom()">
+    <label for="somFee">Monthly fee per employee (USD)</label>
+    <input id="somFee" type="range" min="149" max="249" step="5" value="179" oninput="updateSom()">
+  </div>
+  <div class="calc" id="somOut" aria-live="polite"></div>
+</div>
+<p class="mini">Break-even overlay: ~25 active seats. The 36-month base case is ~450 seats and $0.9–1.1M ARR.</p>
+
 <h3>The SMART assumption register</h3>
 <p class="mini">Post-AutoKon, showing how we'd <i>falsify our own numbers</i> is the credibility play. Each is specific, measurable, and time-bound.</p>
 <table>
@@ -462,6 +598,65 @@ C.competition = ()=>`
 <div class="callout green"><b>USP in one sentence</b><p>The only corridor-native EOR: Indonesian employment done properly — flat $149–199, a named human in your timezone, and a monthly evidence pack proving every rupiah of tax and BPJS was filed — for the SG SME hiring 1–5 Indonesians that every global platform prices out and every local firm under-serves.</p></div>
 <div class="callout"><b>Honest caveat</b><p>Price is the wedge, never the moat. Year-1 moats to <i>earn</i>: service reputation, the compliance-evidence habit, employee-side love (BPJS/THR/payslips), and eventually the wholesale rail. Still only "cheaper" in 12 months = we failed at moat-building.</p></div>
 `;
+
+C['competition/landscape'] = ()=>`
+<div class="kick">The Case · 4.1</div><h2 class="title">The landscape</h2>
+<p class="sub">Only Remofirst and Skuad/Payoneer compete head-to-head on price around $199. Everyone else is priced out of the 1–5-seat corridor or is a partner-resell.</p>
+<div class="callout"><b>Strategic read</b><p>Against the two real price rivals, price alone will not win. The wedge is confirmed Indonesia depth, a named human, a BPJS/THR/payslip evidence pack, and continuity with no rebrand or migration risk.</p></div>
+${C.competition().match(/<div class="chartbox">[\s\S]*?<\/table>/)?.[0]||''}
+`;
+
+C['competition/small-player-wins'] = ()=>`
+<div class="kick">The Case · 4.2</div><h2 class="title">How a small player wins</h2>
+<p class="sub">Small is not a weakness if the buyer is a 1–5-seat SG SME hiring Indonesians. We win where breadth platforms cannot economically care.</p>
+<div class="grid2">
+  <div class="card"><h4 style="margin-top:0">vs the globals</h4><p class="mini">Take the segment they price out. Flat transparent pricing at roughly one-third, a named human in SGT on WhatsApp, and Indonesia evidence they do not package.</p></div>
+  <div class="card"><h4 style="margin-top:0">vs Glints</h4><p class="mini">Pure-play employment ops, no recruitment bundling. Cheaper for bring-your-own-candidate clients, which is the whole contractor-conversion market.</p></div>
+  <div class="card"><h4 style="margin-top:0">vs Remofirst / Skuad</h4><p class="mini">Match the headline price, then win at terminations, Disnaker disputes, BPJS/THR proof, and local accountability.</p></div>
+  <div class="card"><h4 style="margin-top:0">vs local service firms</h4><p class="mini">Productise what they do by hand: instant calculator, self-serve onboarding, live compliance dashboard, and downloadable evidence pack.</p></div>
+</div>
+<div class="callout green"><b>USP in one sentence</b><p>The only corridor-native EOR: Indonesian employment done properly — flat $149–199, a named human in your timezone, and monthly evidence proving every rupiah of tax and BPJS was filed.</p></div>
+`;
+
+const COMPETITORS=[
+  {id:'status-quo',name:'Status quo — contractors via Wise / Aspire',threat:'HIGH',tag:'The $0 default: classify the Indonesian as an independent contractor, pay by cross-border transfer, skip EOR and PT.',fee:'$0',entity:'None',scale:'Default behavior',strengths:['Zero setup','Same-day','Cheap familiar tools'],weaknesses:['Misclassification','Permanent establishment','No BPJS','No THR','No payslips for KPR'],best:'Founders who have not felt the risk yet.',win:'For less than the FX savings they think they are getting, we remove misclassification and PE exposure and give the worker payslips that help them buy a home.',confidence:'published laws + corridor estimate'},
+  {id:'remofirst',name:'Remofirst',threat:'HIGH',tag:'Cheapest transparent flat-rate global EOR, partner-entity model, for lean startups.',fee:'from $199/mo',entity:'Partner',scale:'~$25M Series A; 185+ countries',strengths:['Low flat price','No setup fees','Global reach'],weaknesses:['Invisible partner entity','Partner variability','Payroll/support complaints','No phone support'],best:'Bootstrapped startups making 1–2 cheap global hires.',win:'Same price, more proof: corridor depth, named AM, and BPJS/THR/payslip evidence instead of “trust our partner.”',confidence:'published'},
+  {id:'skuad',name:'Skuad / Payoneer WFM',threat:'HIGH',tag:'Singapore-founded flat-rate global EOR, now Payoneer Workforce Management after acquisition.',fee:'from $199; loads to $350–550',entity:'Mixed / unconfirmed',scale:'Payoneer subsidiary; $61M cash acquisition',strengths:['Low headline price','APAC roots','Payoneer distribution'],weaknesses:['Rebrand churn','All-in pricing rises','ID entity unconfirmed','Payments agenda may dominate'],best:'Clients already in Payoneer’s ecosystem.',win:'Genuinely flat price, no migration risk, named human, and confirmed Indonesia depth.',confidence:'published + conflicting'},
+  {id:'emerhub',name:'Emerhub',threat:'MEDIUM',tag:'Market-entry and incorporation firm since 2011 that also does EOR.',fee:'10% of cost; $49.99–$250',entity:'Owned Jakarta entity',scale:'Bootstrapped; 8 SEA offices',strengths:['Cheapest floor','15-year local depth','PT PMA path'],weaknesses:['Percentage pricing','EOR as PT upsell','Service-firm UX','No evidence artifact'],best:'Clients who may incorporate later.',win:'Flat predictable price undercuts above roughly $1,500 salary, with a named human and downloadable evidence pack.',confidence:'published'},
+  {id:'recruitgo',name:'RecruitGo',threat:'MEDIUM',tag:'Emerhub Group spinout, “Hire Globally, Like a Local,” 40+ countries.',fee:'10% capped at $250',entity:'Owned ID entity via group',scale:'No disclosed VC',strengths:['Owned entity','Emerhub lineage','PT transition path'],weaknesses:['Same percentage unpredictability','Global generalist','Sibling-brand confusion'],best:'Companies wanting an Emerhub-style global wrapper.',win:'We do only SG to ID, so BPJS/THR depth and corridor service are the product, not one country in a list.',confidence:'published'},
+  {id:'raintech',name:'RainTech',threat:'MEDIUM',tag:'Tech-talent sourcing shop with an EOR arm; closest live precedent.',fee:'$300 flat',entity:'Owned for Indonesia',scale:'Small operator; 18 months ahead on US/EU to ID',strengths:['Transparent flat price','24–48hr onboarding','Owned ID entity','Sourcing bundle'],weaknesses:['Pricier than us','Small key-person risk','EOR secondary to sourcing'],best:'Clients who also need Indonesian tech sourcing.',win:'Undercut by $100–150/mo on the same ID-owned flat model, then add named AM and evidence pack.',confidence:'published'},
+  {id:'glints',name:'Glints TalentHub',threat:'MEDIUM',tag:'Recruitment + EOR + PEO in SEA, 10M+ talent pool.',fee:'$299 flat (+18% recruit optional)',entity:'Owned SEA entities',scale:'Series D $50M; 40,000+ orgs',strengths:['SEA brand','Talent pool','Transparent EOR price'],weaknesses:['Recruitment-fee confusion','2–3 week onboarding','Profitability pressure','No prominent SOC 2 / ISO'],best:'Companies wanting sourcing plus EOR.',win:'Cheaper for BYO-candidate clients and more focused on compliance proof than recruitment attach.',confidence:'published'},
+  {id:'incorp',name:'InCorp / Cekindo → Ascentium',threat:'LOW',tag:'Enterprise corporate-services suite; EOR is one line item.',fee:'quote-only (~$250–500 est.)',entity:'Owned PT',scale:'~2,500 professionals; 60,000+ client entities',strengths:['Enterprise weight','Full corporate services','Owned PT'],weaknesses:['Quote friction','Small EOR deals low priority','Slow consulting sales','Rebrand confusion'],best:'Companies needing full incorporation and corporate services.',win:'Published flat price, fast fit-for-size workflow, and named human instead of a consulting sales cycle.',confidence:'quote-only estimate'},
+  {id:'aspire-eor',name:'Aspire EOR — powered by Deel',threat:'DISTRIBUTION',tag:'Discounted wrapper on Deel infrastructure, launched Jan 2026.',fee:'from $399/mo',entity:'Deel entity',scale:'50,000+ businesses; 5,000+ in Indonesia',strengths:['Massive SG SME distribution','Trusted finance stack','Demand validation'],weaknesses:['2–8x ID-native price','Resold Deel','Generic compliance','Brand-new product'],best:'Existing Aspire customers who want convenience.',win:'Half the price, corridor specialist, named WhatsApp human, and the ID evidence pack their generic platform does not provide.',confidence:'published'},
+  {id:'multiplier',name:'Multiplier',threat:'LOW',tag:'APAC-native, Singapore HQ, transparent $400 list.',fee:'$400 list',entity:'Owned/partner mix; ID unverified',scale:'~$77M raised; Series B 2022',strengths:['APAC roots','Transparent price','SG HQ'],weaknesses:['No dedicated rep complaints','Slow support','Deposit','ID entity opacity'],best:'Multi-country APAC buyers.',win:'About 50% cheaper with a named human and unambiguous single-market legal-employer story.',confidence:'published + unverified entity'},
+  {id:'deel',name:'Deel',threat:'LOW',tag:'Global infrastructure of work, 150+ countries.',fee:'$599 list',entity:'Likely owned PT; conflicting source says partner',scale:'$1.4B+ ARR; $17.3B valuation',strengths:['Brand','Breadth','Platform depth'],weaknesses:['High sticker','Deposit','FX markup','Ticket queue support','Rippling litigation risk'],best:'Large multi-country enterprises.',win:'65–75% cheaper, named human vs ticket queue, and BPJS/THR/payslip proof vs buried FX.',confidence:'published + conflicting entity'},
+  {id:'remote',name:'Remote.com',threat:'LOW',tag:'Global employment infrastructure with owned-entity purity.',fee:'$599 annual / $699 monthly',entity:'Owned PT Remote Tech Indonesia',scale:'$300M+ ARR; cash-flow positive',strengths:['No-partner claim','Strong IP assignment','Mature platform'],weaknesses:['Same high price','Thin ID support','US-centric ops'],best:'IP-sensitive global companies.',win:'One-third the price while matching the no-middleman claim, with SGT/IDR fluency.',confidence:'published'},
+  {id:'oyster',name:'Oyster HR',threat:'LOW',tag:'Distributed-first global EOR, values-led brand.',fee:'$499–699',entity:'Partner / thin in ID',scale:'~$288M raised; $1.2B valuation',strengths:['Values brand','180+ countries'],weaknesses:['Deposit','FX markup','Partner entity','2023 layoffs'],best:'Mission-led companies hiring across many countries.',win:'65–75% cheaper, no generic partner story, named human, and concrete evidence pack.',confidence:'published + conflicting price'},
+  {id:'atlas',name:'Atlas HXM',threat:'LOW',tag:'Direct EOR positioning, wrong customer for 1–5 seats.',fee:'~$500–700 quote-only',entity:'Owned claim; SEA thinner',scale:'~500 staff; Series B up to $200M',strengths:['Direct EOR claim','Enterprise compliance'],weaknesses:['Quote-only','Possible implementation fees','Leadership churn','Layoffs','eorHQ says avoid for 1–5'],best:'Enterprise procurement teams.',win:'Published flat price, zero procurement friction, and a corridor where their SEA soft spot is visible.',confidence:'quote-only + conflicting SEA coverage'}
+];
+function threatClass(t){return t==='HIGH'?'risk':t==='MEDIUM'?'local':t==='DISTRIBUTION'?'info':'why';}
+function compCard(c){return `<button class="card" style="text-align:left;cursor:pointer" onclick="go('competition/${c.id}')"><h4 style="margin-top:0">${c.name}</h4><p class="mini">${c.tag}</p><p class="mini"><b>${c.fee}</b> · ${c.entity}</p><span class="pill ${threatClass(c.threat)}">${c.threat}</span></button>`;}
+C['competition/profiles']=()=>`
+<div class="kick">The Case · 4.3</div><h2 class="title">Competitor profiles</h2>
+<p class="sub">Every relevant competitor gets a page: what they claim, where they are strong, where this corridor exposes them, and how we beat them.</p>
+<div class="grid3">${COMPETITORS.map(compCard).join('')}</div>
+<p class="src">Data confidence key: published · estimate · unknown/quote-only · conflicting. Figures are from the brief’s July 2026 competitor pass.</p>
+`;
+function compProfile(c){
+  return `<div class="kick">Competition · Profile</div><h2 class="title">${c.name}</h2>
+<p class="sub">${c.tag}</p>
+<div style="margin-bottom:12px"><span class="pill ${threatClass(c.threat)}">THREAT: ${c.threat}</span> <span class="src">Data confidence: ${c.confidence}</span></div>
+<div class="grid3">
+  <div class="stat gold"><div class="v" style="font-size:18px">${c.fee}</div><div class="k">ID EOR fee</div></div>
+  <div class="stat"><div class="v" style="font-size:16px">${c.entity}</div><div class="k">Entity model</div></div>
+  <div class="stat blue"><div class="v" style="font-size:15px;line-height:1.25">${c.scale}</div><div class="k">Scale / funding</div></div>
+</div>
+<h3>Strengths</h3><p>${c.strengths.map(s=>`<span class="pill win">${s}</span>`).join('')}</p>
+<h3>Weaknesses in this corridor</h3><p>${c.weaknesses.map(w=>`<span class="pill risk">${w}</span>`).join('')}</p>
+<p><b>Best for:</b> ${c.best}</p>
+<div class="callout green"><b>How we beat them</b><p>${c.win}</p></div>`;
+}
+COMPETITORS.forEach(c=>{C[`competition/${c.id}`]=()=>compProfile(c);});
 
 C['what-eor'] = ()=>`
 <div class="kick">The Machine · 05</div><h2 class="title">What Is an EOR</h2>
@@ -832,11 +1027,712 @@ C.resources = ()=>`
 <div class="callout"><b>Companion documents</b><p>This OS distils three deliverables in the <span class="mono">NewVenture-Services/</span> folder: the bake-off decision brief, the EOR as-is operational blueprint, and this launch OS. All figures trace to the sources above; regulatory items need a formal legal opinion before commitment.</p></div>
 `;
 
+/* ---------------- SUB-SECTION CONTENT (drill-down lessons) ---------------- */
+
+/* ===== 1. THE OPPORTUNITY ===== */
+C['opportunity/sequoia'] = ()=>`
+<div class="kick">The Case · 1.1</div><h2 class="title">The thesis</h2>
+<p class="sub"><b>What you'll get:</b> the one-line thesis Kelly and Dickson bought into — Sequoia's "Services: The New Software."</p>
+<div class="callout"><b>"The next $1T company will be a software company masquerading as a services firm."</b><p>For every $1 spent on software, ~$6 is spent on services. AI has crossed the threshold on <i>intelligence</i> work (complex, but rule-bound); humans keep <i>judgement</i>. The higher the intelligence-ratio of a service, the sooner an "autopilot" wins it. — Julien Bek, Sequoia, Mar 2026.</p></div>
+<div class="chartbox"><h4>Where the budget actually is</h4><canvas id="ch_budget" height="150"></canvas><div class="src">For every $1 of software spend, ~$6 of services spend. Autopilots capture the work budget from day one.</div></div>
+<p>Sell the work, not the tool. An EOR is a pure play on this thesis: the client buys a compliant, employed person — an outcome — not payroll software.</p>
+`;
+C['opportunity/intel-judgement'] = ()=>`
+<div class="kick">The Case · 1.2</div><h2 class="title">Intelligence vs judgement</h2>
+<p class="sub"><b>What you'll get:</b> the test for which services AI can run — and why payroll compliance is squarely in the "autopilot" zone.</p>
+<div class="grid2">
+  <div class="card"><h4 style="margin-top:0">Intelligence work — AI wins</h4><p class="mini">Complex but <b>rule-bound</b>: dense regulations, fixed deadlines, deterministic calculations. PPh 21 TER, BPJS bands, THR accrual, severance formulas — the rules are written down. This is exactly what an autopilot runs well behind the scenes.</p></div>
+  <div class="card"><h4 style="margin-top:0">Judgement work — humans keep</h4><p class="mini">Ambiguous, relational, high-stakes-in-the-moment: a contested termination, a Disnaker dispute, a nervous client on WhatsApp. The higher the <i>intelligence</i>-ratio of a service, the sooner it's automatable; the higher the judgement-ratio, the longer humans hold it.</p></div>
+</div>
+<div class="callout blue"><b>Why this matters for us</b><p>EOR is high-intelligence work with a thin, valuable judgement layer. AI absorbs the per-employee grind (the margin engine); humans own the trust moments. That split is the whole operating model.</p></div>
+`;
+C['opportunity/copilot-autopilot'] = ()=>`
+<div class="kick">The Case · 1.3</div><h2 class="title">Copilot vs autopilot</h2>
+<p class="sub"><b>What you'll get:</b> the distinction that decides who captures the budget.</p>
+<div class="grid2">
+  <div class="card"><h4 style="margin-top:0">Copilot — sells the tool</h4><p class="mini">Sold to the <b>professional</b> (Harvey → law firms). The buyer still does the work, faster. Captures a software line-item.</p></div>
+  <div class="card"><h4 style="margin-top:0">Autopilot — sells the outcome</h4><p class="mini">Sold to the <b>end customer</b> (Crosby → the company that needs the NDA). Captures the <i>work</i> budget from day one — the ~$6, not the ~$1.</p></div>
+</div>
+<div class="callout green"><b>An EOR is a pure autopilot</b><p>The client buys "an employed, compliant person in Indonesia," not payroll software. They never touch the machine — they buy the result. That's why the work budget, not the tool budget, is ours to win.</p></div>
+`;
+C['opportunity/why-eor'] = ()=>`
+<div class="kick">The Case · 1.4</div><h2 class="title">Why EOR specifically</h2>
+<p class="sub"><b>What you'll get:</b> four structural reasons this vertical fits the thesis — and us.</p>
+<ul>
+  <li><b>Already 100% outsourced.</b> Sequoia's playbook says start where outsourcing already exists — the budget line exists, the buyer already buys an outcome, and replacing a vendor is a swap not a reorg. Every EOR client is buying an outcome by definition.</li>
+  <li><b>A corridor we understand.</b> Singapore employers, Indonesian workers. Both founders already know the Indonesian employment stack (BPJS, PPh 21, THR, severance) — the painful part is the moat.</li>
+  <li><b>Proven demand.</b> 8+ competitors already charge $166–599/employee/month in this exact corridor. We're not inventing a market; we're re-pricing and re-servicing it.</li>
+  <li><b>Negative working capital.</b> Clients pre-fund salary + fee before we pay out. Structurally reliable payer — the opposite of the AutoKon late-payment pain.</li>
+</ul>
+`;
+C['opportunity/autokon-lessons'] = ()=>`
+<div class="kick">The Case · 1.5</div><h2 class="title">AutoKon lessons applied</h2>
+<p class="sub"><b>What you'll get:</b> how this vertical is chosen <i>against</i> the exact pattern that hurt us before.</p>
+<div class="callout green"><b>The AutoKon lessons, applied</b><p>Reliable payer (pre-funded) · short sales cycle (SG SME self-serve, not government/bank procurement) · no key-person tech risk (standard stack, ops runbooks) · proven demand (competitors already monetise it). This vertical is chosen <i>against</i> the exact pattern that hurt us before.</p></div>
+<div class="grid2">
+  <div class="card"><h4 style="margin-top:0">What hurt us before</h4><p class="mini">Late-paying counterparties, long government/bank procurement cycles, key-person dependence on bespoke tech, demand we had to educate into existence.</p></div>
+  <div class="card"><h4 style="margin-top:0">What EOR fixes</h4><p class="mini">Pre-funding makes the payer reliable; SG SMEs self-serve quickly; the stack is standard and runbook-able; competitors already prove people pay for this.</p></div>
+</div>
+`;
+
+/* ===== 2. WHY NOW ===== */
+C['why-now/salary-arbitrage'] = ()=>`
+<div class="kick">The Case · 2.1</div><h2 class="title">The salary arbitrage</h2>
+<p class="sub"><b>What you'll get:</b> the verified, diligence-proof gap between SG and ID pay. Source: NodeFlair Tech Salary Report 2026 (payslip-verified) + corridor research.</p>
+<div class="chartbox"><h4>SG vs Indonesia — software engineer, monthly (USD)</h4><canvas id="ch_salary" height="200"></canvas><div class="src">SG medians: NodeFlair 2026 (payslip-verified, SGD→USD @0.74). ID: SecondTalent/Jobstreet midpoints. Verified mid-level gap ≈ 3.5–5.5× — conservative vs web "8×" claims, so it survives diligence.</div></div>
+<div class="grid3">
+  <div class="stat gold"><div class="v">3.5–5.5×</div><div class="k">verified mid-level salary gap SG:ID</div></div>
+  <div class="stat blue"><div class="v">+13–25%</div><div class="k">AI-skills pay premium in SG (every hire now costs more)</div></div>
+  <div class="stat green"><div class="v">&gt;50%</div><div class="k">total cost saving hiring an ID senior + our fee vs a SG junior</div></div>
+</div>
+<div class="callout"><b>The floor check</b><p>Even a SG <i>junior</i> median (~US$4,070) costs more than an Indonesian <i>senior</i> ($1,800–3,200) plus our fee plus all statutory costs. The maths sells itself.</p></div>
+`;
+C['why-now/sg-wage-inflation'] = ()=>`
+<div class="kick">The Case · 2.2</div><h2 class="title">SG wage inflation</h2>
+<p class="sub"><b>What you'll get:</b> the cost pressure is worst exactly where SG SMEs can least afford it — Singapore is doing the selling for us.</p>
+<div class="chartbox"><h4>SG wage inflation 2026 — worst where it hurts SMEs</h4><canvas id="ch_wageinf" height="200"></canvas><div class="src">NodeFlair 2026: SE pay +7.5% overall, but +12.6% senior, +11.6% lead. Cost pressure accelerates at the seniority SG SMEs can least afford to lose.</div></div>
+<div class="callout blue"><b>The AI-premium squeeze</b><p>AI-skilled SG engineers now earn 13–25% more. Every AI-era hire got more expensive locally — strengthening the offshore case exactly as demand for those skills peaks.</p></div>
+`;
+C['why-now/three-tailwinds'] = ()=>`
+<div class="kick">The Case · 2.3</div><h2 class="title">The three tailwinds</h2>
+<p class="sub"><b>What you'll get:</b> three independent forces pushing SG SMEs toward remote Indonesian talent.</p>
+<ol>
+  <li><b>The floor check.</b> Even a SG <i>junior</i> median (~US$4,070) costs more than an Indonesian <i>senior</i> ($1,800–3,200) plus our fee plus all statutory costs. The maths sells itself.</li>
+  <li><b>EP/S-Pass tightening.</b> Singapore keeps raising work-pass salary floors and quotas — pushing SMEs to remote SEA talent as the default, not the exception.</li>
+  <li><b>The AI-premium squeeze.</b> AI-skilled SG engineers now earn 13–25% more. Every AI-era hire got more expensive locally — strengthening the offshore case exactly as demand for those skills peaks.</li>
+</ol>
+`;
+C['why-now/aspire-tell'] = ()=>`
+<div class="kick">The Case · 2.4</div><h2 class="title">The Aspire tell</h2>
+<p class="sub"><b>What you'll get:</b> a 50,000-customer fintech just validated the demand — and left the hard part to us.</p>
+<div class="callout blue"><b>The Aspire tell</b><p>Aspire — an SG fintech with 50,000+ SMB customers — just launched EOR by <i>reselling Deel</i> at $399/mo. They judged demand strong enough to launch, but chose not to build the entity + compliance ops. That's precisely the part we own — and a future wholesale channel.</p></div>
+<p class="mini">Read it two ways: (1) demand is real enough that a disciplined fintech bet on it; (2) even a well-capitalised player chose <i>not</i> to build the Indonesian entity + compliance machine — the exact moat we're building.</p>
+`;
+
+/* ===== 3. MARKET ===== */
+C['market/method'] = ()=>`
+<div class="kick">The Case · 3.1</div><h2 class="title">How we size it</h2>
+<p class="sub"><b>What you'll get:</b> the framing and the bottom-up method — so every number below is falsifiable.</p>
+<div class="callout"><b>The framing that matters</b><p>The <b>market is Indonesia</b> — the workers and the employment rail we build there. <b>Singapore is the first buyer geography</b>, not the market. Same rail, many buyer countries over time.</p></div>
+<div class="chartbox"><h4>The funnel — TAM → SAM → SOM</h4><canvas id="ch_funnel" height="150"></canvas>
+<div class="src">TAM ≈ 250k Indonesians working for foreign employers × $150/mo blended fee. SAM ≈ 9k SG companies × 2.2 seats × $179 × 12. SOM ≈ ~2% of SAM seats (Y1 100 · Y2 250 · Y3 450). Excludes wholesale + non-SG employers — both upside.</div></div>
+<div class="grid3">
+  <div class="stat blue"><div class="v">$450M</div><div class="k">TAM — Indonesia-inbound employment ops</div></div>
+  <div class="stat gold"><div class="v">$43M</div><div class="k">SAM — SG-employer formalisable seats</div></div>
+  <div class="stat green"><div class="v">$0.9–1.1M</div><div class="k">SOM — obtainable ARR in 36 months</div></div>
+</div>
+`;
+C['market/tam'] = ()=>`
+<div class="kick">The Case · 3.2</div><h2 class="title">TAM — Indonesia-inbound</h2>
+<p class="sub"><b>What you'll get:</b> the total addressable market, the formula, and the cross-check.</p>
+<div class="stat blue" style="max-width:340px;margin-bottom:14px"><div class="v">$450M / yr</div><div class="k">Indonesia-inbound employment ops</div></div>
+<div class="card"><h4 style="margin-top:0">The formula</h4><p class="mini"><b>≈ 250k</b> Indonesians working for foreign employers <b>× $150/mo</b> blended fee <b>× 12</b> ≈ <b>$450M/yr</b>.</p></div>
+<div class="card"><h4 style="margin-top:0">Cross-check</h4><p class="mini">Global EOR market is ~$4.7–5B. Indonesia plausibly represents 5–10% of APAC inbound-employment flows — which lands in the same order of magnitude. The number survives a sanity check.</p></div>
+<div class="callout"><b>What's excluded (keeps it conservative)</b><p>Domestic Indonesian employment, non-foreign employers, and the wholesale/reseller channel are all outside this figure — so TAM is a floor, not a ceiling.</p></div>
+`;
+C['market/sam'] = ()=>`
+<div class="kick">The Case · 3.3</div><h2 class="title">SAM — SG employers</h2>
+<p class="sub"><b>What you'll get:</b> the serviceable slice we can actually reach from the Singapore beachhead.</p>
+<div class="stat gold" style="max-width:340px;margin-bottom:14px"><div class="v">$43M / yr</div><div class="k">SG-employer formalisable seats</div></div>
+<div class="card"><h4 style="margin-top:0">The formula</h4><p class="mini"><b>≈ 9,000</b> SG companies hiring ID remote talent <b>× 2.2</b> seats each <b>× $179</b>/mo <b>× 12</b> ≈ <b>$43M/yr</b> (~20k seats).</p></div>
+<div class="card"><h4 style="margin-top:0">Includes</h4><p class="mini">The contractor-conversion pool — SG companies already paying Indonesians via Wise — which is latent demand we activate, not net-new education.</p></div>
+<div class="callout"><b>What's excluded</b><p>AU/US/EU buyer geographies and wholesale resale — both live on the same rail and are pure upside to this figure.</p></div>
+`;
+C['market/som'] = ()=>`
+<div class="kick">The Case · 3.4</div><h2 class="title">SOM — 3-yr obtainable</h2>
+<p class="sub"><b>What you'll get:</b> the realistic 36-month capture — plus a live model so you can feel the sensitivity.</p>
+<div class="stat green" style="max-width:340px;margin-bottom:14px"><div class="v">$0.9–1.1M ARR</div><div class="k">obtainable in 36 months</div></div>
+<div class="card"><h4 style="margin-top:0">The base case</h4><p class="mini">~2% of SAM seats over three years: <b>Y1 100 · Y2 250 · Y3 450</b> active seats. At $179/mo that's ~$0.9–1.1M run-rate ARR by month 36 — with break-even crossed around 25 seats.</p></div>
+<h3 id="sec-som">Interactive SOM model — feel the sensitivity</h3>
+<div class="grid2">
+  <div class="calc">
+    <label for="somCompanies">SG companies reached</label>
+    <input id="somCompanies" type="range" min="50" max="500" step="10" value="205" oninput="updateSom()">
+    <label for="somSeats">Average seats per client</label>
+    <input id="somSeats" type="range" min="1" max="5" step=".1" value="2.2" oninput="updateSom()">
+    <label for="somFee">Monthly fee per employee (USD)</label>
+    <input id="somFee" type="range" min="149" max="249" step="5" value="179" oninput="updateSom()">
+  </div>
+  <div class="calc" id="somOut" aria-live="polite"></div>
+</div>
+<p class="mini">Break-even overlay: ~25 active seats. Drag the sliders to see how reach, seats-per-client and price trade off against ARR.</p>
+`;
+C['market/assumptions'] = ()=>`
+<div class="kick">The Case · 3.5</div><h2 class="title">The SMART assumption register</h2>
+<p class="sub"><b>What you'll get:</b> every load-bearing number made specific, measurable, and time-bound — so we can falsify our own case.</p>
+<p class="mini">Post-AutoKon, showing how we'd <i>falsify our own numbers</i> is the credibility play.</p>
+<table>
+<tr><th>#</th><th>Assumption</th><th>Validation (time-bound)</th></tr>
+<tr><td>A1</td><td>≥250k Indonesians work remotely for foreign employers; ≥20% formalisation candidates</td><td>By 17 Jul: triangulate Glints/Deel data, BPS, LinkedIn. Reframe if &lt;100k. <span class="pill risk">softest number</span></td></tr>
+<tr><td>A2</td><td>Blended serviceable fee $150/emp/mo</td><td>Price-test in 10 discovery calls at $179</td></tr>
+<tr><td>A3</td><td>≥3% of ~300k SG companies (≈9k) hire ID remote talent within 3 yrs</td><td>20 SG SME interviews. Kill if &lt;5k evidenced seats</td></tr>
+<tr><td>A4</td><td>Avg 2.2 seats per client</td><td>Measure on first 20 clients; re-tier if &lt;1.5</td></tr>
+<tr><td>A5</td><td>Y1 = 100 seats (40 network, 60 contractor-conversion)</td><td>Gate at 90 days: ≥25 paying seats</td></tr>
+<tr><td>A6</td><td>Monthly logo churn ≤2%</td><td>Cohort-track from month 1</td></tr>
+</table>
+`;
+C['market/corridor-map'] = ()=>`
+<div class="kick">The Case · 3.6</div><h2 class="title">The corridor map</h2>
+<p class="sub"><b>What you'll get:</b> worker side stays Indonesia; buyer side multiplies over time.</p>
+<table>
+<tr><th>Employer geo × ID worker</th><th>Verdict</th></tr>
+<tr><td><b>🇸🇬 Singapore</b> — proven demand, perfect timezone, Dickson on the ground</td><td><span class="pill win">Phase 1 · now</span> beachhead + brand proof</td></tr>
+<tr><td><b>🇦🇺 Australia</b> — mature offshore-hiring culture; accounting/bookkeeping roles lead</td><td><span class="pill info">Phase 2 · mo 9–18</span> via partner firms</td></tr>
+<tr><td><b>🇺🇸🇪🇺 US / EU</b> — largest pool of ID remote contractors; async only</td><td><span class="pill info">Phase 3</span> self-serve + SEO + wholesale</td></tr>
+<tr><td>🇯🇵🇰🇷 Japan / Korea — thin competition; language barrier</td><td>Opportunistic, via a partner</td></tr>
+<tr><td>ID domestic / SG×PH-VN workers</td><td><span class="pill risk">No</span> dilutes the ID-depth moat</td></tr>
+</table>
+<div class="callout blue"><b>The zoom Kelly should hear</b><p>One licensed PT, one compliance stack, one employee-experience layer serves employers from anywhere. If SG saturates at 450 seats, the same rail sells to AU/US/EU and wholesales to resellers. <b>TAM was never the constraint — execution and regulation are.</b></p></div>
+`;
+
+/* ===== 5. WHAT IS AN EOR ===== */
+C['what-eor/definition'] = ()=>`
+<div class="kick">The Machine · 5.1</div><h2 class="title">Definition + the one test</h2>
+<p class="sub"><b>What you'll get:</b> the single question that resolves 90% of the "what even is an EOR" confusion.</p>
+<div class="callout blue"><b>The one test that resolves 90% of the confusion</b><p>Does the client need to already own a local entity? <b>EOR = No</b> (the EOR lends you its entity). <b>PEO = Yes</b> (co-employment on top of your own entity). Everything else is detail. The market barely understands this — which is why definitional clarity is a <i>sales asset</i>, not just an internal doc.</p></div>
+<p>An EOR is a legally-registered local company that becomes the <b>sole legal employer</b> of your worker in a country where you have no entity. You direct the work; the EOR holds the contract, runs payroll, remits taxes, provides statutory benefits, and carries the compliance liability.</p>
+`;
+C['what-eor/taxonomy'] = ()=>`
+<div class="kick">The Machine · 5.2</div><h2 class="title">EOR vs PEO vs the rest</h2>
+<p class="sub"><b>What you'll get:</b> the taxonomy that separates an EOR from the six things people confuse it with.</p>
+<table>
+<tr><th>Model</th><th>Legal employer</th><th>Liability</th><th>Own entity?</th><th>When used</th></tr>
+<tr><td><b>EOR</b></td><td>The EOR — sole</td><td>EOR absorbs (limits)</td><td>No</td><td>Hire where you have no entity — <b>our model</b></td></tr>
+<tr><td>PEO</td><td>You — co-employment</td><td>Shared</td><td>Yes</td><td>Offload HR admin domestically (US)</td></tr>
+<tr><td>Staffing / temp</td><td>The agency</td><td>Joint</td><td>No</td><td>Short-term roles</td></tr>
+<tr><td>Recruitment</td><td>You, after placement</td><td>You</td><td>Yes</td><td>Find-and-handoff perm hires</td></tr>
+<tr><td>Payroll bureau</td><td>You (never provider)</td><td>You</td><td>Yes</td><td>Run payroll mechanics only</td></tr>
+<tr><td>AOR / CoR</td><td>The AOR</td><td>AOR</td><td>No</td><td>Contractors — "the EOR for contractors"</td></tr>
+<tr><td>Contractor platform</td><td>You</td><td>You (unless CoR)</td><td>No</td><td>Pay contractors you classified yourself</td></tr>
+</table>
+<div class="callout"><b>Two notes for our thesis</b><p>Payroll is a <b>component</b> of EOR, not a substitute. And the AOR/contractor line is our <b>fallback wrapper</b> if Permenaker 7/2026 narrows white-collar EOR — contractor-of-record sits outside the alih daya frame.</p></div>
+`;
+C['what-eor/holds-keeps'] = ()=>`
+<div class="kick">The Machine · 5.3</div><h2 class="title">What the EOR holds vs client keeps</h2>
+<p class="sub"><b>What you'll get:</b> the clean division of responsibility — and the claims nobody should make.</p>
+<div class="grid3">
+  <div class="card"><h4 style="margin-top:0">The EOR holds</h4><ul class="mini" style="margin-bottom:0"><li>Legal employer status</li><li>The employment contract</li><li>Payroll + tax remittance</li><li>Statutory benefits (BPJS)</li><li>Compliance liability</li><li>Termination execution</li></ul></div>
+  <div class="card"><h4 style="margin-top:0">The client keeps</h4><ul class="mini" style="margin-bottom:0"><li>Who to hire</li><li>Job scope & targets</li><li>Day-to-day direction</li><li>Performance management</li><li>Tools & equipment</li><li>The actual relationship</li></ul></div>
+  <div class="card"><h4 style="margin-top:0">Nobody should pretend</h4><ul class="mini" style="margin-bottom:0"><li>"Removes all liability" is a vendor claim, not law</li><li>PE risk isn't auto-eliminated</li><li>Misclassification exposure survives</li><li>Indemnity is often capped at fees paid</li></ul></div>
+</div>
+`;
+C['what-eor/value-chain'] = ()=>`
+<div class="kick">The Machine · 5.4</div><h2 class="title">The value chain</h2>
+<p class="sub"><b>What you'll get:</b> the money path is the spine — 13 links hang off it.</p>
+<p class="mini">Client funds one consolidated invoice → EOR runs payroll → withholds &amp; remits taxes → pays the employee net → carries the compliance risk.</p>
+<div class="timeline">
+<div class="tl"><div class="d">01</div><div class="t">Entity</div><div class="x">The registered PT that can legally employ</div></div>
+<div class="tl"><div class="d">02</div><div class="t">Contracts</div><div class="x">PKWT/PKWTT, Bahasa, Disnaker-registered</div></div>
+<div class="tl"><div class="d">03</div><div class="t">Onboarding</div><div class="x">KTP/NPWP/BPJS/bank docs, registrations</div></div>
+<div class="tl"><div class="d">04</div><div class="t">Payroll</div><div class="x">Gross-to-net, the monthly loop</div></div>
+<div class="tl"><div class="d">05</div><div class="t">Tax remittance</div><div class="x">PPh 21 deposit + SPT Masa via Coretax</div></div>
+<div class="tl"><div class="d">06</div><div class="t">Statutory benefits</div><div class="x">BPJS-TK + BPJS Kesehatan</div></div>
+<div class="tl"><div class="d">07</div><div class="t">Supplemental benefits</div><div class="x">Private health, allowances (markup)</div></div>
+<div class="tl"><div class="d">08</div><div class="t">Expense &amp; leave</div><div class="x">Reimbursements, leave tracking</div></div>
+<div class="tl"><div class="d">09</div><div class="t">Compliance monitoring</div><div class="x">Rule changes, deadlines, ceilings</div></div>
+<div class="tl"><div class="d">10</div><div class="t">IP assignment</div><div class="x">Work product assigned to the client</div></div>
+<div class="tl"><div class="d">11</div><div class="t">Offboarding</div><div class="x">PHK notice, severance, deregistration</div></div>
+<div class="tl"><div class="d">12</div><div class="t">Employee support</div><div class="x">Payslips, BPJS claims, questions</div></div>
+<div class="tl"><div class="d">13</div><div class="t">Invoicing</div><div class="x">One consolidated pre-funded invoice</div></div>
+</div>
+<div class="videocard" onclick="window.open('https://www.youtube.com/watch?v=pyf8u70azpQ','_blank')"><div class="play">▶</div><div><div class="vt">Employer of Record (EOR) Explained: What It Is and How It Works</div><div class="vs">YouTube · a clean 6-minute primer on the model</div></div></div>
+`;
+C['what-eor/liability-myths'] = ()=>`
+<div class="kick">The Machine · 5.5</div><h2 class="title">Liability reality — the myths</h2>
+<p class="sub"><b>What you'll get:</b> three vendor claims stated plainly, then corrected — so we never oversell what an EOR removes.</p>
+<div class="callout red"><b>Myth 1: "An EOR removes all liability."</b><p>It absorbs and limits employment liability — it doesn't erase it. Contracts routinely cap the EOR's indemnity <b>at the fees paid</b>, and some exposures flow back to the client by agreement. "All liability gone" is marketing, not law.</p></div>
+<div class="callout red"><b>Myth 2: "An EOR auto-removes permanent-establishment risk."</b><p>PE risk <b>survives</b>. A worker with signing authority or who habitually concludes contracts can still create a taxable presence <i>for the client</i>, regardless of who runs payroll. PMK 112/2025 narrowed the preparatory/auxiliary safe harbor from end-2025 — raising 2026 audit risk.</p></div>
+<div class="callout red"><b>Myth 3: "Indemnity is unlimited."</b><p>Almost never. Read the cap. Misclassification exposure and back-contributions can also survive if the underlying relationship was mis-set-up. The EOR reduces and operationalises risk; it doesn't make it vanish.</p></div>
+<div class="callout green"><b>Why honesty is a wedge</b><p>Competitors overclaim here. Stating the real limits — then packaging the evidence that we handled the controllable risk properly — is exactly the trust posture a corridor-native specialist can own.</p></div>
+`;
+
+/* ===== 6. LEGAL & SETUP ===== */
+C['setup/sequence'] = ()=>`
+<div class="kick">The Machine · 6.1</div><h2 class="title">The setup sequence — the OSS spine</h2>
+<p class="sub"><b>What you'll get:</b> everything that must exist <b>before the first hire</b>. OSS is the spine — the NIB fans out to Coretax, WLKP and BPJS.</p>
+<table>
+<tr><th>#</th><th>Item</th><th>Portal / body</th><th>Why it exists</th></tr>
+<tr><td>1</td><td>Legal entity PT / PT PMA</td><td>Notary + AHU</td><td>An EOR must be a badan hukum; foreign-owned → PT PMA (IDR 10B commitment). The thing that can legally employ.</td></tr>
+<tr><td>2</td><td>NIB (business ID)</td><td class="mono">oss.go.id</td><td>Risk-based licensing (PP 28/2025). For low-risk, the NIB <i>is</i> the licence.</td></tr>
+<tr><td>3</td><td>NPWP badan + Coretax</td><td>DJP Coretax</td><td>Corporate tax ID; you file all PPh 21 through it.</td></tr>
+<tr><td>4</td><td>KBLI classification</td><td>OSS</td><td><b>KBLI 78200</b> (78300 merged in under KBLI 2025). Drives risk class + JKK tier.</td></tr>
+<tr><td>5</td><td>Alih daya licensing</td><td>OSS + Disnaker</td><td>PP 35/2021 Pasal 20. Register each client agreement with Disnaker ≤3 working days of signing.</td></tr>
+<tr><td>6</td><td>SISNAKER account</td><td class="mono">account.kemnaker.go.id</td><td>Gateway to WLKP + JKP administration.</td></tr>
+<tr><td>7</td><td>WLKP manpower report</td><td class="mono">wajiblapor.kemnaker.go.id</td><td>≤30 days of establishment; annual December report.</td></tr>
+<tr><td>8</td><td>BPJS employer reg → NPP</td><td>SIPP + EDABU</td><td>BPJS-TK company number + BPJS-Kesehatan enrolment.</td></tr>
+<tr><td>9</td><td>Corporate banking rail</td><td>BCA / Mandiri / BNI / BRI</td><td>Payroll account + bulk-transfer file capability.</td></tr>
+<tr><td>10</td><td>Insurance + deposit policy</td><td>Insurer / internal</td><td>Professional-error + EPLI cover; client pre-funding (never float payroll).</td></tr>
+<tr><td>11</td><td>Counsel + accounting retainer</td><td>Law firm + accountant</td><td>Employment counsel (terminations); outsourced books for the PT.</td></tr>
+</table>
+`;
+C['setup/entity'] = ()=>`
+<div class="kick">The Machine · 6.2</div><h2 class="title">Entity: PT vs PT PMA</h2>
+<p class="sub"><b>What you'll get:</b> which legal vehicle you actually need to employ in Indonesia.</p>
+<div class="grid2">
+  <div class="card"><h4 style="margin-top:0">PT (local)</h4><p class="mini">Domestically-owned limited company. Lower capital bar, simpler. Viable if the cap table is Indonesian.</p></div>
+  <div class="card"><h4 style="margin-top:0">PT PMA (foreign-owned)</h4><p class="mini">Foreign-investment company — required if foreign shareholders hold the EOR. Carries the <b>IDR 10B investment commitment</b> and more reporting.</p></div>
+</div>
+<p class="mini">Either way, the entity must be a <b>badan hukum</b> (legal person) — the thing that can legally sign the employment contract and be the employer of record. This is the single biggest structural decision; get counsel on the shareholding before incorporation.</p>
+<div class="callout"><b>The "buy the expertise" rule</b><p>This is where DIY hurt us before (the KPR lesson). Notary + AHU + OSS classification are cheap to outsource and expensive to get wrong — the KBLI code alone drives your risk class and JKK tier.</p></div>
+`;
+C['setup/licences'] = ()=>`
+<div class="kick">The Machine · 6.3</div><h2 class="title">Licences &amp; registrations</h2>
+<p class="sub"><b>What you'll get:</b> the chain of IDs and registrations that fan out from the NIB.</p>
+<table>
+<tr><th>Registration</th><th>Where</th><th>Trigger / deadline</th></tr>
+<tr><td>NIB (business ID)</td><td class="mono">oss.go.id</td><td>First — everything else references it</td></tr>
+<tr><td>NPWP badan + Coretax</td><td>DJP Coretax</td><td>Before first payroll / PPh 21 filing</td></tr>
+<tr><td>KBLI 78200 classification</td><td>OSS</td><td>Sets risk class + JKK tier</td></tr>
+<tr><td>Alih daya licence</td><td>OSS + Disnaker</td><td>PP 35/2021 Pasal 20; register each client agreement ≤3 working days</td></tr>
+<tr><td>SISNAKER / SIAPkerja</td><td class="mono">account.kemnaker.go.id</td><td>Gateway to WLKP + JKP</td></tr>
+<tr><td>WLKP manpower report</td><td class="mono">wajiblapor.kemnaker.go.id</td><td>≤30 days of establishment; annual in December</td></tr>
+<tr><td>BPJS employer reg → NPP</td><td>SIPP + EDABU</td><td>Before enrolling the first worker</td></tr>
+</table>
+<p class="mini">The NIB is the spine: it fans out to Coretax (tax), WLKP (manpower reporting), and BPJS (social security). Miss the ordering and you stall the whole chain.</p>
+`;
+C['setup/permenaker-risk'] = ()=>`
+<div class="kick">The Machine · 6.4</div><h2 class="title">The Permenaker 7/2026 risk</h2>
+<p class="sub"><b>What you'll get:</b> the live regulatory overhang to carry through the entire build.</p>
+<div class="callout red"><b>The regulatory overhang — carry it through the whole build</b><p>Permenaker 7/2026 (30 Apr 2026) re-restricted outsourcing to 6 "penunjang" categories. White-collar EOR now hangs on the elastic "layanan penunjang operasional" reading, and the rule is already slated for revision. No formal "EOR licence" exists — you operate as a licensed PT/PT PMA alih daya entity. <b>Get the written counsel opinion before entity money is spent.</b></p></div>
+<div class="callout"><b>The fallback if it narrows</b><p>If counsel reads white-collar EOR as too exposed under Permenaker 7/2026, pivot to a <b>contractor-of-record (AOR/CoR)</b> wrapper — which sits outside the alih daya frame. Same corridor, different legal spine. Decide this <i>before</i> capitalising the PT.</p></div>
+`;
+C['setup/checklist'] = ()=>{
+  const items=[
+   'Incorporate the PT / PT PMA (notary + AHU/Kemenkumham)',
+   'Obtain NIB via OSS (oss.go.id) — the business ID that fans out to everything',
+   'Register NPWP badan + activate Coretax account',
+   'Confirm KBLI 78200 classification (labour supply / HR provision) in OSS',
+   'Secure alih daya business licensing (PP 35/2021 Pasal 20)',
+   'Create SISNAKER / SIAPkerja account (account.kemnaker.go.id)',
+   'File WLKP within 30 days of establishment (wajiblapor.kemnaker.go.id)',
+   'Register as BPJS employer → obtain NPP (SIPP) + BPJS Kesehatan (EDABU)',
+   'Open corporate bank account + enable bulk payroll transfer (KlikBCA Bisnis / Mandiri Kopra)',
+   'Put professional-error + EPLI insurance and a client pre-funding/deposit policy in place',
+   "Retain employment counsel + outsourced accounting for the PT's own books",
+   'Commission a written counsel opinion on Permenaker 7/2026 fit BEFORE capitalising the PT'
+  ];
+  return `
+<div class="kick">The Machine · 6.5</div><h2 class="title">Setup checklist</h2>
+<p class="sub"><b>What you'll get:</b> the running checklist — tick items off as they're done; progress saves in your browser.</p>
+<ul class="check" data-mod="setup">${items.map((t,i)=>`<li class="${checked('setup',i)?'on':''}" role="checkbox" aria-checked="${checked('setup',i)}" tabindex="0" onclick="toggleCheck('setup',${i});this.classList.toggle('on');this.setAttribute('aria-checked',this.classList.contains('on'))"><span class="box" aria-hidden="true">✓</span><span class="txt">${t}</span></li>`).join('')}</ul>
+`;
+};
+
+/* ===== 7. OPERATIONS ===== */
+C['operations/overview'] = ()=>`
+<div class="kick">The Machine · 7.1</div><h2 class="title">Lifecycle overview</h2>
+<p class="sub"><b>What you'll get:</b> how an EOR runs <b>today</b>, quote to offboard — and where the future "to-be" lives.</p>
+<p>Each stage below shows the task, why it exists, how a small owned-entity ID EOR does it (<span class="pill local">our archetype — manual</span>), and how a Deel-class platform does it (<span class="pill deel">contrast</span>). The gap between those two columns is where AI eventually enters — but not yet.</p>
+<div class="timeline">
+<div class="tl"><div class="d">Stage 0</div><div class="t">Quote &amp; sign</div><div class="x">Cost simulation, MSA, KYC — margin is set here</div></div>
+<div class="tl"><div class="d">Stage 1</div><div class="t">Onboard</div><div class="x">Docs, contract, Disnaker + BPJS registration</div></div>
+<div class="tl"><div class="d">Stage 2 ⚠</div><div class="t">Payroll loop</div><div class="x">The monthly product — gross-to-net, maker-checker</div></div>
+<div class="tl"><div class="d">Stage 3 ⚠</div><div class="t">File &amp; remit</div><div class="x">BPJS + PPh 21 deadlines, THR</div></div>
+<div class="tl"><div class="d">Stage 4</div><div class="t">Support &amp; changes</div><div class="x">Leave, raises, claims, invoicing</div></div>
+<div class="tl"><div class="d">Stage 5 ⚠</div><div class="t">Offboard</div><div class="x">Termination — the highest-risk moment</div></div>
+</div>
+<p class="mini">Three stages carry ⚠: payroll, statutory filing, and termination. Those are where trust is won or lost.</p>
+`;
+C['operations/quote-sign'] = ()=>`
+<div class="kick">The Machine · 7.2</div><h2 class="title">Stage 0 · Quote &amp; sign</h2>
+<div class="stage"><div class="stage-h"><div class="stage-n">0</div><div class="stage-t">Quote &amp; sign</div></div><div class="stage-b">
+<p><span class="pill why">Why</span>Quality and margin are both set here. A wrong cost simulation means you eat the difference or surprise the client on invoice one.</p>
+<p class="mini"><b>Tasks:</b> cost simulation (gross → true employer cost, ≈115–118% of gross before fee) · MSA + deposit terms · client KYC.</p>
+<p class="mini"><span class="pill local">Small ID EOR</span> spreadsheet calculator, manual quote, PDF MSA, email. <span class="pill deel">Deel-class</span> instant self-serve calculator, click-through MSA, automated KYC.</p>
+<p class="mini"><span class="pill risk">What breaks here</span> a mis-simulated quote silently kills margin for the life of the contract.</p></div></div>
+`;
+C['operations/onboard'] = ()=>`
+<div class="kick">The Machine · 7.3</div><h2 class="title">Stage 1 · Onboard</h2>
+<div class="stage"><div class="stage-h"><div class="stage-n">1</div><div class="stage-t">Onboard the employee</div></div><div class="stage-b">
+<p><span class="pill why">Why</span>Creates the legal employment + every downstream registration. Wrong docs or contract type and payroll, tax and BPJS all inherit the error.</p>
+<p class="mini"><b>Tasks:</b> collect KTP (NIK = tax ID since Jul 2024), KK, NPWP, BPJS numbers, bank, ijazah · draft PKWT/PKWTT (written, Bahasa; PKWTT probation ≤3mo, PKWT no probation, max 5yr) · register PKWT to Disnaker ≤3 days, both BPJS within 30 days.</p>
+<p class="mini"><span class="pill local">Small ID EOR</span> template + WhatsApp doc collection + manual SIPP/EDABU entry. <span class="pill deel">Deel-class</span> guided digital onboarding, e-signature, auto-generated contract.</p>
+<p class="mini"><span class="pill risk">What breaks here</span> the wrong contract type (PKWT vs PKWTT) sets the severance exposure for the whole relationship.</p></div></div>
+`;
+C['operations/payroll-loop'] = ()=>`
+<div class="kick">The Machine · 7.4</div><h2 class="title">Stage 2 · Payroll loop ⚠</h2>
+<div class="stage"><div class="stage-h warn"><div class="stage-n">2</div><div class="stage-t">Run payroll — the monthly loop ⚠</div></div><div class="stage-b">
+<p><span class="pill why">Why</span>This is the product. Repeats monthly, deadline-bound, and errors are caught by the <i>employee</i>, not the system — a trust event (49% job-hunt after two payroll mistakes).</p>
+<p class="mini"><b>Tasks:</b> data cutoff → gross-to-net (employee BPJS JHT 2% + JP 1% + Kes 1%, PPh 21 TER, multi-province UMP ⚠) → maker-checker approval → bulk disbursement → mandatory payslip.</p>
+<p class="mini"><span class="pill local">Small ID EOR</span> payroll spreadsheet, TER keyed by hand, manual bank file. <span class="pill deel">Deel-class</span> engine auto-computes ("90-second pay run"), error &lt;1%. <span class="pill risk">Pain</span> ~40% of payroll errors trace to manual data entry.</p>
+<p class="mini"><span class="pill risk">What breaks here</span> a keyed-in TER or ceiling error surfaces on the payslip — in front of the employee.</p></div></div>
+`;
+C['operations/file-remit'] = ()=>`
+<div class="kick">The Machine · 7.5</div><h2 class="title">Stage 3 · File &amp; remit ⚠</h2>
+<div class="stage"><div class="stage-h warn"><div class="stage-n">3</div><div class="stage-t">File &amp; remit — statutory compliance ⚠</div></div><div class="stage-b">
+<p><span class="pill why">Why</span>Where the "we keep you compliant" promise is kept or broken. Deadlines fixed, penalties automatic.</p>
+<p class="mini"><b>Tasks:</b> BPJS Kesehatan by 10th (EDABU) · BPJS-TK by 15th (SIPP) · PPh 21 deposit by 15th + SPT Masa by 20th (Coretax) · THR ≥7 days before holiday.</p>
+<p class="mini"><span class="pill local">Small ID EOR</span> a person logs into EDABU, SIPP and Coretax separately every month. <span class="pill deel">Deel-class</span> "Compliance Hub" auto-applies rule changes; deadline risk engineered out.</p>
+<p class="mini"><span class="pill risk">What breaks here</span> a missed deadline is an automatic penalty (BPJS late = 2%/mo) and, for health, suspended coverage.</p>
+<p class="mini">→ Full mechanics in the <a onclick="go('compliance')">Compliance Deep-Dive</a>.</p></div></div>
+`;
+C['operations/support-changes'] = ()=>`
+<div class="kick">The Machine · 7.6</div><h2 class="title">Stage 4 · Support &amp; changes</h2>
+<div class="stage"><div class="stage-h"><div class="stage-n">4</div><div class="stage-t">Support &amp; changes</div></div><div class="stage-b">
+<p><span class="pill why">Why</span>Between onboarding and offboarding: leave, raises, BPJS claims, questions, invoicing. Poor support is the quiet churn driver.</p>
+<p class="mini"><span class="pill local">Small ID EOR</span> founder answers WhatsApp directly — high-touch, personal, doesn't scale. <span class="pill deel">Deel-class</span> 24/7 chat, 13 languages, ~80% first-contact resolution, self-service portal.</p>
+<p class="mini"><span class="pill risk">What breaks here</span> slow answers to a worker's BPJS-claim or payslip question erode trust silently — until they leave.</p></div></div>
+`;
+C['operations/offboard'] = ()=>`
+<div class="kick">The Machine · 7.7</div><h2 class="title">Stage 5 · Offboard ⚠</h2>
+<div class="stage"><div class="stage-h danger"><div class="stage-n">5</div><div class="stage-t">Offboard — termination, the highest-risk moment ⚠</div></div><div class="stage-b">
+<p><span class="pill why">Why</span>Where EORs get hurt. Severance is generous and formula-driven; disputes escalate to a labour court. <b>Our PT carries the liability, not the client.</b></p>
+<p class="mini"><b>Tasks:</b> written PHK notice ≥14 working days · severance (UP up to 9×, UPMK up to 10×, UPH) · dispute path bipartite → Disnaker → PHI court → cassation · final settlement + BPJS deregistration.</p>
+<p class="mini"><span class="pill local">Small ID EOR</span> counsel computes severance case-by-case; every case bespoke. <span class="pill deel">Deel-class</span> severance accrued monthly on the invoice (no lump-sum shock), templated offboarding.</p>
+<p class="mini"><span class="pill risk">What breaks here</span> if the client stops paying, our PT still owes the statutory severance — which is why the deposit is non-negotiable.</p>
+<p class="mini">→ Severance tables in the <a onclick="go('compliance/severance')">Compliance Deep-Dive</a>.</p></div></div>
+`;
+C['operations/internal-run'] = ()=>`
+<div class="kick">The Machine · 7.8</div><h2 class="title">How it's run internally</h2>
+<p class="sub"><b>What you'll get:</b> the roles, the ratio that sets the cost model, and the one control that keeps it honest.</p>
+<div class="grid2">
+  <div class="card"><h4 style="margin-top:0">The roles</h4><p class="mini">Payroll specialists · compliance & legal (in-house + local counsel) · onboarding/HR ops · client success · finance/treasury. At small scale one person wears several hats — the key-person risk we know (Faishal lesson).</p></div>
+  <div class="card"><h4 style="margin-top:0">The ratio that sets the cost model</h4><p class="mini"><b>~1 payroll FTE per 100–200 employees</b> (1:100 comfortable, 1:200 lean). This is the number a future "to-be" has to move — and the reason automation matters to margin, not to the product.</p></div>
+</div>
+<div class="callout"><b>The one control that keeps it honest — maker-checker (four-eyes)</b><p>HR adds/changes a worker → Payroll runs pay → Finance approves funds. No single person controls setup + calculation + approval + reconciliation. Disbursement stays locked until the chain completes. Non-negotiable at any scale.</p></div>
+`;
+
+/* ===== 8. COMPLIANCE ===== */
+C['compliance/calendar'] = ()=>`
+<div class="kick">The Machine · 8.1</div><h2 class="title">The deadline calendar</h2>
+<p class="sub"><b>What you'll get:</b> the recurring calendar the whole operation runs on. Rates current as of July 2026; verify against source before operating.</p>
+<div class="timeline">
+<div class="tl"><div class="d">Mid–late month</div><div class="t">Payroll cutoff</div><div class="x">Freeze attendance & variable inputs</div></div>
+<div class="tl"><div class="d">~25th–month end</div><div class="t">Disburse net pay + payslips</div><div class="x">Bulk transfer; payslip legally mandatory (PP 36/2021 Pasal 53)</div></div>
+<div class="tl"><div class="d">10th (following month)</div><div class="t">BPJS Kesehatan payment</div><div class="x">Miss it and coverage suspends</div></div>
+<div class="tl"><div class="d">15th (following month)</div><div class="t">BPJS-TK payment + PPh 21 deposit</div><div class="x">SIPP + Coretax e-Billing; BPJS late = 2%/mo</div></div>
+<div class="tl"><div class="d">20th (following month)</div><div class="t">SPT Masa PPh 21 filing</div><div class="x">Coretax</div></div>
+<div class="tl"><div class="d">1 March (annual)</div><div class="t">JP wage-ceiling reset</div><div class="x">2026 = IDR 11,086,300 — update payroll before the March run</div></div>
+<div class="tl"><div class="d">≥7 days before Idul Fitri</div><div class="t">Pay THR in full</div><div class="x">2026 deadline: 14 March · late = 5% fine</div></div>
+<div class="tl"><div class="d">December run</div><div class="t">PPh 21 annual recalculation + Form 1721-A1</div><div class="x">The "rekonsiliasi Desember"</div></div>
+</div>
+`;
+C['compliance/cost-stack'] = ()=>`
+<div class="kick">The Machine · 8.2</div><h2 class="title">Employer cost stack</h2>
+<p class="sub"><b>What you'll get:</b> what "loaded cost" actually means — the true cost of employing, before your fee.</p>
+<div class="chartbox"><canvas id="ch_coststack" height="150"></canvas><div class="src">On top of gross salary: employer BPJS ≈10.24–11.74% (JHT 3.7% + JP 2% capped + JKK 0.24% + JKM 0.30% + Kesehatan 4% capped), THR accrual ≈8.3%, plus a severance accrual. Fully-loaded ≈115–118% of gross before your fee. Try the live calculator in <a onclick="go('economics/cost-calculator')">Unit Economics</a>.</div></div>
+<p class="mini">The headline for clients: a gross salary is never the real cost. Loaded cost sits around <b>115–118% of gross</b> before any EOR fee — which is exactly why a transparent calculator is a sales asset.</p>
+`;
+C['compliance/bpjs'] = ()=>`
+<div class="kick">The Machine · 8.3</div><h2 class="title">BPJS — the two systems</h2>
+<p class="sub"><b>What you'll get:</b> the full contribution table for both BPJS programmes, employer and employee side.</p>
+<table>
+<tr><th>Programme</th><th>Employer</th><th>Employee</th><th>Ceiling / notes</th></tr>
+<tr><td>BPJS-TK · JHT (old-age)</td><td>3.7%</td><td>2.0%</td><td>No cap</td></tr>
+<tr><td>BPJS-TK · JP (pension)</td><td>2.0%</td><td>1.0%</td><td>Wage ceiling IDR 11,086,300 (from 1 Mar 2026)</td></tr>
+<tr><td>BPJS-TK · JKK (accident)</td><td>0.24–1.74%</td><td>—</td><td>Risk-based; low-risk tech = 0.24%</td></tr>
+<tr><td>BPJS-TK · JKM (death)</td><td>0.30%</td><td>—</td><td>No cap</td></tr>
+<tr><td>BPJS Kesehatan (health)</td><td>4%</td><td>1%</td><td>Wage cap IDR 12,000,000; up to 5 family covered</td></tr>
+</table>
+<p class="mini">BPJS-TK (Ketenagakerjaan) runs through SIPP; BPJS Kesehatan through EDABU. They're separate portals with separate deadlines (15th and 10th) — a recurring source of manual error.</p>
+<div class="videocard" onclick="window.open('https://www.youtube.com/watch?v=iaG4cW4h4oU','_blank')"><div class="play">▶</div><div><div class="vt">Cara Menghitung & Lapor SPT PPh 21 Coretax 2025</div><div class="vs">YouTube · TER method walkthrough in Coretax</div></div></div>
+`;
+C['compliance/pph21-ter'] = ()=>`
+<div class="kick">The Machine · 8.4</div><h2 class="title">PPh 21 &amp; the TER method</h2>
+<p class="sub"><b>What you'll get:</b> how monthly income tax is actually computed under the TER regime (PMK 168/2023).</p>
+<p class="mini">Jan–Nov: PPh 21 = <b>TER rate × monthly gross</b> (rate from PTKP-status category A/B/C + income band). December: revert to annual progressive (5%–35%) and true up. File monthly via Coretax e-Bupot 21 + SPT Masa; issue Form 1721-A1 annually.</p>
+<div class="grid3">
+  <div class="card"><h4 style="margin-top:0">Category A</h4><p class="mini">TK/0, TK/1, K/0 — single or 1 dependent.</p></div>
+  <div class="card"><h4 style="margin-top:0">Category B</h4><p class="mini">2–3 dependents.</p></div>
+  <div class="card"><h4 style="margin-top:0">Category C</h4><p class="mini">K/3 — married + 3 dependents.</p></div>
+</div>
+<div class="callout"><b>Why December is different</b><p>Eleven months use the simplified TER rate; the December run recalculates the full year on the progressive brackets and settles the difference — the "rekonsiliasi Desember." Get the annual true-up wrong and the employee's take-home swings in the last cheque of the year.</p></div>
+<p class="mini">Cross-check any computation against the <a href="https://kalkulator.ortax.org/ter" target="_blank" rel="noopener">Ortax TER calculator</a> before filing.</p>
+`;
+C['compliance/thr'] = ()=>`
+<div class="kick">The Machine · 8.5</div><h2 class="title">THR — the religious holiday allowance</h2>
+<p class="sub"><b>What you'll get:</b> the 13th-month-style statutory bonus, its deadline, and how it hits the cost model.</p>
+<div class="grid2">
+  <div class="card"><h4 style="margin-top:0">The rule (Permenaker 6/2016)</h4><p class="mini">One month's wage for workers with <b>≥12 months</b> tenure; <b>pro-rata</b> (months ÷ 12 × wage) below 12 months. Paid <b>≥7 days before</b> the religious holiday. 2026 deadline: <b>14 March</b>.</p></div>
+  <div class="card"><h4 style="margin-top:0">The penalty</h4><p class="mini">Late payment carries a <b>5% fine</b> of the THR owed, plus the obligation still stands. It's a hard, dated deadline — not a soft target.</p></div>
+</div>
+<div class="callout"><b>How it hits the model</b><p>THR is one month's wage per year, so we <b>accrue ≈8.3% (1/12)</b> of gross every month into loaded cost. That's why the calculator adds a THR line — it's real money, smoothed across the year rather than a March shock.</p></div>
+`;
+C['compliance/severance'] = ()=>`
+<div class="kick">The Machine · 8.6</div><h2 class="title">Severance under PP 35/2021</h2>
+<p class="sub"><b>What you'll get:</b> the three-component severance formula, the multipliers, and a worked example of the exposure.</p>
+<div class="grid2">
+<div><h4>UP — Uang Pesangon (× wage)</h4>
+<table><tr><th>Service</th><th>UP</th><th>Service</th><th>UP</th></tr>
+<tr><td>&lt;1 yr</td><td>1</td><td>4–&lt;5</td><td>5</td></tr>
+<tr><td>1–&lt;2</td><td>2</td><td>5–&lt;6</td><td>6</td></tr>
+<tr><td>2–&lt;3</td><td>3</td><td>6–&lt;7</td><td>7</td></tr>
+<tr><td>3–&lt;4</td><td>4</td><td>≥8 yr</td><td>9 (cap)</td></tr></table></div>
+<div><h4>UPMK — service pay (× wage, from ≥3 yr)</h4>
+<table><tr><th>Service</th><th>UPMK</th><th>Service</th><th>UPMK</th></tr>
+<tr><td>3–&lt;6</td><td>2</td><td>15–&lt;18</td><td>6</td></tr>
+<tr><td>6–&lt;9</td><td>3</td><td>18–&lt;21</td><td>7</td></tr>
+<tr><td>9–&lt;12</td><td>4</td><td>≥24 yr</td><td>10</td></tr>
+<tr><td>12–&lt;15</td><td>5</td><td></td><td></td></tr></table></div>
+</div>
+<p class="mini">Multipliers apply to UP & UPMK by termination ground: 0× (resignation, urgent misconduct) → 0.5× (efficiency due to losses) → 1× (standard) → 1.75× (retirement) → 2× (death/prolonged illness). <b>UPH</b> (rights: unused leave + relocation) always adds on top. Wage base = basic + fixed allowances. Dispute path: bipartite (30d) → Disnaker mediation → PHI court → Supreme Court cassation.</p>
+<div class="callout red"><b>Worked example — why this is the highest-risk stage</b><p>A 5-year employee terminated for "efficiency due to losses" still gets <b>0.5×(6 UP) + 1×(2 UPMK) + UPH ≈ 5 months' wage</b>. As the legal employer, our PT pays it, then recovers from the client per contract — so client credit risk and severance math are the same risk. This is why the deposit/pre-funding policy is non-negotiable.</p></div>
+`;
+
+/* ===== 9. UNIT ECONOMICS ===== */
+C['economics/pl-shape'] = ()=>`
+<div class="kick">The Machine · 9.1</div><h2 class="title">The ops P&amp;L shape</h2>
+<p class="sub"><b>What you'll get:</b> why this is modelled as an ops P&L, not a SaaS P&L — and where margin actually hides.</p>
+<p>This is a <b>service business</b>. Dickson funds operations, not just software, so the model has real per-employee labour cost that steps up with headcount — until AI absorbs it. The "services-as-software" kicker is that gross margin climbs toward ~75–80% as automation takes the per-employee grind.</p>
+<div class="callout"><b>Where margin actually hides</b><p>FX spread (1–3% over mid-market — the quiet profit centre), benefits markup (5–15%), float on deposits, and above all <b>amortising the one maintained entity across many employees</b>. The single PT is the fixed cost; every additional seat spreads it thinner.</p></div>
+`;
+C['economics/break-even'] = ()=>`
+<div class="kick">The Machine · 9.2</div><h2 class="title">Break-even</h2>
+<p class="sub"><b>What you'll get:</b> the ~25-employee break-even and the margin trajectory beyond it.</p>
+<div class="grid2">
+  <div class="chartbox"><h4>Break-even ≈ 25 employees</h4><canvas id="ch_breakeven" height="200"></canvas><div class="src">$179/emp fee · fixed ~$3.5k/mo · +1 Jakarta admin (~$800/mo) per 75 emp · ~$12/emp variable. ~8–12 SG clients.</div></div>
+  <div class="chartbox"><h4>Gross margin climbs toward ~75–80%</h4><canvas id="ch_margin" height="200"></canvas><div class="src">The services-as-software kicker: AI absorbs the per-employee work, humans only touch approval & exceptions.</div></div>
+</div>
+<p class="mini">Break-even lands around <b>25 employees</b> — roughly 8–12 SG clients at 2.2 seats each. That's the first hard gate: get to 25 seats and the entity pays for itself.</p>
+`;
+C['economics/staffing'] = ()=>`
+<div class="kick">The Machine · 9.3</div><h2 class="title">Staffing ladder</h2>
+<p class="sub"><b>What you'll get:</b> why headcount steps rather than scales linearly — the automation lever.</p>
+<div class="chartbox"><h4>Staffing steps, doesn't scale linearly</h4><canvas id="ch_staff" height="185"></canvas><div class="src">AI-prepped registers let 1 admin run ~75 emp vs ~25–30 manual.</div></div>
+<p class="mini">Manually, one admin comfortably handles ~25–30 employees. With AI-prepped registers, the same admin runs ~75. That gap — 1 FTE per 75 vs per 25 — is the entire margin story of the "to-be." It moves the cost curve, not the product.</p>
+`;
+C['economics/setup-capital'] = ()=>`
+<div class="kick">The Machine · 9.4</div><h2 class="title">Setup capital</h2>
+<p class="sub"><b>What you'll get:</b> the actual cheques to launch — ~$33k — and why working capital turns negative after.</p>
+<div class="chartbox"><h4>Setup capital ≈ $33k</h4><canvas id="ch_setup" height="185"></canvas><div class="src">The actual cheques to launch. Working capital is negative thereafter — clients pre-fund.</div></div>
+<p class="mini">~$33k of one-time setup: ops runway, a working-capital buffer, legal, PT + licences, and infrastructure. After launch, working capital is <b>negative</b> — clients pre-fund salary + fee before we disburse, so growth funds itself rather than consuming cash.</p>
+`;
+C['economics/minimum-viable-client'] = ()=>`
+<div class="kick">The Machine · 9.5</div><h2 class="title">The minimum-viable-client law</h2>
+<p class="sub"><b>What you'll get:</b> the size below which serving a client well loses money — and why "who we say no to" is a design decision.</p>
+<div class="callout"><b>Veri's hardest lesson: "I said no to a client whose volume was too low — servicing them cost more than they paid."</b><p>Signals converge: EOR is economical up to ~10 employees/country; a flat setup fee adds ~21% to first-month cost on a 1-person deal; volume discounts only trigger at 20+ heads. <b>There is a client size below which serving well loses money — so "who we say no to" is a design decision, not a failure.</b> Our pricing floor and minimum seat count fall out of this.</p></div>
+<div class="grid3">
+  <div class="stat gold"><div class="v">~10</div><div class="k">employees/country where EOR stays economical</div></div>
+  <div class="stat blue"><div class="v">~21%</div><div class="k">setup fee adds to a 1-person first month</div></div>
+  <div class="stat green"><div class="v">20+</div><div class="k">heads before volume discounts trigger</div></div>
+</div>
+`;
+C['economics/cost-calculator'] = ()=>`
+<div class="kick">The Machine · 9.6</div><h2 class="title">🧮 The cost calculator</h2>
+<p class="sub"><b>What you'll get:</b> a live cost-of-employment calculator — true employer cost, employee take-home, and our fee vs Deel's $599. <span class="tag">estimate · verify before quoting</span></p>
+<div class="grid2">
+  <div class="calc">
+    <label for="calcGross">Monthly gross salary (IDR)</label>
+    <input id="calcGross" type="number" value="25000000" oninput="runCalc()">
+    <label for="calcTer">PTKP / dependents (PPh 21 TER category)</label>
+    <select id="calcTer" onchange="runCalc()">
+      <option value="A">A — single or 1 dependent (TK/0, TK/1, K/0)</option>
+      <option value="B">B — 2–3 dependents</option>
+      <option value="C">C — married + 3 dependents (K/3)</option>
+    </select>
+    <label for="calcJkk">JKK risk tier</label>
+    <select id="calcJkk" onchange="runCalc()">
+      <option value="0.0024">Low risk (office/tech) — 0.24%</option>
+      <option value="0.0054">Medium — 0.54%</option>
+      <option value="0.0089">High — 0.89%</option>
+    </select>
+    <label for="calcFee">Our monthly fee (USD)</label>
+    <input id="calcFee" type="number" value="179" oninput="runCalc()">
+  </div>
+  <div class="calc" id="calcOut" aria-live="polite"></div>
+</div>
+<p class="mini" style="margin-top:8px">FX: IDR/USD 16,150 (adjust <span class="mono">const FX</span> in code before use). PPh 21 uses a simplified TER-A/B/C band table — directionally right, not filing-grade.</p>
+`;
+
+/* ===== 10. QUALITY, RISK & CONTROLS ===== */
+C['risk/failure-modes'] = ()=>`
+<div class="kick">The Machine · 10.1</div><h2 class="title">Failure modes</h2>
+<p class="sub"><b>What you'll get:</b> the six ways an EOR gets hurt — and who's on the hook for each.</p>
+<div class="card"><h4 style="margin-top:0">Failure modes → who's on the hook</h4>
+<ul class="mini" style="margin-bottom:0">
+  <li><b>Misclassification</b> — employee treated as contractor; willful penalties + back-contributions ($40B class-action settlements in 2024).</li>
+  <li><b>Permanent establishment</b> — an EOR does <b>not</b> auto-remove PE; a worker with signing authority can create a taxable presence for the <i>client</i>.</li>
+  <li><b>Payroll errors</b> — employer bears liability even when a processor caused it.</li>
+  <li><b>Late statutory filing</b> — automatic BPJS/tax penalties; coverage suspension.</li>
+  <li><b>Botched termination</b> — wrongful-termination exposure; contested if client ignored advice.</li>
+  <li><b>Data protection</b> — payroll data is personal data (Indonesia PDP; GDPR if EU workers).</li>
+</ul></div>
+`;
+C['risk/benchmark-numbers'] = ()=>`
+<div class="kick">The Machine · 10.2</div><h2 class="title">The benchmark numbers</h2>
+<p class="sub"><b>What you'll get:</b> the industry data that makes getting payroll right worth it.</p>
+<div class="card"><h4 style="margin-top:0">The numbers that make it worth getting right</h4>
+<ul class="mini" style="margin-bottom:0">
+  <li><b>~$291</b> — cost of a single payroll error (EY).</li>
+  <li><b>~15 corrections</b> per pay period at an average company.</li>
+  <li><b>40%</b> of errors trace to manual data entry.</li>
+  <li><b>80%</b> are first caught by the employee, not the system.</li>
+  <li><b>49%</b> of employees job-hunt after just <b>two</b> payroll mistakes.</li>
+  <li><b>99.9%</b> on-time-accurate = industry SLA norm; APAC self-reports ~69%.</li>
+  <li>Automation typically pulls error rates <b>below 1%</b>.</li>
+</ul></div>
+`;
+C['risk/controls'] = ()=>`
+<div class="kick">The Machine · 10.3</div><h2 class="title">The controls</h2>
+<p class="sub"><b>What you'll get:</b> the five controls serious operators run — the maker-checker discipline at the centre.</p>
+<table>
+<tr><th>Control</th><th>What it does</th></tr>
+<tr><td>Maker-checker (four-eyes)</td><td>Every sensitive op split into initiate + independent approve; no self-approval; disbursement locked until the chain completes.</td></tr>
+<tr><td>Audit trail</td><td>Tamper-proof read-only logs (user, timestamp, IP). Our AutoKon evidence-pack DNA, applied to payroll.</td></tr>
+<tr><td>Pre-funding / deposit</td><td>Never float payroll. Client funds the cycle 5–7 business days before payday; a small deposit covers termination exposure.</td></tr>
+<tr><td>Insurance</td><td>Professional-error cover + EPLI (wrongful termination/discrimination).</td></tr>
+<tr><td>Segregation of duties</td><td>HR adds → Payroll calculates → Finance releases. No one owns setup + calc + approval + reconciliation.</td></tr>
+</table>
+`;
+C['risk/trust-vs-reliability'] = ()=>`
+<div class="kick">The Machine · 10.4</div><h2 class="title">Local trust vs platform reliability</h2>
+<p class="sub"><b>What you'll get:</b> the honest read on the as-is — and the seam a future to-be closes.</p>
+<div class="callout blue"><b>The honest read on the as-is — and the seam to close</b><p>The small owned-entity EOR wins on <b>trust and local depth</b> (a named human, in timezone) but is structurally exposed on <b>consistency and reliability</b> — spreadsheets, manual portal entry, one or two people holding deadlines in their heads. The Deel-class platform is the inverse: reliable at scale, impersonal, priced for it. That tension — local trust vs platform reliability — is exactly the seam a future to-be closes. We name it; we don't solve it here.</p></div>
+`;
+
+/* ===== 11. GO-TO-MARKET ===== */
+C['gtm/wedges'] = ()=>`
+<div class="kick">Execute · 11.1</div><h2 class="title">The three wedges</h2>
+<p class="sub"><b>What you'll get:</b> three motions, not one market — and the real competitor is the $0 status quo, so the primary motion is <b>conversion</b>.</p>
+<div class="grid3">
+  <div class="card"><h4 style="margin-top:0">🎯 Returnee trigger</h4><p class="mini">Indonesian EP/S-Pass holders in SG who move home. Their employer already knows, trusts and wants to keep them — the highest-intent EOR moment there is, created by the same MOM tightening we cite as tailwind. Nobody markets to this moment.</p></div>
+  <div class="card"><h4 style="margin-top:0">🏗️ Construction back-office</h4><p class="mini">BIM modelers, CAD drafters, QS, estimators. Flips the "wrong network" risk: Dickson's property network IS the right network if the first roles are ones his contacts hire — and we know this talent pool better than any EOR.</p></div>
+  <div class="card"><h4 style="margin-top:0">💸 Contractor conversion</h4><p class="mini">Target SG companies already paying Indonesian contractors via Wise. Pitch retention to the employer; pitch BPJS/THR/payslips-for-KPR to the worker. Latent demand → active demand.</p></div>
+</div>
+`;
+C['gtm/reframe'] = ()=>`
+<div class="kick">Execute · 11.2</div><h2 class="title">The reframe — sell the pain</h2>
+<p class="sub"><b>What you'll get:</b> the positioning that de-risks the whole go-to-market.</p>
+<div class="callout green"><b>The reframe that de-risks everything</b><p>Sell the concrete pain, not the category (Veri's #1 lesson). Not "do you want an EOR" but "keep your best Indonesian people, compliantly, for less than you think." Employee-side pull (BPJS, THR, payslips → KPR eligibility) is a channel no competitor uses.</p></div>
+<p class="mini">The buyer doesn't wake up wanting "an EOR." They wake up wanting to keep a specific person, avoid a specific risk, or stop a specific headache. Lead with that concrete pain and the category sells itself.</p>
+`;
+C['gtm/pricing'] = ()=>`
+<div class="kick">Execute · 11.3</div><h2 class="title">Pricing posture</h2>
+<p class="sub"><b>What you'll get:</b> the four pricing levers and where we set each.</p>
+<table>
+<tr><th>Lever</th><th>Position</th></tr>
+<tr><td>Headline fee</td><td>$149–199 flat, transparent, no hidden deposit surprise (vs Deel $599 + FX + deposit)</td></tr>
+<tr><td>Deposit</td><td>Small + insured — <b>never</b> zero (our PT eats PKWTT severance liability if a client stops paying)</td></tr>
+<tr><td>Minimum</td><td>A floor seat count per client, set by the min-viable-client math — saying no is discipline</td></tr>
+<tr><td>Expansion</td><td>Benefits upsell, FX, devices/coworking; later, wholesale "powered-by-us" to resellers</td></tr>
+</table>
+<p class="mini">Price is the wedge, never the moat — see <a onclick="go('competition/small-player-wins')">how a small player wins</a>.</p>
+`;
+C['gtm/checklist'] = ()=>{
+  const items=[
+   'Draft the returnee-trigger landing page: "Keep your Indonesian employee when they go home"',
+   'Draft the construction back-office page: "Your Singapore practice, your Indonesian drafting team"',
+   'Build the contractor-conversion outbound list (SG cos already paying ID contractors)',
+   "Get Dickson's 10 named prospects + the person to call for each",
+   'Decide price point: $149 aggressive vs $179 vs $199',
+   'Set the minimum seat count / pricing floor from the min-viable-client math',
+   'Set deposit posture (small/insured — never zero)',
+   'Reach out to Veri / HyreTech for the operator interview'
+  ];
+  return `
+<div class="kick">Execute · 11.4</div><h2 class="title">GTM checklist</h2>
+<p class="sub"><b>What you'll get:</b> the running go-to-market checklist — progress saves in your browser.</p>
+<ul class="check" data-mod="gtm">${items.map((t,i)=>`<li class="${checked('gtm',i)?'on':''}" role="checkbox" aria-checked="${checked('gtm',i)}" tabindex="0" onclick="toggleCheck('gtm',${i});this.classList.toggle('on');this.setAttribute('aria-checked',this.classList.contains('on'))"><span class="box" aria-hidden="true">✓</span><span class="txt">${t}</span></li>`).join('')}</ul>
+`;
+};
+
+/* ===== 12. LAUNCH ROADMAP ===== */
+C['roadmap/four-phases'] = ()=>`
+<div class="kick">Execute · 12.1</div><h2 class="title">The four phases</h2>
+<p class="sub"><b>What you'll get:</b> from learning to first revenue — phased, with kill/scale gates so we never repeat the AutoKon "keep going regardless" pattern.</p>
+<div class="roadmap">
+  <div class="phase"><div class="ph">Phase 0 · now</div><div class="pt">Learn & validate</div><div class="pd">Master the as-is · interview Veri · 20 SME interviews · counsel opinion</div></div>
+  <div class="phase"><div class="ph">Phase 1</div><div class="pt">Set up the entity</div><div class="pd">PT + licences + BPJS + banking + counsel. ~$33k, ~4–8 weeks</div></div>
+  <div class="phase"><div class="ph">Phase 2</div><div class="pt">First 5 clients</div><div class="pd">SG network + contractor-conversion. Flawless payroll. Gate: ≥25 seats at 90 days</div></div>
+  <div class="phase"><div class="ph">Phase 3</div><div class="pt">Systemise & scale</div><div class="pd">Design the to-be — where AI enters the process (separate workstream)</div></div>
+</div>
+`;
+C['roadmap/gates'] = ()=>`
+<div class="kick">Execute · 12.2</div><h2 class="title">The gates</h2>
+<p class="sub"><b>What you'll get:</b> the decision gates — where we kill or reframe instead of drifting.</p>
+<table>
+<tr><th>Gate</th><th>Kill / reframe if…</th></tr>
+<tr><td>Demand (by 17 Jul)</td><td>&lt;5k evidenced corridor seats, or &lt;5 credible named prospects → lead with contractor-conversion instead of network sales</td></tr>
+<tr><td>Legal (before entity spend)</td><td>Counsel opinion negative on white-collar EOR → pivot to contractor-of-record wrapper</td></tr>
+<tr><td>Traction (90 days post-launch)</td><td>&lt;25 paying seats → rewrite GTM before more capital</td></tr>
+<tr><td>Churn (rolling)</td><td>&gt;4%/mo for 2 quarters → pricing/service model review</td></tr>
+</table>
+`;
+C['roadmap/checklist'] = ()=>{
+  const items=[
+   'Complete the as-is learning (this OS) + operator interview with Veri',
+   'Written counsel opinion on Permenaker 7/2026 fit',
+   'Validate demand: 20 SG SME interviews, ≥5 named prospects',
+   'Incorporate PT + all licences + BPJS + banking (Phase 1 setup checklist)',
+   'Build the cost calculator + onboarding flow + compliance dashboard (prototype)',
+   'Land first 5 paying employees on platform',
+   'Run 3 flawless monthly payroll cycles (maker-checker, evidence pack)',
+   'Review unit economics against plan; set the to-be (where AI enters)'
+  ];
+  return `
+<div class="kick">Execute · 12.3</div><h2 class="title">Execution checklist</h2>
+<p class="sub"><b>What you'll get:</b> the running execution checklist — progress saves in your browser.</p>
+<ul class="check" data-mod="roadmap">${items.map((t,i)=>`<li class="${checked('roadmap',i)?'on':''}" role="checkbox" aria-checked="${checked('roadmap',i)}" tabindex="0" onclick="toggleCheck('roadmap',${i});this.classList.toggle('on');this.setAttribute('aria-checked',this.classList.contains('on'))"><span class="box" aria-hidden="true">✓</span><span class="txt">${t}</span></li>`).join('')}</ul>
+<div class="callout"><b>Deliberately deferred</b><p>The <b>to-be</b> process (where AI enters — as internal process, not product), which manual steps automate first, our SLAs, and the tech stack. Per Dickson: understand the as-is fully before designing the to-be. This OS is that foundation.</p></div>
+`;
+};
+
+/* ===== 13. RESOURCES ===== */
+C['resources/videos'] = ()=>`
+<div class="kick">Execute · 13.1</div><h2 class="title">Video tutorials</h2>
+<p class="sub"><b>What you'll get:</b> the payroll/tax videos to watch before running a real cycle — the muscle memory of the operation.</p>
+<div class="videocard" onclick="window.open('https://www.youtube.com/watch?v=pyf8u70azpQ','_blank')"><div class="play">▶</div><div><div class="vt">Employer of Record (EOR) Explained — What It Is & How It Works</div><div class="vs">YouTube · the model in ~6 minutes</div></div></div>
+<div class="videocard" onclick="window.open('https://www.youtube.com/watch?v=iaG4cW4h4oU','_blank')"><div class="play">▶</div><div><div class="vt">Cara Menghitung & Lapor SPT PPh 21 Coretax 2025</div><div class="vs">YouTube · TER method + bukti potong in Coretax</div></div></div>
+<div class="videocard" onclick="window.open('https://www.youtube.com/playlist?list=PLJLYiiOhpnm9__uddR7mQdCgJ7Ks7JaFR','_blank')"><div class="play">▶</div><div><div class="vt">Panduan Coretax PPh Pasal 21 (playlist)</div><div class="vs">YouTube · create bukti potong, report, billing</div></div></div>
+<div class="videocard" onclick="window.open('https://www.youtube.com/playlist?list=PLDDScx7l7xS19VM7N4aBtNaesWC2x3OQG','_blank')"><div class="play">▶</div><div><div class="vt">Tutorial dalam Sistem Coretax (playlist)</div><div class="vs">YouTube · end-to-end Coretax walkthroughs</div></div></div>
+`;
+C['resources/thesis'] = ()=>`
+<div class="kick">Execute · 13.2</div><h2 class="title">The thesis</h2>
+<p class="sub"><b>What you'll get:</b> the primary sources behind the "services are the new software" thesis.</p>
+<ul>
+<li><a href="https://sequoiacap.com/article/services-the-new-software/" target="_blank" rel="noopener">Sequoia — "Services: The New Software"</a> (Julien Bek) — the bible.</li>
+<li><a href="https://fortune.com/2026/04/21/services-are-the-new-software-sequoia-venture-capital-julien-bek-ai-native-eye-on-ai/" target="_blank" rel="noopener">Fortune — interview with Julien Bek</a> on why services are the new software.</li>
+<li><a href="https://www.forbes.com/sites/josipamajic/2026/04/01/sequoia-says-ai-will-kill-software-tools-by-becoming-the-work/" target="_blank" rel="noopener">Forbes — Sequoia says AI will become the work</a>.</li>
+</ul>
+`;
+C['resources/regulation-payroll'] = ()=>`
+<div class="kick">Execute · 13.3</div><h2 class="title">Regulation &amp; payroll</h2>
+<p class="sub"><b>What you'll get:</b> the primary Indonesian regulation, portals, and payroll references.</p>
+<ul>
+<li><a href="https://www.hukumonline.com/klinik/a/legalitas-employer-of-record-di-indonesia-menurut-pp-35-2021-lt686bf29357fe7/" target="_blank" rel="noopener">Hukumonline — legality of EOR in Indonesia</a> (alih daya analysis, Permenaker 7/2026).</li>
+<li><a href="https://oss.go.id" target="_blank" rel="noopener">OSS</a> · <a href="https://www.pajak.go.id/en" target="_blank" rel="noopener">DJP / Coretax</a> · <a href="https://sipp.bpjsketenagakerjaan.go.id/" target="_blank" rel="noopener">BPJS-TK SIPP Online</a> · <a href="https://edabu.bpjs-kesehatan.go.id" target="_blank" rel="noopener">BPJS Kesehatan EDABU</a> · <a href="https://wajiblapor.kemnaker.go.id/" target="_blank" rel="noopener">WLKP</a>.</li>
+<li><a href="https://catapa.com/en/blog/perhitungan-pesangon-berdasarkan-pp-no-35-tahun-2021" target="_blank" rel="noopener">CATAPA — severance calculation (PP 35/2021)</a> · <a href="https://www.gadjian.com/blog/2026/03/25/cara-menghitung-uang-pesangon-phk/" target="_blank" rel="noopener">Gadjian — pesangon, UPMK, UPH + tax</a>.</li>
+<li><a href="https://leglobal.law/countries/indonesia/employment-law/employment-law-overview-indonesia/" target="_blank" rel="noopener">L&E Global — Indonesia employment law overview</a> (contracts, termination).</li>
+<li><a href="https://kalkulator.ortax.org/ter" target="_blank" rel="noopener">Ortax — PPh 21 TER calculator</a> (cross-check our calculator).</li>
+</ul>
+`;
+C['resources/competitors-market'] = ()=>`
+<div class="kick">Execute · 13.4</div><h2 class="title">Competitors &amp; market</h2>
+<p class="sub"><b>What you'll get:</b> the sources for the competitive field and corridor demand.</p>
+<ul>
+<li><a href="https://eorhq.com/compare/best-eor-for-indonesia/" target="_blank" rel="noopener">eorHQ — best EOR for Indonesia</a> (pricing comparison) · <a href="https://eorhq.com/guides/deel-pricing/" target="_blank" rel="noopener">Deel pricing teardown</a>.</li>
+<li><a href="https://emerhub.com/indonesia/employer-of-record/" target="_blank" rel="noopener">Emerhub</a> · <a href="https://talenthub.glints.com/peo-eor/indonesia" target="_blank" rel="noopener">Glints TalentHub</a> · <a href="https://aspireapp.com/employer-of-record" target="_blank" rel="noopener">Aspire EOR (Deel resold)</a>.</li>
+<li><a href="https://www.deel.com/blog/eor-vs-peo/" target="_blank" rel="noopener">Deel — EOR vs PEO</a> · <a href="https://www.deel.com/blog/aor-vs-eor/" target="_blank" rel="noopener">AOR vs EOR</a> (the taxonomy).</li>
+<li><a href="https://www.deel.com/global-hiring-report-2025/" target="_blank" rel="noopener">Deel — State of Global Hiring 2025</a> (corridor demand).</li>
+</ul>
+<div class="callout"><b>Companion documents</b><p>This OS distils three deliverables in the <span class="mono">NewVenture-Services/</span> folder: the bake-off decision brief, the EOR as-is operational blueprint, and this launch OS. All figures trace to the sources above; regulatory items need a formal legal opinion before commitment.</p></div>
+`;
+
 /* ---------------- CHART INITIALISERS (lazy, dark-themed) ---------------- */
 const FX=16150;
-let done={};
+const CHART_INSTANCES={};
+function destroyRenderedCharts(){
+  document.querySelectorAll('#content canvas[id]').forEach(el=>{
+    if(CHART_INSTANCES[el.id]){
+      CHART_INSTANCES[el.id].destroy();
+      delete CHART_INSTANCES[el.id];
+    }
+  });
+}
+function makeChart(canvasId,config){
+  const el=document.getElementById(canvasId);
+  if(!el||!window.Chart) return;
+  if(CHART_INSTANCES[canvasId]){
+    CHART_INSTANCES[canvasId].destroy();
+  }
+  CHART_INSTANCES[canvasId]=new Chart(el,config);
+}
 function initCharts(id){
-  if(done[id]||!window.Chart) return; done[id]=true;
+  if(!window.Chart) return;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>drawCharts(id)));
+}
+function drawCharts(id){
+  destroyRenderedCharts();
   Chart.defaults.font.family="-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif";
   Chart.defaults.font.size=11; Chart.defaults.color='#b6b6c4'; Chart.defaults.borderColor='rgba(255,255,255,.08)';
   Chart.defaults.plugins.tooltip.backgroundColor='rgba(16,16,24,.94)';
@@ -851,33 +1747,33 @@ function initCharts(id){
   const grid={grid:{color:'rgba(255,255,255,.07)'}};
   const g=(x)=>document.getElementById(x);
   try{
-  if(id==='opportunity'&&g('ch_budget')) new Chart(g('ch_budget'),{type:'bar',data:{labels:['Software budget','Services budget'],datasets:[{data:[1,6],backgroundColor:['#5b6472','#e0b84a']}]},options:{indexAxis:'y',...noLegend,scales:{x:{...grid,ticks:{callback:v=>'$'+v}},y:{...grid}}}});
+  if(id==='opportunity'&&g('ch_budget')) makeChart('ch_budget',{type:'bar',data:{labels:['Software budget','Services budget'],datasets:[{data:[1,6],backgroundColor:['#5b6472','#e0b84a']}]},options:{indexAxis:'y',...noLegend,scales:{x:{...grid,ticks:{callback:v=>'$'+v}},y:{...grid}}}});
   if(id==='why-now'){
-    if(g('ch_salary')) new Chart(g('ch_salary'),{type:'bar',data:{labels:['Junior','Mid','Senior','Lead'],datasets:[{label:'Singapore (USD/mo)',data:[4070,5480,6660,7700],backgroundColor:'#7c8494'},{label:'Indonesia (USD/mo)',data:[750,1400,2500,3500],backgroundColor:'#e0b84a'}]},options:{...bottomLegend,scales:{y:{...grid,ticks:{callback:v=>'$'+v/1000+'k'}},x:{...grid}}}});
-    if(g('ch_wageinf')) new Chart(g('ch_wageinf'),{type:'bar',data:{labels:['Overall','Junior','Mid','Senior','Lead'],datasets:[{data:[7.5,5.3,1.7,12.6,11.6],backgroundColor:['#5b6472','#5b6472','#5b6472','#fb7185','#fb7185']}]},options:{...noLegend,scales:{y:{...grid,ticks:{callback:v=>v+'%'}},x:{...grid}}}});
+    if(g('ch_salary')) makeChart('ch_salary',{type:'bar',data:{labels:['Junior','Mid','Senior','Lead'],datasets:[{label:'Singapore (USD/mo)',data:[4070,5480,6660,7700],backgroundColor:'#7c8494'},{label:'Indonesia (USD/mo)',data:[750,1400,2500,3500],backgroundColor:'#e0b84a'}]},options:{...bottomLegend,scales:{y:{...grid,ticks:{callback:v=>'$'+v/1000+'k'}},x:{...grid}}}});
+    if(g('ch_wageinf')) makeChart('ch_wageinf',{type:'bar',data:{labels:['Overall','Junior','Mid','Senior','Lead'],datasets:[{data:[7.5,5.3,1.7,12.6,11.6],backgroundColor:['#5b6472','#5b6472','#5b6472','#fb7185','#fb7185']}]},options:{...noLegend,scales:{y:{...grid,ticks:{callback:v=>v+'%'}},x:{...grid}}}});
   }
-  if(id==='market'&&g('ch_funnel')) new Chart(g('ch_funnel'),{type:'bar',data:{labels:['TAM $450M','SAM $43M','SOM ~$1M'],datasets:[{data:[450,43,1.05],backgroundColor:['#7aa2ff','#e0b84a','#34d399']}]},options:{indexAxis:'y',...noLegend,scales:{x:{type:'logarithmic',...grid,ticks:{callback:v=>'$'+v+'M'}},y:{...grid}}}});
+  if(id==='market'&&g('ch_funnel')) makeChart('ch_funnel',{type:'bar',data:{labels:['TAM $450M','SAM $43M','SOM ~$1M'],datasets:[{data:[100,9.6,0.23],backgroundColor:['#7aa2ff','#e0b84a','#34d399']}]},options:{indexAxis:'y',...noLegend,scales:{x:{...grid,ticks:{callback:v=>v+'%'}},y:{...grid}},plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>['TAM $450M','SAM $43M','SOM ~$1M'][ctx.dataIndex]+' · '+ctx.raw+'% of TAM'}}}}});
   if(id==='competition'&&g('ch_ladder')){
     const L=['Oyster','Deel/Remote/Atlas','Multiplier','Aspire (Deel resold)','Glints (+18%)','Skuad/Remofirst','RecruitGo','Emerhub cap','US TARGET'];
     const V=[649,599,450,399,299,199,166,250,174];
-    new Chart(g('ch_ladder'),{type:'bar',data:{labels:L,datasets:[{data:V,backgroundColor:L.map(n=>n==='US TARGET'?'#e0b84a':(n==='Deel/Remote/Atlas'?'#fb7185':'#7c8494'))}]},options:{indexAxis:'y',...noLegend,scales:{x:{...grid,ticks:{callback:v=>'$'+v}},y:{...grid}}}});
+    makeChart('ch_ladder',{type:'bar',data:{labels:L,datasets:[{data:V,backgroundColor:L.map(n=>n==='US TARGET'?'#e0b84a':(n==='Deel/Remote/Atlas'?'#fb7185':'#7c8494'))}]},options:{indexAxis:'y',...noLegend,scales:{x:{...grid,ticks:{callback:v=>'$'+v}},y:{...grid}}}});
   }
   if(id==='what-eor'&&g('ch_valuechain')){
     const L=['Entity','Contracts','Onboard','Payroll','Tax','Benefits','Suppl.','Exp/Leave','Compliance','IP','Offboard','Support','Invoice'];
-    new Chart(g('ch_valuechain'),{type:'bar',data:{labels:L,datasets:[{data:L.map(()=>1),backgroundColor:'#e0b84a'}]},options:{...noLegend,scales:{y:{display:false},x:{...grid,ticks:{font:{size:9}}}}}});
+    makeChart('ch_valuechain',{type:'bar',data:{labels:L,datasets:[{data:L.map(()=>1),backgroundColor:'#e0b84a'}]},options:{...noLegend,scales:{y:{display:false},x:{...grid,ticks:{font:{size:9}}}}}});
   }
-  if(id==='compliance'&&g('ch_coststack')) new Chart(g('ch_coststack'),{type:'bar',data:{labels:['Loaded employer cost'],datasets:[{label:'Gross',data:[100],backgroundColor:'#5b6472'},{label:'Employer BPJS ~11%',data:[11],backgroundColor:'#e0b84a'},{label:'THR accrual ~8.3%',data:[8.3],backgroundColor:'#f0d68a'},{label:'Severance accrual ~4%',data:[4],backgroundColor:'#fbe3a0'}]},options:{indexAxis:'y',plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true,...grid,ticks:{callback:v=>v+'%'}},y:{stacked:true,...grid}}}});
+  if(id==='compliance'&&g('ch_coststack')) makeChart('ch_coststack',{type:'bar',data:{labels:['Loaded employer cost'],datasets:[{label:'Gross',data:[100],backgroundColor:'#5b6472'},{label:'Employer BPJS ~11%',data:[11],backgroundColor:'#e0b84a'},{label:'THR accrual ~8.3%',data:[8.3],backgroundColor:'#f0d68a'},{label:'Severance accrual ~4%',data:[4],backgroundColor:'#fbe3a0'}]},options:{indexAxis:'y',plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true,...grid,ticks:{callback:v=>v+'%'}},y:{stacked:true,...grid}}}});
   if(id==='economics') initEcoCharts();
   }catch(e){console.warn('chart',id,e);}
 }
 function ecoModel(){const FEE=179,FIX=3500,ADM=800,PER=12,CAP=75;const ns=[0,10,20,25,30,40,50,75,100,125,150];
   const cost=n=>n===0?FIX:FIX+Math.ceil(n/CAP)*ADM+n*PER;const rev=n=>n*FEE;return{ns,cost,rev};}
 function initEcoCharts(){const {ns,cost,rev}=ecoModel();const g=(x)=>document.getElementById(x);const grid={grid:{color:'rgba(255,255,255,.07)'}};
-  if(g('ch_breakeven')) new Chart(g('ch_breakeven'),{type:'line',data:{labels:ns,datasets:[{label:'Revenue',data:ns.map(rev),borderColor:'#e0b84a',backgroundColor:'rgba(224,184,74,.12)',fill:true,tension:.2,pointRadius:2},{label:'Cost',data:ns.map(cost),borderColor:'#fb7185',tension:.2,pointRadius:2}]},options:{plugins:{legend:{position:'bottom'}},scales:{y:{...grid,ticks:{callback:v=>'$'+(v/1000)+'k'}},x:{...grid}}}});
+  if(g('ch_breakeven')) makeChart('ch_breakeven',{type:'line',data:{labels:ns,datasets:[{label:'Revenue',data:ns.map(rev),borderColor:'#e0b84a',backgroundColor:'rgba(224,184,74,.12)',fill:true,tension:.2,pointRadius:2},{label:'Cost',data:ns.map(cost),borderColor:'#fb7185',tension:.2,pointRadius:2}]},options:{plugins:{legend:{position:'bottom'}},scales:{y:{...grid,ticks:{callback:v=>'$'+(v/1000)+'k'}},x:{...grid}}}});
   const ms=ns.filter(n=>n>0);
-  if(g('ch_margin')) new Chart(g('ch_margin'),{type:'line',data:{labels:ms,datasets:[{data:ms.map(n=>Math.round((rev(n)-cost(n))/rev(n)*100)),borderColor:'#34d399',backgroundColor:'rgba(52,211,153,.12)',fill:true,tension:.25,pointRadius:2}]},options:{plugins:{legend:{display:false}},scales:{y:{min:-100,max:100,...grid,ticks:{callback:v=>v+'%'}},x:{...grid}}}});
-  if(g('ch_staff')) new Chart(g('ch_staff'),{type:'bar',data:{labels:['25','75','150','300'],datasets:[{label:'AI-run (us)',data:[1,1,2,4],backgroundColor:'#e0b84a'},{label:'Manual',data:[1,3,6,11],backgroundColor:'#5b6472'}]},options:{plugins:{legend:{position:'bottom'}},scales:{x:{...grid,title:{display:true,text:'employees'}},y:{...grid,title:{display:true,text:'admins'}}}}});
-  if(g('ch_setup')) new Chart(g('ch_setup'),{type:'doughnut',data:{labels:['Ops runway $12k','WC buffer $10k','Legal $6k','PT+licence $4k','Infra $1k'],datasets:[{data:[12,10,6,4,1],backgroundColor:['#e0b84a','#f0d68a','#fb7185','#7aa2ff','#5b6472'],borderWidth:2,borderColor:'#12121a'}]},options:{plugins:{legend:{position:'right',labels:{boxWidth:12,font:{size:10}}}},cutout:'58%'}});
+  if(g('ch_margin')) makeChart('ch_margin',{type:'line',data:{labels:ms,datasets:[{data:ms.map(n=>Math.round((rev(n)-cost(n))/rev(n)*100)),borderColor:'#34d399',backgroundColor:'rgba(52,211,153,.12)',fill:true,tension:.25,pointRadius:2}]},options:{plugins:{legend:{display:false}},scales:{y:{min:-100,max:100,...grid,ticks:{callback:v=>v+'%'}},x:{...grid}}}});
+  if(g('ch_staff')) makeChart('ch_staff',{type:'bar',data:{labels:['25','75','150','300'],datasets:[{label:'AI-run (us)',data:[1,1,2,4],backgroundColor:'#e0b84a'},{label:'Manual',data:[1,3,6,11],backgroundColor:'#5b6472'}]},options:{plugins:{legend:{position:'bottom'}},scales:{x:{...grid,title:{display:true,text:'employees'}},y:{...grid,title:{display:true,text:'admins'}}}}});
+  if(g('ch_setup')) makeChart('ch_setup',{type:'doughnut',data:{labels:['Ops runway $12k','WC buffer $10k','Legal $6k','PT+licence $4k','Infra $1k'],datasets:[{data:[12,10,6,4,1],backgroundColor:['#e0b84a','#f0d68a','#fb7185','#7aa2ff','#5b6472'],borderWidth:2,borderColor:'#12121a'}]},options:{plugins:{legend:{position:'right',labels:{boxWidth:12,font:{size:10}}}},cutout:'58%'}});
   runCalc();
 }
 
@@ -921,29 +1817,109 @@ function runCalc(){
    <div class="line"><span>− PPh 21 (TER-${cat}, ${(terRate(cat,gross)*100).toFixed(2)}%)</span><span class="neg">${fmt(pph)}</span></div>
    <div class="line tot"><span>Net take-home</span><span class="pos">${fmt(net)}</span></div>`;
 }
+function updateSom(){
+  const out=document.getElementById('somOut'); if(!out) return;
+  const companies=+(document.getElementById('somCompanies').value||0);
+  const seatsPer=+(document.getElementById('somSeats').value||0);
+  const fee=+(document.getElementById('somFee').value||0);
+  const seats=Math.round(companies*seatsPer);
+  const arr=seats*fee*12;
+  const breakeven=25;
+  out.innerHTML=`
+   <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">SOM sensitivity</div>
+   <div class="line"><span>Companies reached</span><b>${companies.toLocaleString()}</b></div>
+   <div class="line"><span>Avg seats / client</span><b>${seatsPer.toFixed(1)}</b></div>
+   <div class="line"><span>Active seats</span><b>${seats.toLocaleString()}</b></div>
+   <div class="line"><span>Monthly fee</span><b>$${fee}</b></div>
+   <div class="line tot"><span>Run-rate ARR</span><span>$${Math.round(arr).toLocaleString()}</span></div>
+   <div class="mini">${seats>=breakeven?'Above':'Below'} ~25-seat break-even by ${Math.abs(seats-breakeven).toLocaleString()} seats.</div>`;
+}
 
 /* ---------------- NAV / ROUTER ---------------- */
 let curId='home';
+let curKey='home';
+let curRoute=null;
+const ROUTE_ALIASES={
+  'market/som':{key:'market/som',anchor:'sec-som'},
+  'competition/deel':{key:'competition/deel'},
+  'compliance/severance':{key:'compliance/severance',anchor:'sec-severance'}
+};
+function childrenOf(moduleId){return SUBS[moduleId]||[];}
+function firstKey(moduleId){
+  const kids=childrenOf(moduleId);
+  return kids.length?`${moduleId}/${kids[0].id}`:moduleId;
+}
+function allRoutes(){
+  const routes=[];
+  MODS.forEach(m=>{
+    const kids=childrenOf(m.id);
+    if(!kids.length){routes.push({key:m.id,module:m,child:null});return;}
+    kids.forEach(child=>routes.push({key:`${m.id}/${child.id}`,module:m,child}));
+  });
+  return routes;
+}
+function resolveRoute(raw){
+  const rawKey=(raw||'').replace(/^#/,'')||'home';
+  // Aliases only carry an optional scroll anchor; the target key is resolved
+  // directly below (no recursion — the alias key equals the plain key).
+  const alias=ROUTE_ALIASES[rawKey];
+  const anchor=alias?alias.anchor:undefined;
+  const key=alias?alias.key:rawKey;
+  const first=key.split('/')[0];
+  const module=MODS.find(m=>m.id===first);
+  if(!module) return {key:'home',id:'home',module:MODS[0],child:null,hash:'home',anchor};
+  const kids=childrenOf(module.id);
+  if(!kids.length) return {key:module.id,id:module.id,module,child:null,hash:module.id,anchor};
+  const childId=key.includes('/')?key.split('/')[1]:kids[0].id;
+  const child=kids.find(k=>k.id===childId)||kids[0];
+  return {key:`${module.id}/${child.id}`,id:module.id,module,child,hash:`${module.id}/${child.id}`,anchor};
+}
 function renderNav(){
   const nav=document.getElementById('modnav'); let html=''; let lastG='';
   MODS.forEach(m=>{
     if(m.group!==lastG){html+=`<div class="navsec">${m.group}</div>`;lastG=m.group;}
-    html+=`<div class="navlink ${curId===m.id?'active':''} ${isDone(m.id)?'completed':''}" data-id="${m.id}" role="link" tabindex="0" aria-current="${curId===m.id?'page':'false'}" aria-label="${m.nav}${isDone(m.id)?' (completed)':''}" onclick="go('${m.id}')"><span class="ix" aria-hidden="true">${m.ix}</span><span>${m.nav}</span><span class="done" aria-hidden="true">✓</span></div>`;
+    const kids=childrenOf(m.id);
+    if(!kids.length){
+      html+=`<div class="navlink ${curKey===m.id?'active':''} ${isDone(m.id)?'completed':''}" data-id="${m.id}" role="link" tabindex="0" aria-current="${curKey===m.id?'page':'false'}" aria-label="${m.nav}${isDone(m.id)?' (completed)':''}" onclick="go('${m.id}')"><span class="ix" aria-hidden="true">${m.ix}</span><span>${m.nav}</span><span class="done" aria-hidden="true">✓</span></div>`;
+      return;
+    }
+    const done=kids.filter(k=>isDone(`${m.id}/${k.id}`)).length;
+    const complete=done===kids.length;
+    const open=curId===m.id;
+    html+=`<div class="navgroup ${open?'open':''} ${complete?'completed':''}">
+      <button class="navhead ${open?'active':''}" role="button" aria-expanded="${open}" onclick="toggleGroup('${m.id}')">
+        <span class="ix" aria-hidden="true">${m.ix}</span><span>${m.nav}</span><span class="count">${done}/${kids.length}</span><span class="chev" aria-hidden="true">›</span>
+      </button>
+      <div class="navkids" id="kids_${m.id}">
+        ${kids.map(k=>{const key=`${m.id}/${k.id}`;return `<button class="navchild ${curKey===key?'active':''} ${isDone(key)?'completed':''}" onclick="go('${key}')" aria-current="${curKey===key?'page':'false'}">${k.nav}</button>`;}).join('')}
+      </div>
+    </div>`;
   });
   nav.innerHTML=html;
 }
+function toggleGroup(moduleId){
+  if(curId===moduleId){go(firstKey(moduleId));return;}
+  go(firstKey(moduleId));
+}
 function renderTabs(){
   const bar=document.getElementById('tabbar'); if(!bar) return;
-  const groups=[...new Set(MODS.map(m=>m.group))];
-  const cur=MODS.find(x=>x.id===curId)||MODS[0];
-  bar.innerHTML=groups.map(gp=>{const first=MODS.find(m=>m.group===gp);const active=cur.group===gp;return `<button class="tab ${active?'active':''}" role="tab" aria-selected="${active}" onclick="go('${first.id}')">${gp}</button>`;}).join('');
+  let kids=childrenOf(curId);
+  // Competition has 17 children (3 structural + 14 competitor pages). Showing all
+  // as top pills balloons the sticky bar; competitor pages are reached via the
+  // profiles grid + sidebar accordion, so only the structural tabs go up here.
+  if(curId==='competition') kids=kids.slice(0,3);
+  if(!kids.length){bar.innerHTML='';return;}
+  bar.innerHTML=kids.map(k=>{const key=`${curId}/${k.id}`;const active=curKey===key||(curId==='competition'&&k.id==='profiles'&&!['landscape','small-player-wins'].includes(curKey.split('/')[1]));return `<button class="tab ${active?'active':''}" role="tab" aria-selected="${active}" onclick="go('${key}')">${k.nav}</button>`;}).join('');
 }
-function go(id){
-  const m=MODS.find(x=>x.id===id)||MODS[0]; curId=m.id;
-  try{location.hash=id;}catch(e){}
-  document.getElementById('crumb').textContent=m.title;
+function go(id,routeHash,anchor){
+  const route=resolveRoute(id);
+  const m=route.module; curId=m.id; curKey=route.key; curRoute=route;
+  try{location.hash=routeHash||route.hash||route.key;}catch(e){}
+  document.getElementById('crumb').innerHTML=`${m.nav}${route.child?` &rsaquo; ${route.child.nav}`:''}`;
   const content=document.getElementById('content');
-  content.innerHTML=`<section class="view" id="v_${m.id}" aria-label="${m.title}">${C[m.id]?C[m.id]():'<p>Coming soon.</p>'}${navButtons(m)}</section>`;
+  const contentKey=C[route.key]?route.key:m.id;
+  const title=route.child?`${m.title} — ${route.child.nav}`:m.title;
+  content.innerHTML=`<section class="view" id="v_${m.id}" aria-label="${title}">${C[contentKey]?C[contentKey]():'<p>Coming soon.</p>'}${navButtons(route)}</section>`;
   // wrap tables so they scroll (never overflow) on narrow viewports
   content.querySelectorAll('table').forEach(t=>{
     if(t.parentElement&&t.parentElement.classList.contains('tablewrap'))return;
@@ -952,23 +1928,28 @@ function go(id){
   window.scrollTo({top:0});
   renderNav();
   renderTabs();
-  initCharts(id);
-  if(id==='economics') setTimeout(runCalc,60);
+  initCharts(m.id);
+  if(m.id==='economics') setTimeout(runCalc,60);
+  if(m.id==='market') setTimeout(updateSom,60);
+  if(anchor||route.anchor) setTimeout(()=>jumpTo(anchor||route.anchor),80);
   closeNav();
 }
 function jumpTo(anchor){
   const el=document.getElementById(anchor);
   if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
 }
-function navButtons(m){
-  const i=MODS.findIndex(x=>x.id===m.id);
-  const prev=MODS[i-1], next=MODS[i+1];
-  const doneBtn=m.id!=='home'?`<button class="btn ${isDone(m.id)?'ghost':'gold'}" onclick="markDone('${m.id}',${!isDone(m.id)});go('${m.id}')">${isDone(m.id)?'✓ Marked complete':'Mark complete'}</button>`:'';
-  return `<div class="next"><div>${prev?`<button class="btn" onclick="go('${prev.id}')">← ${prev.nav}</button>`:''}</div><div style="display:flex;gap:10px;flex-wrap:wrap">${doneBtn}${next?`<button class="btn gold" onclick="go('${next.id}')">${next.nav} →</button>`:''}</div></div>`;
+function navButtons(route){
+  const routes=allRoutes();
+  const i=routes.findIndex(x=>x.key===route.key);
+  const prev=routes[i-1], next=routes[i+1];
+  const label=r=>r.child?r.child.nav:r.module.nav;
+  const doneBtn=route.key!=='home'?`<button class="btn ${isDone(route.key)?'ghost':'gold'}" onclick="markDone('${route.key}',${!isDone(route.key)});go('${route.key}')">${isDone(route.key)?'✓ Marked complete':'Mark complete'}</button>`:'';
+  return `<div class="next"><div>${prev?`<button class="btn" onclick="go('${prev.key}')">← ${label(prev)}</button>`:''}</div><div style="display:flex;gap:10px;flex-wrap:wrap">${doneBtn}${next?`<button class="btn gold" onclick="go('${next.key}')">${label(next)} →</button>`:''}</div></div>`;
 }
 function refreshProgress(){
-  const total=MODS.length-1; // exclude home
-  const complete=MODS.filter(m=>m.id!=='home'&&isDone(m.id)).length;
+  const routes=allRoutes().filter(r=>r.key!=='home');
+  const total=routes.length;
+  const complete=routes.filter(r=>isDone(r.key)).length;
   const pct=Math.round(complete/total*100);
   document.getElementById('progN').textContent=pct+'%';
   document.getElementById('topPct').textContent=pct+'%';
@@ -983,16 +1964,19 @@ function closeNav(){document.getElementById('sidebar').classList.remove('open');
 
 /* keyboard operability for div/li-based controls */
 document.addEventListener('keydown',e=>{
-  if((e.key==='Enter'||e.key===' ')&&e.target&&e.target.matches&&e.target.matches('.navlink,.check li,.videocard,.chip')){
+  if((e.key==='Enter'||e.key===' ')&&e.target&&e.target.matches&&e.target.matches('.navlink,.navhead,.navchild,.check li,.videocard,.chip')){
     e.preventDefault();e.target.click();
   }
   if(e.key==='Escape')closeNav();
 });
 
-window.addEventListener('hashchange',()=>{const id=(location.hash||'').slice(1)||'home';if(MODS.find(m=>m.id===id)&&id!==curId)go(id);});
+window.addEventListener('hashchange',()=>{
+  const route=resolveRoute(location.hash);
+  if(route.key!==curKey||route.anchor) go(route.key,route.hash,route.anchor);
+});
 
-const startId=((location.hash||'').slice(1)&&MODS.find(m=>m.id===(location.hash||'').slice(1)))?(location.hash).slice(1):'home';
-renderNav(); refreshProgress(); go(startId);
+const startRoute=resolveRoute(location.hash);
+renderNav(); refreshProgress(); go(startRoute.key,startRoute.hash,startRoute.anchor);
 
 // Chart.js may finish loading after first paint — re-init current view once ready
 let tries=0;

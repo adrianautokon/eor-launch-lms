@@ -14,3 +14,5 @@ node_modules/
 
 # OMC local state
 .omc/
+.vercel
+CURSOR-BRIEF-v2.md
