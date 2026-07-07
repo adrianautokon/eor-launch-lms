@@ -297,15 +297,17 @@ const MODS=[
  {id:'market',ix:'3',group:'The Case',nav:'Market — TAM/SAM/SOM',subs:[['method','How we size it'],['tam','TAM'],['sam','SAM'],['som','SOM (interactive)'],['assumptions','Assumption register'],['reach','Buyer geographies']]},
  {id:'competition',ix:'4',group:'The Case',nav:'Competition',subs:[['landscape','The landscape'],['win','How we win'],['profiles','Profiles']]},
  {id:'whateor',ix:'5',group:'The Machine',nav:'What Is an EOR',subs:[['def','Definition + the test'],['tax','EOR vs PEO vs the rest'],['split','EOR holds / client keeps'],['chain','The value chain'],['myths','Liability myths']]},
- {id:'setup',ix:'6',group:'The Machine',nav:'Legal & Setup',subs:[['structure','Legal structure canvas'],['seq','The setup sequence'],['entity','Entity: PT vs PT PMA'],['lic','Licences & registrations'],['risk','Permenaker 7/2026 risk'],['memos','Counsel memo checklist'],['check','Setup checklist']]},
- {id:'ops',ix:'7',group:'The Machine',nav:'Operations (As-Is)',subs:[['overview','Lifecycle overview'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s5','5 · Offboard'],['first10','First 10 employees runbook'],['run','How it is run']]},
- {id:'compliance',ix:'8',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['thr','THR dashboard'],['sev','Severance'],['term','Termination tree']]},
- {id:'econ',ix:'9',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator']]},
- {id:'pay',ix:'10',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line']]},
- {id:'quality',ix:'11',group:'The Machine',nav:'Quality, Risk & Controls',subs:[['modes','Failure modes'],['nums','The benchmark numbers'],['ctrl','The controls'],['seam','Trust vs reliability']]},
- {id:'gtm',ix:'12',group:'Execute',nav:'Go-to-Market',subs:[['icp','The advanced-market ICP'],['sg','Singapore-first beachhead'],['roles','Role-risk taxonomy'],['pseo','Programmatic SEO engine'],['wedges','Conversion wedges'],['pricing','Pricing posture'],['check','GTM checklist']]},
- {id:'roadmap',ix:'13',group:'Execute',nav:'Launch Roadmap',subs:[['phases','The four gates'],['gates','Gate criteria'],['check','Execution checklist']]},
- {id:'resources',ix:'14',group:'Execute',nav:'Resources & Learn',subs:[['video','Videos'],['thesis','The thesis'],['reg','Regulation & payroll'],['biz','EOR business & payments']]},
+ {id:'setup',ix:'6',group:'The Machine',nav:'Legal & Setup',subs:[['seq','The setup sequence'],['entity','Entity: PT vs PT PMA'],['lic','Licences & registrations'],['risk','Permenaker 7/2026 risk'],['check','Setup checklist']]},
+ {id:'ops',ix:'7',group:'The Machine',nav:'Operations (As-Is)',subs:[['overview','Lifecycle overview'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s5','5 · Offboard'],['run','How it is run']]},
+ {id:'playbook',ix:'8',group:'The Machine',nav:'Coordination Playbook',subs:[['swimlane','End-to-end swimlane'],['triangle','The legal triangle'],['raci','RACI across the lifecycle'],['manpower','EOR team & hiring ladder'],['clock','The monthly payroll clock'],['termination','Termination decision tree'],['rolerisk','Role-risk taxonomy'],['thr','THR as a monthly liability'],['memos','Counsel memo checklist']]},
+ {id:'compliance',ix:'9',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['thr','THR'],['sev','Severance']]},
+ {id:'econ',ix:'10',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator']]},
+ {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line']]},
+ {id:'quality',ix:'12',group:'The Machine',nav:'Quality, Risk & Controls',subs:[['modes','Failure modes'],['nums','The benchmark numbers'],['ctrl','The controls'],['seam','Trust vs reliability']]},
+ {id:'gtm',ix:'13',group:'Execute',nav:'Go-to-Market',subs:[['icp','The advanced-market ICP'],['pseo','Programmatic SEO engine'],['wedges','Conversion wedges'],['pricing','Pricing posture'],['check','GTM checklist']]},
+ {id:'roadmap',ix:'14',group:'Execute',nav:'Launch Roadmap',subs:[['phases','The four phases'],['gates','The gates'],['check','Execution checklist']]},
+ {id:'resources',ix:'15',group:'Execute',nav:'Resources & Learn',subs:[['video','Videos'],['thesis','The thesis'],['reg','Regulation & payroll'],['biz','EOR business & payments']]},
+ {id:'glossary',ix:'16',group:'Execute',nav:'Glossary',subs:[['biz','EOR business terms'],['contract','Contract-stack terms'],['law','Employment law'],['tax','Tax & statutory'],['entity','Entity & licensing'],['docs','Documents & IDs']]},
 ];
 const SUB={}, COMP={}, CHARTS={};
 const COMPLIST=['statusquo','remofirst','skuad','emerhub','recruitgo','raintech','glints','incorp','aspire','multiplier','deel','remote','oyster','atlas'];
@@ -352,7 +354,7 @@ function go(mod,sub,keep){
   if(!keep){if(sub){const el=document.getElementById('sub-'+sub);if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),40);else window.scrollTo(0,0);}else window.scrollTo(0,0);}
   if(window.innerWidth<=760)closeNav();
   if(m.id==='econ')setTimeout(runCalc,60);
-  if(m.id==='market')setTimeout(runSom,60);
+  if(m.id==='market')setTimeout(runSom,60);if(m.id==='playbook')setTimeout(renderSwimlane,60);
   setTimeout(attachScrollSpy,80);
 }
 function buildModule(m){
@@ -438,7 +440,9 @@ const INTRO={
  quality:'Quality in payroll means accurate, on-time, compliant, every cycle. Where it breaks, what it costs, how to control it.',
  gtm:'Global from day one with a Singapore-first beachhead — ICP, role-risk taxonomy, programmatic SEO, conversion wedges, and pricing posture.',
  roadmap:'Gate 0–3 launch model — legal clearance before capital, first clients, flawless payroll cycles, then productisation only when ops are proven.',
- resources:'Curated, verified reading + video. Watch the payroll/tax ones before you run a real cycle.'
+ resources:'Curated, verified reading + video. Watch the payroll/tax ones before you run a real cycle.',
+ playbook:'The coordination playbook — who does what, when, and to whom. A detailed swimlane, RACI, the manpower ladder, the monthly clock, and the termination tree.',
+ glossary:'Every term, defined — with the contract terminology front and centre. Search across all terms.'
 };
 function moduleIntro(id){return INTRO[id]?`<p class="sub0">${INTRO[id]}</p>`:'';}
 
@@ -1247,6 +1251,310 @@ ${res('https://emergingeconomy.substack.com/p/the-arbitrage-economy-earning-glob
 ${res('https://statrys.com/sg/reviews/airwallex-vs-aspire-app','Compare','Airwallex vs Aspire','Payments rail selection for SEA.')}
 ${res('https://www.omnius.so/blog/programmatic-seo-case-study','Case study','Programmatic SEO — the EOR growth motion','67 → 2,100 signups, worked end to end.')}
 <div class="callout"><b>Companion documents</b><p>This OS distils the project's prior deliverables in <span class="mono">NewVenture-Services/</span>: the bake-off decision brief and the EOR as-is operational blueprint. All figures trace to the sources above; regulatory items need a formal legal opinion before commitment.</p></div>`;
+
+/* ================= SWIMLANE RENDERER ================= */
+function renderSwimlane(){
+  const el=document.getElementById('swimlane');if(!el)return;
+  const lanes=[['Client (foreign)','#7aa2ff'],['EOR · Sales / CS','#e0b84a'],['EOR · HR & Onboarding','#e0b84a'],['EOR · Payroll','#e0b84a'],['EOR · Finance','#e0b84a'],['EOR · Compliance / Counsel','#fb7185'],['Employee (Indonesia)','#34d399']];
+  const stages=['0 · Quote & sign','1 · Onboard','2 · Payroll loop','3 · File & remit','4 · Support','5 · Offboard'];
+  const acts=[
+   [0,0,1,'Requests a hire — role, salary, jurisdiction, reporting line'],
+   [1,0,2,'Role-risk assessment + loaded-cost quote; draft MSA / SOW + deposit terms'],
+   [0,0,3,'Signs MSA + pre-funds deposit'],
+   [2,1,4,'Draft PKWT/PKWTT + IP/NDA + no-authority clause; collect KTP/NIK/NPWP/BPJS/bank'],
+   [5,1,5,'Verify role-risk + PE / no-authority clauses'],
+   [6,1,6,'Signs contract; provides documents'],
+   [2,1,7,'Register PKWT (Disnaker ≤3d) + enrol BPJS ×2 (≤30d)'],
+   [0,2,8,'Confirms variable pay by T-10; pre-funds invoice by T-7'],
+   [3,2,9,'Cutoff T-5; gross-to-net (BPJS, PPh 21 TER); payroll register — maker'],
+   [5,2,10,'Maker-checker review of register'],
+   [4,2,11,'Approve + release bank payout — checker'],
+   [6,2,12,'Receives salary + payslip on T'],
+   [3,3,13,'BPJS 10th/15th; PPh 21 deposit 15th + SPT 20th (Coretax)'],
+   [5,3,14,'Assemble monthly compliance evidence pack'],
+   [4,3,15,'Issue invoice + reconciliation'],
+   [0,3,16,'Receives evidence pack + reconciliation by T+21'],
+   [6,4,17,'Raises changes: leave, salary, dependents, bank'],
+   [2,4,18,'Change log + master-data update (audit trail)'],
+   [0,4,19,'Approves raises / role changes'],
+   [0,5,20,'Requests termination (cannot execute it)'],
+   [5,5,21,'Classify ground; evidence check; counsel review'],
+   [2,5,22,'Written PHK notice; severance calc (UP / UPMK / UPH)'],
+   [6,5,23,'Accepts settlement OR disputes → bipartit → Disnaker → PHI'],
+   [3,5,24,'Final payroll + BPJS/tax closeout + final evidence pack']
+  ];
+  const LW=158,SW=232,LH=150,HH=46,BW=210,BH=64;
+  const W=LW+stages.length*SW,H=HH+lanes.length*LH;
+  const cell={};acts.forEach(a=>{const k=a[0]+'_'+a[1];(cell[k]=cell[k]||[]).push(a);});
+  const pos={};
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="font-family:inherit">`;
+  s+=`<defs><marker id="aw" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(224,184,74,.65)"/></marker></defs>`;
+  lanes.forEach((ln,li)=>{const y=HH+li*LH;s+=`<rect x="0" y="${y}" width="${W}" height="${LH}" fill="${li%2?'rgba(255,255,255,.02)':'rgba(255,255,255,.045)'}"/>`;s+=`<rect x="0" y="${y}" width="6" height="${LH}" fill="${ln[1]}"/>`;s+=`<foreignObject x="12" y="${y}" width="${LW-18}" height="${LH}"><div xmlns="http://www.w3.org/1999/xhtml" style="height:${LH}px;display:flex;align-items:center;font-size:12.5px;font-weight:700;color:#f4f4f8;line-height:1.3">${ln[0]}</div></foreignObject>`;});
+  stages.forEach((st,si)=>{const x=LW+si*SW;s+=`<line x1="${x}" y1="${HH}" x2="${x}" y2="${H}" stroke="rgba(255,255,255,.08)"/>`;s+=`<foreignObject x="${x}" y="0" width="${SW}" height="${HH}"><div xmlns="http://www.w3.org/1999/xhtml" style="height:${HH}px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#e0b84a;text-transform:uppercase;letter-spacing:.5px">${st}</div></foreignObject>`;});
+  s+=`<line x1="${LW}" y1="0" x2="${LW}" y2="${H}" stroke="rgba(255,255,255,.12)"/><line x1="0" y1="${HH}" x2="${W}" y2="${HH}" stroke="rgba(255,255,255,.12)"/>`;
+  Object.keys(cell).forEach(k=>{const parts=k.split('_').map(Number),l=parts[0],st=parts[1],list=cell[k];list.forEach((a,idx)=>{const bx=LW+st*SW+(SW-BW)/2;const cy0=HH+l*LH;const by=list.length>1?cy0+8+idx*(BH+8):cy0+(LH-BH)/2;pos[a[2]]={x:bx,y:by,cx:bx+BW/2,cy:by+BH/2,r:bx+BW,b:by+BH};const col=lanes[l][1];s+=`<foreignObject x="${bx}" y="${by}" width="${BW}" height="${BH}"><div xmlns="http://www.w3.org/1999/xhtml" style="height:${BH}px;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid ${col}55;border-left:3px solid ${col};border-radius:9px;padding:6px 8px 6px 9px;font-size:10.5px;line-height:1.25;color:#e8e8f0;display:flex;gap:6px;overflow:hidden"><span style="flex-shrink:0;width:16px;height:16px;border-radius:5px;background:${col};color:#12121a;font-weight:800;font-size:10px;display:flex;align-items:center;justify-content:center">${a[2]}</span><span>${a[3]}</span></div></foreignObject>`;});});
+  for(let n=1;n<24;n++){if(pos[n]&&pos[n+1]){const p=pos[n],q=pos[n+1];let x1,y1,x2,y2;if(q.cx>p.cx){x1=p.r;y1=p.cy;x2=q.x;y2=q.cy;}else if(q.cx<p.cx){x1=p.x;y1=p.cy;x2=q.r;y2=q.cy;}else{x1=p.cx;y1=q.cy>p.cy?p.b:p.y;x2=q.cx;y2=q.cy>p.cy?q.y:q.b;}s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(224,184,74,.4)" stroke-width="1.4" marker-end="url(#aw)"/>`;}}
+  s+='</svg>';el.innerHTML=s;
+}
+
+/* ================= PLAYBOOK SUBS ================= */
+SUB['playbook/swimlane']=()=>`
+<p class="lead">The as-is workflow, broken down by <b>actor</b> — not a table but a true swimlane. Seven lanes (the client, five EOR functions, and the employee) across the six lifecycle stages. Follow the numbered path 1→24 to see every handoff. This is the coordination map: who does what, when, and to whom.</p>
+<div class="callout blue"><b>How to read it</b><p>Each box is one actor's action in one stage. Arrows are handoffs. The three ⚠ pressure points — the payroll run (stage 2), statutory filing (stage 3), and termination (stage 5) — are where coordination failures cost the most. Scroll horizontally to see all six stages.</p></div>
+<div class="tablewrap" style="border:1px solid var(--gline);border-radius:14px;background:rgba(255,255,255,.02);padding:6px"><div id="swimlane" style="min-width:1400px"></div></div>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--text2)">
+ <span>🔵 Client · directs work, funds, requests</span><span>🟡 EOR functions · Sales, HR, Payroll, Finance</span><span>🔴 Compliance / Counsel · the risk gate</span><span>🟢 Employee · in Indonesia</span></div>
+<p class="mini" style="margin-top:10px">The clean separation of the five EOR lanes IS the maker-checker control: whoever prepares payroll (Payroll lane) is never the one who releases the money (Finance lane) or signs off compliance (Compliance lane). See <a onclick="go('playbook','manpower')">EOR team & hiring ladder</a>.</p>`;
+SUB['playbook/triangle']=()=>`
+<p class="lead">The legal spine is a triangle. The foreign client signs a commercial agreement with the EOR; the EOR — not the client — signs the Indonesian employment contract with the worker and owns every statutory obligation. Get this split wrong and either the client becomes an accidental Indonesian employer, or the EOR takes on risk it can't price.</p>
+<div class="moneyflow">
+ <div class="mfstep"><div class="mfn">1</div><div><div class="mft">Foreign client → EOR</div><div class="mfd">MSA / EOR Service Agreement / SOW — commercial terms, fee, pre-funding, indemnity, role restrictions, PE clauses, termination-request process.</div></div></div>
+ <div class="mfstep"><div class="mfn">2</div><div><div class="mft">EOR (Indonesian entity) → Employee</div><div class="mfd">Employment Agreement (PKWT or PKWTT), in Bahasa/bilingual — wage, position, rights, confidentiality/IP, no-authority wording. The EOR owns payroll, BPJS, PPh 21, THR, termination.</div></div></div>
+ <div class="mfstep"><div class="mfn">3</div><div><div class="mft">Employee → Client</div><div class="mfd">Provides the work under the client's day-to-day direction — but with no authority to bind the client, sign contracts, or represent it in Indonesia.</div></div></div>
+</div>
+<h3>Roles & responsibilities — who owns what, who must NOT</h3>
+<div class="tablewrap"><table><tr><th>Party</th><th>Owns / controls</th><th>Must NOT do</th></tr>
+<tr><td><b>Client</b></td><td>Day-to-day work direction, job requirements, performance expectations, tools</td><td>Become legal employer · sign Indonesian employment docs · ask the worker to bind the client in Indonesia</td></tr>
+<tr><td><b>EOR</b></td><td>Employment contract, payroll, BPJS, PPh 21, THR, statutory compliance, termination execution</td><td>Pretend it removes ALL client risk · ignore role-authority / PE issues</td></tr>
+<tr><td><b>Employee</b></td><td>Provides work, follows client direction, receives statutory rights from the EOR</td><td>Sign contracts or conclude deals for the client unless separately reviewed</td></tr></table></div>
+<h3>The contract stack</h3>
+<ol>
+<li><b>Client MSA / EOR Service Agreement</b> — fee, payroll funding, deposit, indemnity, role & PE restrictions, confidentiality/DPA, termination-request process, client-caused liability.</li>
+<li><b>Indonesia SOW / Perjanjian Alih Daya</b> — outsourced work description, period, remote status, worker protections (BPJS, THR, leave, overtime, termination rights). ⚠ Mandatory + registered with Disnaker ≤3 days under Permenaker 7/2026.</li>
+<li><b>Employment Agreement (PKWT/PKWTT)</b> — Bahasa/bilingual, wage + fixed allowances, position, rights, IP/confidentiality, no-authority wording.</li>
+<li><b>IP / Confidentiality / Invention Assignment</b> — especially for software/product/design roles (Indonesia doesn't apply US "work-for-hire" — you need express assignment).</li>
+<li><b>Client-side Work Protocol</b> — prevents accidental PE/signing-authority; sets client-manager duties + requires performance documentation before any termination request.</li>
+</ol>
+<h3>SG × ID dual-entity structure</h3>
+<div class="moneyflow"><div class="mfstep"><div class="mfn">SG</div><div><div class="mft">Navv HoldCo / SalesCo (Singapore)</div><div class="mfd">Commercial contracting, global collection (Airwallex), investor-facing structure. Helps sales + payments — but does <b>not</b> remove employer risk.</div></div></div>
+<div class="mfstep"><div class="mfn">ID</div><div><div class="mft">Indonesian PT / PT PMA (operating employer)</div><div class="mfd">The real legal employer: payroll, BPJS, PPh 21, THR, WLKP, termination. Must be operationally real, not a paper entity — the worker is in Indonesia, so all disputes and obligations land here.</div></div></div></div>
+${res('https://www.opensourceceo.com/p/deel-deep-dive','Reference','Bill Kerr — Deel, EOR & the future of global teams','How the legal triangle scales.')}`;
+SUB['playbook/raci']=()=>`
+<p class="lead">RACI removes the "I thought you had it" failures. For each task across the lifecycle: <b>R</b>esponsible (does it), <b>A</b>ccountable (owns it), <b>C</b>onsulted, <b>I</b>nformed. Colour-coded so the handoffs are obvious.</p>
+<div class="tablewrap"><table style="font-size:11.5px"><tr><th>Task</th><th>Client</th><th>Sales/CS</th><th>HR/Ops</th><th>Payroll</th><th>Finance</th><th>Compliance</th><th>Employee</th></tr>
+${[
+['Role-risk + quote','C','A/R','C','','','C',''],
+['Sign MSA + pre-fund','A/R','C','','','I','','' ],
+['Draft & sign contract','I','','A/R','','','C','R'],
+['Collect docs + register','','','A/R','I','','C','R'],
+['Confirm variable pay','A/R','C','R','I','','',''],
+['Gross-to-net + register','I','','C','A/R','','C',''],
+['Maker-checker review','','','','C','C','A/R',''],
+['Release bank payout','I','','','C','A/R','C',''],
+['Pay employee + payslip','I','','','R','A','','I'],
+['BPJS + PPh 21 filing','I','','','A/R','C','C',''],
+['Evidence pack','I','C','C','C','C','A/R',''],
+['Change requests','A','C','A/R','I','','C','R'],
+['Termination decision','C','','R','','C','A/R','I'],
+['Severance + closeout','I','I','R','A/R','A','C','R']
+].map(r=>`<tr><td style="font-weight:600;color:#fff">${r[0]}</td>${r.slice(1).map(c=>`<td style="text-align:center;font-weight:700;color:${c.includes('A')?'#e0b84a':c.includes('R')?'#34d399':c==='C'?'#7aa2ff':c==='I'?'#8a8a98':'transparent'}">${c||'·'}</td>`).join('')}</tr>`).join('')}
+</table></div>
+<p class="mini"><span style="color:#e0b84a;font-weight:700">A</span> accountable · <span style="color:#34d399;font-weight:700">R</span> responsible · <span style="color:#7aa2ff;font-weight:700">C</span> consulted · <span style="color:#8a8a98;font-weight:700">I</span> informed. Note two hard rules: <b>Compliance is accountable for termination decisions</b> (never the client), and <b>Finance releases payout</b> separately from Payroll who prepares it.</p>`;
+SUB['playbook/manpower']=()=>`
+<p class="lead">Don't build a bloated org. Build a <b>minimum viable EOR operations cell</b> — counsel + accounting + payroll on retainer — then add headcount only as employees-under-management grow. Here's the ladder.</p>
+<h4>Phase 0 · pre-incorporation (before first employee)</h4>
+<div class="tablewrap"><table><tr><th>Role</th><th>Engagement</th><th>Why</th></tr>
+<tr><td>Indonesian employment counsel</td><td>Retainer / memo</td><td>Permenaker 7/2026, role taxonomy, contracts, termination</td></tr>
+<tr><td>Notary / incorporation firm</td><td>Project</td><td>PT/PMA setup, AHU, OSS/NIB</td></tr>
+<tr><td>Tax / payroll consultant</td><td>Retainer</td><td>PPh 21, BPJS, payroll workflow</td></tr>
+<tr><td>Accounting / finance firm</td><td>Retainer</td><td>Bookkeeping, withholding, reconciliation</td></tr>
+<tr><td>Founder / operator</td><td>Internal</td><td>Owns SOP, vendors, client research</td></tr></table></div>
+<h4>Phase 1 · 1–25 employees under management</h4>
+<div class="tablewrap"><table><tr><th>Role</th><th>Hire type</th><th>Owns</th></tr>
+<tr><td>Ops Lead / HR Compliance Lead</td><td>Full-time or strong fractional</td><td>Onboarding, contracts, employee support, compliance calendar</td></tr>
+<tr><td>Payroll Specialist</td><td>Fractional → full-time</td><td>Gross-to-net, payslips, payroll register</td></tr>
+<tr><td>Finance / Admin</td><td>Part-time / fractional</td><td>Invoicing, funding checks, bank files, reconciliation</td></tr>
+<tr><td>Employment Counsel</td><td>Retainer</td><td>All terminations / unusual cases</td></tr>
+<tr><td>Accounting / Tax firm</td><td>Retainer</td><td>Filings, payroll-tax sanity checks</td></tr></table></div>
+<div class="grid2"><div class="card"><h4 style="margin-top:0">Phase 2 · 25–100 employees</h4><p class="mini">Add: Customer Success / Account Manager · Payroll Checker (2nd approver) · Compliance Analyst · HR Ops backup · part-time automation engineer.</p></div>
+<div class="card"><h4 style="margin-top:0">Phase 3 · 100+ employees</h4><p class="mini">Add: Payroll Lead · HR Operations Lead · Compliance Manager · Finance Controller · Employee Support function · internal tooling owner.</p></div></div>
+<h3>Segregation of duties — the minimum control</h3>
+<div class="tablewrap"><table><tr><th>Activity</th><th>Maker</th><th>Checker / approver</th></tr>
+<tr><td>Add employee master data</td><td>HR Ops</td><td>Ops Lead</td></tr>
+<tr><td>Change salary / bank data</td><td>HR Ops</td><td>Founder / Finance</td></tr>
+<tr><td>Calculate payroll</td><td>Payroll Specialist</td><td>Ops Lead / Founder</td></tr>
+<tr><td>Release bank payout</td><td>Finance / Admin</td><td>Founder / Director</td></tr>
+<tr><td>Send evidence pack</td><td>Ops Lead</td><td>Finance / Founder</td></tr></table></div>`;
+SUB['playbook/clock']=()=>`
+<p class="lead">Payroll isn't a day, it's a clock. Anchoring every cycle to the same relative calendar (T = payday) is what makes it reliable at scale — and it maps ops deadlines onto the hard legal ones.</p>
+<div class="timeline">
+${[['T-10','Collect payroll changes','Leave, OT, allowance, joiner/leaver, dependent changes'],['T-7','Client pre-funds the invoice','No funds → escalate before cutoff. The EOR never fronts payroll'],['T-5','Payroll cutoff / freeze inputs','Anything after this rolls to next cycle'],['T-4','Payroll calculation','Gross-to-net: BPJS, PPh 21 TER → payroll register'],['T-3','Maker-checker review','Register approved before any money moves'],['T-2','Finance approval / payout prep','Bank file built, second approver releases'],['T','Salary paid + payslip issued','The trust moment — on time, correct'],['T+10 / +15 / +20','Statutory deadlines','BPJS Kesehatan 10th · BPJS-TK + PPh 21 deposit 15th · SPT Masa 20th'],['T+21','Monthly evidence pack sent','Payslip + BPJS proof + PPh 21 proof + reconciliation + change log']].map(t=>`<div class="tl"><div class="d">${t[0]}</div><div class="t">${t[1]}</div><div class="x">${t[2]}</div></div>`).join('')}</div>
+<div class="callout"><b>Why anchor to T</b><p>A fixed relative clock means the same checklist runs every month regardless of which calendar day payday falls on — the single biggest driver of the 99.5–99.9% accuracy SLA, and the thing that survives a key person being away.</p></div>`;
+SUB['playbook/termination']=()=>`
+<p class="lead">Termination is the highest-risk stage and must <b>never</b> be a one-click button. The client may <i>request</i> it; the EOR, as Indonesian legal employer, <i>decides and runs</i> the lawful process — branched by legal ground and required evidence.</p>
+<div class="moneyflow">
+${[['1','Client request','The client cannot execute — only request'],['2','Classify legal ground','Resignation / PKWT end / performance / misconduct / efficiency / closure / illness / death / retirement / abandonment'],['3','Evidence check','Performance trail, warnings (SP), documentation per ground'],['4','Counsel review','Employment counsel signs off BEFORE employee communication'],['5','Written PHK notice / negotiation','Surat Pemberitahuan PHK; bipartit if contested'],['6','Settlement calculation','UP + UPMK + UPH by the correct 0.5×–2× multiplier'],['7','Employee accepts OR disputes','Accept → settle. Dispute → bipartit → Disnaker mediasi → PHI → kasasi'],['8','Final payroll + closeout','Final pay, BPJS/tax closeout, final evidence pack']].map(s=>`<div class="mfstep"><div class="mfn">${s[0]}</div><div><div class="mft">${s[1]}</div><div class="mfd">${s[2]}</div></div></div>`).join('')}
+</div>
+<h3>Termination reason taxonomy</h3>
+<div class="tablewrap"><table><tr><th>Reason</th><th>Category</th><th>Note</th></tr>
+<tr><td>Resignation</td><td>Employee-initiated</td><td>Final pay + docs still needed; uang pisah per contract</td></tr>
+<tr><td>End of PKWT term</td><td>Contract expiry</td><td>PKWT kompensasi may apply (not PKWTT severance)</td></tr>
+<tr><td>Performance</td><td>Employer-initiated</td><td>Requires warning trail (SP 1/2/3)</td></tr>
+<tr><td>Misconduct / urgent misconduct</td><td>Employer-initiated</td><td>Evidence-heavy; counsel review</td></tr>
+<tr><td>Business efficiency / losses / closure</td><td>Employer-initiated</td><td>Severance multiplier depends on basis; documentation required</td></tr>
+<tr><td>Prolonged illness · death · retirement</td><td>Statutory</td><td>Special handling; higher multipliers (illness 2×, death 2×)</td></tr>
+<tr><td>Missing / absence</td><td>Abandonment route</td><td>Notice process required — never "missing = auto-fired"</td></tr></table></div>
+<h3>Missing-employee SOP</h3>
+<div class="callout red"><b>Do not assume "missing = automatic termination."</b><p><b>Day 1:</b> welfare check (WhatsApp/email/phone), ask client for last activity, freeze access only if data/security risk. <b>Day 2:</b> formal Bahasa/bilingual written notice with a response deadline. <b>Day 3–5:</b> second notice + emergency contact if justified; document every attempt. <b>After notice:</b> counsel classifies resignation / abandonment / misconduct / termination, then final pay + BPJS/tax + access closure.</p></div>
+${res('https://www.hukumonline.com/klinik/a/cara-hitung-pesangon-lt515b7ec90fe0c/','Legal','Hukumonline — severance calculation','The multiplier tables by ground.')}`;
+SUB['playbook/rolerisk']=()=>`
+<p class="lead">Under Permenaker 7/2026, outsourcing is restricted to supporting-service categories — so <b>role selection is legal strategy</b>. Rank every first-client role by legal comfort, and frame the SOW as <i>support</i>, never core business.</p>
+<div class="tablewrap"><table><tr><th>Role</th><th>Legal comfort</th><th>Commercial fit</th><th>Stance</th></tr>
+<tr><td>VA / admin ops</td><td>High</td><td>Medium</td><td>Safe early category</td></tr>
+<tr><td>Finance ops / bookkeeping</td><td>High</td><td>Medium-high</td><td>Good early category</td></tr>
+<tr><td>Customer support</td><td>Medium-high</td><td>High</td><td>Good early category</td></tr>
+<tr><td>QA tester</td><td>Medium</td><td>High</td><td>Safer tech-adjacent role</td></tr>
+<tr><td>Data / BI support</td><td>Medium</td><td>High</td><td>Good if framed as support</td></tr>
+<tr><td>Product ops / project coordinator</td><td>Medium</td><td>High</td><td>Strong Navv-fit</td></tr>
+<tr><td>UI/UX designer</td><td>Medium-risk</td><td>High</td><td>Possible with careful SOW</td></tr>
+<tr><td>Software engineer</td><td>Higher risk</td><td>Very high</td><td>Only after counsel-approved template</td></tr>
+<tr><td>Product manager owning roadmap</td><td>Higher risk</td><td>High</td><td>Avoid as first category</td></tr>
+<tr><td>Sales / contract-closing</td><td>High risk</td><td>Low</td><td>Avoid — PE + authority risk</td></tr></table></div>
+<div class="grid2"><div class="callout red" style="margin:0"><b>Avoid this wording</b><p>"Employee is embedded as a <b>core employee</b> of Client's engineering team building Client's <b>core product</b>."</p></div>
+<div class="callout green" style="margin:0"><b>Prefer this wording</b><p>"Employee provides remote <b>software development support, QA, implementation, design, or product-operations support</b> under the Client's direction, <b>without authority to bind the Client</b>, conclude contracts, represent the Client in Indonesia, or manage Client revenue."</p></div></div>`;
+SUB['playbook/thr']=()=>`
+<p class="lead">THR (Tunjangan Hari Raya) is the mandatory religious-holiday allowance — and the fastest way to blow a cash-flow model if treated as an annual surprise. Handle it as a <b>monthly liability</b>.</p>
+<div class="worked"><div class="wt">The rule</div><div class="wl"><span>Service ≥ 12 months</span><span>THR = 1 month's wage</span></div><div class="wl"><span>1 ≤ service &lt; 12 months</span><span>THR = (months / 12) × 1 month's wage</span></div><div class="wl"><span>Deadline</span><span>≥ 7 days before the holiday (H-7)</span></div><div class="wl tot"><span>Monthly accrual</span><span>= monthly wage ÷ 12 (~8.3%)</span></div></div>
+<p>Every monthly client invoice should therefore include: gross salary + employer BPJS + <b>THR accrual</b> + severance/risk reserve + EOR fee + FX/payment fee. Pre-fund THR at least 10 business days before the statutory deadline; escalate before the deadline if the client is late. Never market zero-deposit unless you carry insurance/reserve.</p>
+<h3>THR dashboard concept</h3>
+<div class="tablewrap"><table><tr><th>Employee</th><th>Holiday</th><th>Start</th><th>Service (mo)</th><th>Monthly wage</th><th>Accrued THR</th><th>Due</th><th>Client funded?</th></tr>
+<tr><td>Example</td><td>Idul Fitri</td><td>1 Jan</td><td>8</td><td>Rp10M</td><td>Rp6.67M</td><td>H-7</td><td>Yes / No</td></tr></table></div>
+<div class="callout"><b>Edge cases for counsel</b><p>Employee resigns near the holiday · employer terminates before the holiday · PKWT ending near THR date · fixed vs variable allowance base · &lt;1 month service · multiple religions / holiday-date handling. Permenaker 7/2026 explicitly extends THR to outsourced workers.</p></div>
+${res('https://www.aseanbriefing.com/news/thr-compliance-in-indonesia-what-foreign-employers-must-review-before-eid-2026/','Guide','ASEAN Briefing — THR compliance 2026','What foreign employers must review before Eid.')}`;
+SUB['playbook/memos']=()=>`
+<p class="lead">Legal clearance is <b>Gate 0</b> — before any incorporation spend. Commission these three counsel memos precisely so the work is fast and scoped. This is the single most important de-risking step.</p>
+<div class="callout red"><b>⚠ The KBLI question just got sharper</b><p>Newer research indicates a foreign-owned EOR likely registers under <b>KBLI 78101</b> (labour placement — Medium-High risk, Manpower-verified) and/or <b>KBLI 78300</b> (HR-function provision — Low risk, NIB-only), <b>not 78200</b> (which OSS effectively closes to large-scale PMA). Sources conflict — this is exactly what Memo B must settle before incorporating.</p></div>
+<div class="grid3">
+<div class="card"><h4 style="margin-top:0">Memo A · Permenaker 7/2026 legality</h4><ul class="mini" style="margin-bottom:0"><li>Can white-collar roles fit "layanan penunjang operasional"?</li><li>Which roles are low/med/high risk?</li><li>SOW + contract wording to use?</li><li>Must each client agreement be recorded with Disnaker?</li></ul></div>
+<div class="card"><h4 style="margin-top:0">Memo B · Entity & KBLI</h4><ul class="mini" style="margin-bottom:0"><li>PT PMA or local PT?</li><li>KBLI 78101 / 78300 vs 78200 — which is correct & available?</li><li>Paid-up capital, investment plan, director/commissioner, LKPM?</li><li>Special outsourcing licence or only OSS/NIB?</li></ul></div>
+<div class="card"><h4 style="margin-top:0">Memo C · Termination & indemnity</h4><ul class="mini" style="margin-bottom:0"><li>Exact PHK process by ground</li><li>PKWT kompensasi vs PKWTT severance</li><li>Missing-employee / abandonment process</li><li>What must be funded before notice? Enforceable client-indemnity wording?</li></ul></div></div>
+<div class="callout green"><b>Gate 0 go/no-go</b><p>"Can Navv legally employ Indonesian remote tech/product/support workers for advanced-market clients under a defensible structure?" — No money moves to incorporation until all three memos clear. See the <a onclick="go('roadmap','gates')">roadmap gates</a>.</p></div>`;
+
+/* ================= GLOSSARY ================= */
+function gcard(t){return `<div class="card gterm" data-t="${(t.t+' '+t.d).toLowerCase().replace(/"/g,'')}"><div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><h4 style="margin:0;color:#fff">${t.t}</h4>${t.s?`<a href="${t.s}" target="_blank" style="font-size:11px;flex-shrink:0">source ↗</a>`:''}</div><p class="mini" style="margin:6px 0 4px">${t.d}</p><p class="mini" style="margin:0;color:var(--gold2)"><b>Why it matters:</b> ${t.w}</p></div>`;}
+function glossaryFilter(q){q=(q||'').toLowerCase().trim();document.querySelectorAll('.gterm').forEach(e=>{e.style.display=(!q||e.dataset.t.includes(q))?'':'none';});}
+const GLOSSARY=[
+{c:'biz',t:'Employer of Record (EOR)',d:'A third party that becomes the legal employer of a worker on behalf of a client, taking on payroll, tax, benefits and compliance while the client directs the work.',w:'This is the business — the EOR carries the legal-employer liabilities so the client hires without a local entity.'},
+{c:'biz',t:'PEO',d:'A co-employment model (US-origin) where the PEO and client share employer responsibilities, usually needing the client to already have a local entity.',w:'Often confused with EOR; a PEO co-employs, an EOR is the sole legal employer.'},
+{c:'biz',t:'AOR / Contractor of Record',d:'A party that formally engages and pays independent contractors on a client behalf.',w:'The compliant path when a role does not warrant employment — but in Indonesia the contractor/employee line is thin.'},
+{c:'biz',t:'Staffing agency',d:'A firm that recruits and supplies (often temporary) workers, usually remaining their employer.',w:'Overlaps with alih daya and is scope-restricted under Permenaker 7/2026.'},
+{c:'biz',t:'Payroll bureau',d:'Processes payroll (gross-to-net, filings, disbursement) but is not the legal employer.',w:'Carries far less liability than an EOR — be clear which you sell.'},
+{c:'biz',t:'Co-employment',d:'An arrangement where two entities share employer obligations for the same worker.',w:'Can drag the client into joint liability; a true EOR keeps sole-employer status.'},
+{c:'biz',t:'Owned-entity model',d:'Running EOR services through your own locally incorporated entity.',w:'Control, better margin, cleaner liability — but capital + ongoing compliance.'},
+{c:'biz',t:'In-Country Partner (ICP) / Aggregator',d:'A local licensed entity a platform uses to employ workers where it lacks its own entity; an aggregator stitches many together.',w:'You inherit the partner compliance quality and licensing scope.'},
+{c:'biz',t:'Permanent Establishment (PE) / BUT',d:'A taxable business presence a foreign company can inadvertently create, triggering local corporate tax.',w:'A core EOR value is avoiding PE — but a poorly structured EOR can create the very PE it was meant to avoid.'},
+{c:'biz',t:'Misclassification',d:'Treating a worker as a contractor (or a permanent employee as fixed-term) when the law says otherwise.',w:'Indonesia biggest EOR risk: a defective PKWT can be deemed permanent; back-pay + severance + BPJS land on the EOR.'},
+{c:'biz',t:'Loaded / fully-burdened cost',d:'Total cost to employ: gross salary plus all employer contributions, allowances, accruals and fees.',w:'The number you quote and price against — bare salary understates it badly.'},
+{c:'biz',t:'Burden rate',d:'The percentage uplift over base salary for employer statutory + benefit costs.',w:'Your margin lives or dies on an accurate Indonesian burden rate (~15–18%).'},
+{c:'biz',t:'Pass-through cost',d:'A cost the EOR incurs on the client behalf and bills onward at cost, without markup.',w:'Clean pass-through vs marked-up-fee separation builds trust and keeps the taxable service fee distinct.'},
+{c:'biz',t:'Pre-funding',d:'Requiring the client to remit payroll funds before the EOR pays employees.',w:'The EOR must pay the worker (and BPJS/tax) whether or not the client has paid.'},
+{c:'biz',t:'Deposit',d:'A held sum (often 1–2 months payroll or a severance reserve) the client posts as security.',w:'Covers tail liabilities (notably severance) if the client walks away.'},
+{c:'biz',t:'Float',d:'The window between when the EOR pays out and when client funds clear.',w:'Negative float means financing the client; managed via pre-funding + deposit.'},
+{c:'biz',t:'FX spread',d:'The margin between the rate an EOR buys currency at and the rate it bills the client.',w:'Both a cost to manage and (transparently) a revenue line for cross-border clients.'},
+{c:'biz',t:'Evidence pack',d:'A bundled set of documents proving compliance/correctness of an action.',w:'An EOR defensibility rests on evidence — for termination: contracts + bipartit + mediation + payment proof.'},
+{c:'biz',t:'SLA',d:'A contractual commitment to service standards (accuracy, turnaround, deadlines).',w:'Tie SLAs to hard Indonesian deadlines (PPh 21 20th, THR H-7, BPJS monthly).'},
+{c:'biz',t:'Maker-checker / four-eyes',d:'One person prepares (maker), a different person reviews/approves (checker) before execution.',w:'Prevents costly single-person payroll errors and fraud.'},
+{c:'biz',t:'Segregation of Duties (SoD)',d:'Splitting critical steps across different people (approve vs release).',w:'Keeps a single actor from both authorising and disbursing payments.'},
+{c:'biz',t:'Gross-to-net',d:'The full calc from gross pay to net take-home, subtracting tax and employee contributions.',w:'The heart of the payroll engine; errors surface directly as employee complaints.'},
+{c:'biz',t:'Payroll register',d:'The detailed record of a payroll run: every employee, gross, deductions, contributions, net.',w:'The primary evidence + reconciliation artifact for each cycle.'},
+{c:'biz',t:'RACI',d:'A matrix assigning Responsible, Accountable, Consulted, Informed for each task.',w:'Makes the client–EOR–employee handoffs explicit.'},
+{c:'contract',t:'Master Services Agreement (MSA)',d:'The overarching commercial contract between EOR and client (fees, liability, IP, term, governing law).',w:'Where the big protections live — every SOW inherits it.'},
+{c:'contract',t:'EOR Service Agreement',d:'Defines the EOR relationship: EOR as sole legal employer, pricing, pre-funding, responsibility split.',w:'The document that puts liability where you intend.'},
+{c:'contract',t:'Statement of Work (SOW)',d:'A per-engagement document under the MSA specifying the worker, role, salary, benefits, start date.',w:'Where per-employee cost and contract type (PKWT/PKWTT) live.'},
+{c:'contract',t:'Perjanjian Alih Daya',d:'The Indonesian-law outsourcing contract between provider (EOR) and user company — now mandatory under Permenaker 7/2026.',w:'⚠ Must be registered with Disnaker within 3 business days; the office can refuse non-compliant scope.',s:'https://www.ahp.id/indonesias-new-outsourcing-rules-minister-of-manpower-regulation-no-7-of-2026-and-what-it-means-for-employers/'},
+{c:'contract',t:'Employment agreement (PKWT / PKWTT)',d:'The contract between EOR and the individual worker under Indonesian law.',w:'The third leg of the triangle; its type sets the entire liability profile.'},
+{c:'contract',t:'IP assignment',d:'A clause transferring ownership of IP the worker creates to the client (employee → EOR → client).',w:'Or the client does not own what it paid for.'},
+{c:'contract',t:'Invention assignment',d:'A specific IP-assignment form covering inventions and patentable work.',w:'For technical roles the chain-of-title must be watertight through the EOR.'},
+{c:'contract',t:'Work-for-hire',d:'A US doctrine where employee-created work is automatically employer-owned.',w:'Indonesia does not apply it the same way — you need express assignment clauses.'},
+{c:'contract',t:'Confidentiality / NDA',d:'A promise not to disclose or misuse confidential information.',w:'Must bind the employee via the employment agreement, not just the MSA.'},
+{c:'contract',t:'Non-solicitation',d:'Bars a party or ex-employee from poaching the other employees or clients.',w:'Protects the EOR from clients hiring placed workers directly — but weakly enforceable vs employees in Indonesia.'},
+{c:'contract',t:'Non-compete / restraint of trade',d:'Restricts a worker from joining competitors after leaving.',w:'⚠ Indonesian courts are generally hostile to post-employment non-competes — treat as weak.'},
+{c:'contract',t:'Indemnification',d:'A promise to cover the other party losses from specified events.',w:'The EOR should be indemnified for acting on client instructions; the client for the EOR compliance lapses.'},
+{c:'contract',t:'Limitation of liability',d:'Caps maximum liability (often to fees paid) and excludes indirect damages.',w:'Given Indonesian severance size, carve statutory liabilities in/out of the cap deliberately.'},
+{c:'contract',t:'Governing law',d:'Specifies which jurisdiction law governs the contract.',w:'The MSA may be SG-law, but the employment relationship is inescapably Indonesian law.'},
+{c:'contract',t:'Dispute resolution / arbitration',d:'Sets how disputes resolve (named courts or arbitration, e.g. SIAC/BANI).',w:'Employment disputes must go through Indonesia bipartit → mediasi → PHI — you cannot arbitrate those away.'},
+{c:'contract',t:'Force majeure',d:'Excuses performance when extraordinary events prevent it.',w:'Defines whether the EOR is off the hook for e.g. Coretax downtime — but statutory duties rarely qualify.'},
+{c:'contract',t:'No-authority clause',d:'States the EOR has no authority to bind the client and is not its agent.',w:'Critical PE/BUT defence — rebuts the dependent-agent argument.'},
+{c:'contract',t:'Data Processing Agreement (DPA)',d:'Governs how personal data is handled between controller and processor.',w:'⚠ The EOR processes sensitive data (NIK, NPWP, salary, BPJS); Indonesia PDP Law (UU 27/2022) requires it.'},
+{c:'contract',t:'Pause-work / suspension clause',d:'Lets the EOR suspend a worker services on client non-payment without terminating.',w:'Stop supplying labour to a non-paying client while still owing the employee — pairs with pre-funding.'},
+{c:'contract',t:'Termination-for-convenience',d:'Lets a party end the contract without cause, on notice.',w:'The EOR still faces statutory obligations to the employee — the clause must require the client to fund wind-down.'},
+{c:'law',t:'PKWT',d:'Fixed-term employment contract for temporary/completion work, capped at 5 years total; no probation; end-of-contract kompensasi owed.',w:'The default EOR vehicle — track the 5-year cap, never add probation, accrue kompensasi from month 1.',s:'https://jdih.kemnaker.go.id/asset/data_puu/PP352021.pdf'},
+{c:'law',t:'PKWTT',d:'Open-ended permanent contract; may include ≤3-month probation; carries full severance on termination.',w:'Full severance exposure — if a worker is (or is reclassified as) PKWTT, the EOR is on the hook.',s:'https://jdih.kemnaker.go.id/asset/data_puu/PP352021.pdf'},
+{c:'law',t:'PHK',d:'Termination of employment; generally negotiated bilaterally first, then escalated if contested.',w:'The EOR issues the PHK and pays severance; each ground carries a 0.5×–2× multiplier.',s:'https://jdih.kemnaker.go.id/asset/data_puu/PP352021.pdf'},
+{c:'law',t:'Masa percobaan (probation)',d:'A trial period up to 3 months, allowed only for new PKWTT hires, paid ≥ minimum wage.',w:'Probation on a PKWT is illegal and voids the clause — a very common client mistake.'},
+{c:'law',t:'Alih daya (outsourcing)',d:'Delegating part of a company work to a provider by supplying workers; restricted to 6 categories, barred from core functions.',w:'⚠ The single most consequential rule for the EOR model (Permenaker 7/2026).',s:'https://www.hukumonline.com/berita/a/permenaker-outsourcing-terbaru-atur-6-jenis-pekerjaan-penunjang-lt69f4459de298b/'},
+{c:'law',t:'UU Ketenagakerjaan (UU 13/2003)',d:'Indonesia foundational labour statute; still in force, heavily amended by Cipta Kerja.',w:'Defines baseline worker protections; a new standalone Labour Law is expected soon.'},
+{c:'law',t:'UU Cipta Kerja / Omnibus (UU 6/2023)',d:'The job-creation law that liberalised fixed-term contracts, severance and outsourcing.',w:'Source of the flexible rules — but partly invalidated by the MK, so certainty is lower than it looks.'},
+{c:'law',t:'PP 35/2021',d:'Implementing regulation for PKWT, alih daya, working time and PHK/severance.',w:'Your day-to-day compliance manual — every severance figure traces to its tables.',s:'https://jdih.kemnaker.go.id/asset/data_puu/PP352021.pdf'},
+{c:'law',t:'PP 36/2021 (wages)',d:'Core wages regulation (minimum wage, structure, overtime), amended by PP 49/2025.',w:'⚠ PP 49/2025 raised the wage formula and revived sectoral minimums — some placements now owe more.'},
+{c:'law',t:'Permenaker 7/2026',d:'Ministerial regulation (30 Apr 2026) restricting outsourcing to 6 categories, mandating a registered Perjanjian Alih Daya, with a 2-year transition.',w:'⚠ Defines the legal boundary of the entire EOR offering; widely seen as transitional/contestable.',s:'https://www.hukumonline.com/berita/a/permenaker-7-2026-dan-dilema-dunia-usaha--antara-kepastian-hukum-dan-realitas-lapangan-lt69f986b7895b7/'},
+{c:'law',t:'Layanan penunjang operasional',d:'The 5th and broadest permitted outsourcing category — a catch-all for non-core operational support.',w:'⚠ Your widest compliant lane AND biggest gray zone — document why each role is genuinely support.'},
+{c:'law',t:'UMP / UMK',d:'Provincial / regency minimum-wage floors set annually by the Governor (UMK ≥ UMP).',w:'⚠ Pay at least the correct regional floor and check whether a revived sectoral minimum applies.'},
+{c:'law',t:'UP — Uang Pesangon',d:'Core severance on PKWTT termination, 1–9 months by tenure, × the 0.5×–2× ground multiplier.',w:'The largest termination liability — accrue for it and apply the correct multiplier.',s:'https://www.gadjian.com/blog/2026/01/19/tabel-pesangon-uu-cipta-kerja/'},
+{c:'law',t:'UPMK — Uang Penghargaan Masa Kerja',d:'Long-service pay on PHK for ≥3 years service, 2–10 months by tenure.',w:'Stacks on UP for longer-tenured workers — model combined exposure past 3 years.'},
+{c:'law',t:'UPH — Uang Penggantian Hak',d:'Compensation of accrued rights on termination: unused leave, return transport, contractual items.',w:'Owed even in clean exits — track leave balances and hire-location transport.'},
+{c:'law',t:'Uang pisah',d:'A payment to a voluntarily-resigning worker where full pesangon is not owed; set by contract/company rules.',w:'Because your documents define it, you control this liability through your templates.'},
+{c:'law',t:'Bipartit',d:'Mandatory first step in an industrial dispute: direct employer–worker negotiation, max 30 working days.',w:'You cannot skip to court — every disputed termination needs a documented bipartit (risalah).'},
+{c:'law',t:'Disnaker',d:'The regional manpower office that registers agreements, houses mediators, runs mediation.',w:'The EOR primary government touchpoint for outsourcing-agreement registration and disputes.'},
+{c:'law',t:'Mediasi',d:'Compulsory post-bipartit conciliation by a government mediator; on failure a written anjuran is issued.',w:'The gatekeeper to court — no mediation risalah/anjuran, no valid PHI filing.'},
+{c:'law',t:'PHI',d:'Industrial Relations Court — first-instance court for disputes that fail bipartit + mediation; no High Court appeal, only cassation.',w:'Trial-level evidence must be right the first time.'},
+{c:'law',t:'Kasasi',d:'Direct appeal to the Supreme Court against a PHI decision — the final stage.',w:'Extends timeline/cost of a contested PHK — factor into settle-vs-litigate decisions.'},
+{c:'law',t:'THR — Tunjangan Hari Raya',d:'Mandatory religious-holiday pay: 1 month wage for ≥12 months service (pro-rata 1–12), paid by H-7.',w:'A hard annual deadline with sanctions — accrue across every placement, pay on time.',s:'https://www.hukumonline.com/berita/a/h-7-lebaran--ini-kriteria-pekerja-yang-wajib-dapat-thr-lt660f569300d53/'},
+{c:'law',t:'Uang kompensasi PKWT',d:'End-of-contract compensation for a fixed-term worker (≥1 month service): 1 month wage per 12 months, pro-rata.',w:'⚠ A recurring guaranteed cost on every PKWT — accrue from month 1 or margin erodes.'},
+{c:'tax',t:'NPWP',d:'The unique taxpayer ID for all filings and withholding; now a 16-digit number.',w:'No valid NPWP/NIK → no withholding, bukti potong, or filing. ⚠ Old 15-digit format expired Jun 2024.',s:'https://www.pajak.go.id/index.php/en/node/114311'},
+{c:'tax',t:'NIK',d:'The 16-digit national ID on the KTP; for residents the NIK is the NPWP after a one-time matching.',w:'⚠ Confirm the NIK is matched/validated in Coretax or e-Bupot fails.'},
+{c:'tax',t:'PTKP',d:'Non-taxable income threshold: Rp 54M/yr base, +Rp 4.5M spouse, +Rp 4.5M per dependent (max 3).',w:'Drives the annual tax base and the monthly TER category — capture accurately.'},
+{c:'tax',t:'PPh 21',d:'Employee income tax the employer withholds monthly; progressive 5/15/25/30/35%.',w:'The EOR is the withholding agent — liable for correct calc, deposit and reporting.'},
+{c:'tax',t:'TER',d:'Simplified monthly PPh 21 method (since 2024): a flat effective rate by PTKP category A/B/C, Jan–Nov; December reconciled progressively.',w:'⚠ Map each employee to A/B/C; wrong category or December true-up causes disputes.',s:'https://pajak.go.id/en/artikel/simplifying-employee-income-tax-withholding-0'},
+{c:'tax',t:'PMK 168/2023',d:'The Finance-Minister regulation that established TER and detailed PPh 21 rules (from Jan 2024).',w:'Your payroll methodology and software must be demonstrably PMK 168-compliant.'},
+{c:'tax',t:'Bukti potong / e-Bupot',d:'The official proof-of-withholding slip; e-Bupot 21/26 (now inside Coretax) generates them.',w:'The employee evidence of tax paid. ⚠ Form 1721-A1 renamed BPA1 under PER-11/PJ/2025.'},
+{c:'tax',t:'SPT Masa',d:'The monthly tax return reporting tax withheld; PPh 21 due by the 20th.',w:'A hard monthly deadline — late filing triggers penalties for which the EOR is liable.'},
+{c:'tax',t:'Form 1721-A1',d:'The annual withholding certificate summarising a permanent employee income + PPh 21.',w:'Issue accurately at year-end; reflects the December TER-to-progressive reconciliation. Renamed BPA1.'},
+{c:'tax',t:'PKP',d:'VAT-registered taxable entrepreneur; mandatory once turnover reaches Rp 4.8bn.',w:'Determines whether the EOR must charge VAT and issue faktur pajak on its management fees.'},
+{c:'tax',t:'Faktur pajak',d:'The formal VAT invoice a PKP issues via e-Faktur.',w:'The EOR issues these on its service fees if it is a PKP. ⚠ VAT effectively 11% for most services.'},
+{c:'tax',t:'Coretax',d:'DJP centralized tax system (Jan 2025) consolidating registration, filing, e-Faktur and e-Bupot.',w:'⚠ The single portal for all withholding + SPT — but a rocky rollout, so build deadline buffers.'},
+{c:'tax',t:'BPJS Ketenagakerjaan',d:'The employment social-security agency (JHT/JP/JKK/JKM/JKP); reporting via SIPP.',w:'Register every worker, compute multi-program contributions, remit monthly.'},
+{c:'tax',t:'BPJS Kesehatan',d:'National health insurance; 5% of wage (4% employer / 1% employee), cap Rp 12M, up to 5 family.',w:'A separate agency + portal (EDABU) from BPJS-TK.'},
+{c:'tax',t:'JHT',d:'Old-age savings; 5.7% total (3.7% employer / 2% employee), no wage ceiling.',w:'The largest single BPJS-TK line and uncapped — scales with salary.'},
+{c:'tax',t:'JP',d:'Pension; 3% total (2% employer / 1% employee), wage-capped.',w:'⚠ Ceiling rose to Rp 11,086,300/mo from 1 Mar 2026 — apply the current ceiling.'},
+{c:'tax',t:'JKK',d:'Work-accident insurance; 0.24%–1.74% by risk class, fully employer-paid.',w:'Depends on the registered risk class (office/tech ≈ 0.24%).'},
+{c:'tax',t:'JKM',d:'Death benefit; 0.3% of wage, fully employer-paid.',w:'Small, flat, employer-only — but mandatory for every worker.'},
+{c:'tax',t:'JKP',d:'Unemployment benefit; ~0.46% funded by government subsidy + recomposition — no new net cost.',w:'Enrollment mandatory but no separate deduction — do not double-charge.'},
+{c:'tax',t:'SIPP',d:'The online employer portal for BPJS Ketenagakerjaan.',w:'Where monthly BPJS-TK movements and contribution reports are filed.'},
+{c:'tax',t:'EDABU',d:'BPJS Kesehatan employer portal for managing JKN membership + family data.',w:'Keep employee + dependent data synced here for valid coverage.'},
+{c:'entity',t:'PT',d:'The standard Indonesian LLC (Law 40/2007) — RUPS, Directors, Commissioners; limited liability.',w:'The base vehicle — a locally-owned EOR uses a plain PT.'},
+{c:'entity',t:'PT PMA',d:'A PT with any foreign shareholding; always classified large-scale.',w:'The vehicle a foreign founder needs — triggers LKPM + the IDR 10bn investment-plan norm.',s:'https://ssek.com/blog/setting-up-a-foreign-owned-outsourcing-company-in-indonesia/'},
+{c:'entity',t:'PMA',d:'The legal category of foreign direct investment (Law 25/2007).',w:'Determines whether the EOR is foreign-investment-regulated (LKPM, min-capital, positive-list).'},
+{c:'entity',t:'Akta Pendirian',d:'The notarized founding deed with the articles of association, filed to Kemenkumham.',w:'Step 1 — the KBLI codes chosen here define what the entity may legally do.'},
+{c:'entity',t:'Kemenkumham / AHU',d:'The ministry (and its online system) that approves a company as a legal entity (~1–2 days).',w:'Turns the EOR from a deed into a legal person that can sign contracts + hold licences.'},
+{c:'entity',t:'SK Pengesahan',d:'The ministerial decree confirming the PT is approved and registered.',w:'Proof of legal existence — needed for bank accounts, OSS, client due diligence.'},
+{c:'entity',t:'KBLI (esp. 78101/78300)',d:'The 5-digit business-activity code in OSS setting licensing, risk tier and foreign-ownership eligibility.',w:'⚠ A PMA EOR likely uses 78101 (labour placement) and/or 78300 (HR provision) — NOT 78200. Re-verify under KBLI 2025.',s:'https://ssek.com/blog/setting-up-a-foreign-owned-outsourcing-company-in-indonesia/'},
+{c:'entity',t:'OSS / OSS-RBA',d:'Indonesia centralized electronic business-licensing platform; requirements scale with risk tier.',w:'Every EOR licence flows through OSS.'},
+{c:'entity',t:'NIB',d:'The foundational single business ID issued via OSS (replaces TDP, API, customs NIK).',w:'No NIB, no legal operation. For low-risk 78300 the NIB alone may suffice.'},
+{c:'entity',t:'Izin Usaha',d:'The operating licence; under OSS-RBA the tier depends on risk.',w:'For 78101 a verified Standard Certificate from the Ministry of Manpower is required.'},
+{c:'entity',t:'WLKP',d:'Mandatory company manpower report via SISNAKER — within 30 days of operating, and annually.',w:'The EOR employs the workers, so it carries the WLKP obligation for the whole workforce.'},
+{c:'entity',t:'SISNAKER',d:'The Ministry of Manpower integrated online system (WLKP, foreign-worker services).',w:'The EOR day-to-day manpower compliance surface.'},
+{c:'entity',t:'KITAS',d:'Limited-stay permit for foreigners; work KITAS needs a contract, RPTKA, sponsor + DKP-TKA levy.',w:'Sponsoring KITAS for clients foreign hires is a flagship EOR service. ⚠ Biometric registration from Jun 2025.'},
+{c:'entity',t:'LKPM',d:'Quarterly investment-activity report every PT PMA files via OSS.',w:'⚠ A permanent quarterly obligation; 4 idle quarters auto-trigger sanctions (BKPM Reg 5/2025).'},
+{c:'entity',t:'RUPS',d:'General meeting of shareholders; annual (within 6 months of year-end) + extraordinary.',w:'Governs capital increases, director changes, major decisions.'},
+{c:'entity',t:'Modal disetor (paid-up capital)',d:'Capital deposited into the company. PMA: investment plan >IDR 10bn/KBLI/location; min paid-up IDR 2.5bn.',w:'⚠ The up-front cash barrier dropped to IDR 2.5bn (BKPM Reg 5/2025, Oct 2025).',s:'https://sasbali.com/bkpm-regulation-no-5-of-2025-new-pt-pma-capital-rules-explained/'},
+{c:'entity',t:'Positive Investment List (DNI)',d:'Perpres 10/2021 list of open/conditional sectors that replaced the old Negative List.',w:'Confirms labour supply (78101/78300) is open to foreign ownership.'},
+{c:'entity',t:'PJP',d:'Payment Service Provider licensed by Bank Indonesia.',w:'Running payroll through a bank does not need a PJP licence — but holding/transmitting client funds at scale might.'},
+{c:'docs',t:'KTP',d:'The Indonesian resident ID card carrying the 16-digit NIK.',w:'The primary onboarding identity doc; its NIK doubles as the tax ID and must be validated in Coretax.'},
+{c:'docs',t:'KK (Kartu Keluarga)',d:'The official household/family registration card.',w:'Verifies dependents for PTKP and enrols family in BPJS Kesehatan.'},
+{c:'docs',t:'NPWP card',d:'The taxpayer-registration card showing the NPWP.',w:'For residents this is now effectively the NIK/KTP after integration.'},
+{c:'docs',t:'Ijazah',d:'Formal proof of education/qualifications.',w:'Collected for role verification and, for RPTKA/KITAS roles, as a required document.'},
+{c:'docs',t:'Slip gaji (payslip)',d:'The per-cycle statement of gross pay, deductions and net.',w:'The employee-facing output of gross-to-net; doubles as evidence of correct pay — and enables KPR mortgage applications.'},
+{c:'docs',t:'Surat keterangan kerja',d:'An employment-verification letter (role, tenure).',w:'The EOR issues these (for bank, visa, credit) — requests route to the EOR, not the client.'},
+{c:'docs',t:'Surat Pemberitahuan PHK',d:'The formal written notice of termination.',w:'A required dated artifact in the PHK process; part of the evidence pack if contested.'}
+];
+const GCATS={biz:'EOR business terms',contract:'Contract-stack terms',law:'Employment law',tax:'Tax & statutory',entity:'Entity & licensing',docs:'Documents & IDs'};
+SUB['glossary/biz']=()=>`<div style="position:sticky;top:112px;z-index:20;background:linear-gradient(180deg,rgba(8,8,13,.9),rgba(8,8,13,.6));padding:8px 0"><input id="gsearch" type="text" placeholder="🔍 Search all ${GLOSSARY.length} terms…" oninput="glossaryFilter(this.value)" style="width:100%;padding:11px 14px;border:1px solid var(--gline);border-radius:12px;background:rgba(255,255,255,.06);color:var(--text);font-size:15px;font-family:inherit"></div>${GLOSSARY.filter(t=>t.c==='biz').map(gcard).join('')}`;
+SUB['glossary/contract']=()=>GLOSSARY.filter(t=>t.c==='contract').map(gcard).join('');
+SUB['glossary/law']=()=>GLOSSARY.filter(t=>t.c==='law').map(gcard).join('');
+SUB['glossary/tax']=()=>GLOSSARY.filter(t=>t.c==='tax').map(gcard).join('');
+SUB['glossary/entity']=()=>GLOSSARY.filter(t=>t.c==='entity').map(gcard).join('');
+SUB['glossary/docs']=()=>GLOSSARY.filter(t=>t.c==='docs').map(gcard).join('');
 
 /*__CONTENT__*/
 
