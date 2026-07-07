@@ -7,3 +7,6 @@ uploads/
 .DS_Store
 CURSOR-BRIEF-v2.md
 CURSOR-PROMPT.md
+
+_tmp_*.txt
+CURSOR-*.md
