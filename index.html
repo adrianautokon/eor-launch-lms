@@ -190,6 +190,8 @@ tr:hover td{background:rgba(255,255,255,.04);}
 .drivebox .dt{font-size:12px;font-weight:750;color:#fff;}
 .drivebox .dd{font-size:11.5px;color:var(--muted);}
 .drivebox a{font-size:11px;font-weight:800;white-space:nowrap;color:var(--gold2);}
+.doclinks{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;}
+.doclinks a{border:1px solid rgba(224,184,74,.24);border-radius:999px;padding:6px 9px;background:rgba(224,184,74,.06);}
 .simbox{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;border:1px solid rgba(47,211,154,.24);background:rgba(47,211,154,.055);border-radius:14px;padding:16px;margin:14px 0;}
 .simbox h4{margin:0 0 6px;color:#fff;}
 .simbox p{margin:0;color:var(--text2);}
@@ -329,6 +331,7 @@ tr:hover td{background:rgba(255,255,255,.04);}
   .ssd-to::before{content:'→ ';color:var(--gold2);}
   .ssd-out{grid-template-columns:1fr;}
   .drivebox{align-items:flex-start;flex-direction:column;}
+  .doclinks{justify-content:flex-start;width:100%;}
   .simbox{grid-template-columns:1fr;}
   .simmeta{grid-template-columns:1fr;}
 }
@@ -518,11 +521,36 @@ function vid(url,t,s){return `<div class="videocard" onclick="window.open('${url
 function res(url,tag,t,d){return `<a class="reslink" href="${url}" target="_blank"><span class="rtag">${tag}</span><div class="rt">${t}</div><div class="rd">${d}</div></a>`;}
 const DRIVE='https://drive.google.com/drive/folders/1KGw7TCS5PM2qZ6PRlBYHFbQlz2F4z_5m?usp=sharing';
 const SIM='https://navv-desk-sim.vercel.app/';
-function driveBox(doc,why='Open the full DOCX source pack for details, diagrams, and audit trail.'){
-  return `<div class="drivebox"><div><div class="dt">${doc}</div><div class="dd">${why}</div></div><a href="${DRIVE}" target="_blank">Open Drive ↗</a></div>`;
+const DOCS={
+ ops07:'https://docs.google.com/document/d/1MuTbTHucS4JcSDRKZz43FNWiZ6OJFH0_/edit',
+ ops07a:'https://docs.google.com/document/d/1SVCf8EsrVSKXZNtQdwStefOpiX1g1p7I/edit',
+ ops07b:'https://docs.google.com/document/d/1At2zu8BQlZCgSXkejCum-U44DOcDdPZ4/edit',
+ ops07c:'https://docs.google.com/document/d/1bAih--3EaJ-QazofxoWFguH_1_FaRPMp/edit',
+ ops07d:'https://docs.google.com/document/d/11l_BsW_czUzztMv4Bm_QJd72jpsqKwGe/edit',
+ ops07e:'https://docs.google.com/document/d/1iDdYXkHTEpLpCjdzyxCsbhwCfNf6PpX5/edit',
+ playbook08:'https://docs.google.com/document/d/1DO_BsxKBDtsDcWM1VGmCdJAPqQlUwmLc/edit',
+ msa:'https://docs.google.com/document/d/1J7b3Xz2gyl10VgIYlKdK02yxisi8GKhI/edit'
+};
+const DOC_TITLES={
+ ops07:'07 Operations As-Is',
+ ops07a:'07A Quote & Sign',
+ ops07b:'07B Onboarding',
+ ops07c:'07C Payroll & Filing',
+ ops07d:'07D Support & Change',
+ ops07e:'07E Offboarding',
+ playbook08:'08 Coordination Playbook',
+ msa:'MSA Template Skeleton'
+};
+function docUrl(key){return DOCS[key]||DRIVE;}
+function driveBox(doc,why='Open the full DOCX source pack for details, diagrams, and audit trail.',url=DRIVE,label='Open Drive ↗'){
+  return `<div class="drivebox"><div><div class="dt">${doc}</div><div class="dd">${why}</div></div><a href="${url}" target="_blank" rel="noopener">${label}</a></div>`;
 }
-function ssd(title,actors,rows,out){
-  return `<div class="ssd"><div class="ssd-h"><h4>${title}</h4><a href="${DRIVE}" target="_blank">Full source ↗</a></div>
+function docBundle(keys,why='Open the specific companion documents behind this LMS section.'){
+  return `<div class="drivebox"><div><div class="dt">Source documents</div><div class="dd">${why}</div></div><div class="doclinks">${keys.map(k=>`<a href="${docUrl(k)}" target="_blank" rel="noopener">${DOC_TITLES[k]||k} ↗</a>`).join('')}</div></div>`;
+}
+function ssd(title,actors,rows,out,docKey){
+  const source=docUrl(docKey),label=docKey?'Open stage DOCX ↗':'Full source ↗';
+  return `<div class="ssd"><div class="ssd-h"><h4>${title}</h4><a href="${source}" target="_blank" rel="noopener">${label}</a></div>
   <div class="ssd-actors">${actors.map(a=>`<span class="ssd-actor">${a}</span>`).join('')}</div>
   <div class="ssd-grid">${rows.map((r,i)=>`<div class="ssd-step"><div class="ssd-n">${i+1}</div><div class="ssd-from">${r[0]}</div><div class="ssd-arrow">→</div><div class="ssd-to">${r[1]}</div><div class="ssd-msg">${r[2]}</div><div class="ssd-gate">${r[3]||''}</div></div>`).join('')}</div>
   <div class="ssd-out">${out.map(o=>`<div><b>${o[0]}</b>${o[1]}</div>`).join('')}</div></div>`;
@@ -1028,6 +1056,7 @@ SUB['ops/overview']=()=>`
 <div class="grid4"><div class="stat"><div class="v" style="font-size:15px">0 · Quote</div><div class="k">loaded cost + margin</div></div><div class="stat"><div class="v" style="font-size:15px">1 · Onboard</div><div class="k">manufacturing a legal relationship</div></div><div class="stat gold"><div class="v" style="font-size:15px">2 · Payroll ⚠</div><div class="k">gross-to-net, the core engine</div></div><div class="stat red"><div class="v" style="font-size:15px">5 · Offboard ⚠</div><div class="k">highest-risk stage</div></div></div>
 <div class="chartbox"><h4>The three control spines: quote, payroll, termination</h4><canvas id="ch_ops_spine"></canvas><div class="src">Each stage is scored 1-5 on the dimensions the operating reports identify as load-bearing.</div></div>
 <div class="callout blue"><b>The mental model</b><p>Money and risk concentrate in three places: the <b>quote</b> (where margin is set), the monthly <b>payroll run</b> (where trust is won or lost), and <b>termination</b> (where liability lives). A corridor-native operator must be strongest exactly there.</p></div>
+${docBundle(['ops07','ops07a','ops07c','ops07e'],'Start with the overview report, then open the three control-spine stage documents directly.')}
 ${vid('https://www.youtube.com/watch?v=3VsargKk16o','Payroll Process Explained Step by Step','YouTube · the end-to-end payroll walkthrough — watch first')}
 ${vid('https://www.youtube.com/watch?v=NfaNNtwDHGE','What is Payroll? Introduction to Payroll (QuickBooks)','YouTube · a CPA breaks down keeping, calculating, processing')}`;
 
@@ -1076,13 +1105,13 @@ SUB['ops/series']=()=>`
  <div class="card"><h4 style="margin-top:0">Lab artifacts</h4><p class="mini">Each stage asks for one artifact: quote pack, clean master file, approved payroll register, filing evidence pack, support/change log, or termination case file. The LMS teaches the artifact, not just the concept.</p></div>
  <div class="card"><h4 style="margin-top:0">Assessment gates</h4><p class="mini">A learner should pass only when they can identify the funding gate, maker-checker gate, counsel gate, statutory deadline and evidence trail for the stage.</p></div>
 </div>
-${driveBox('Operations source bundle: 07A-E, 07 Operations As-Is, 08 Coordination Playbook','Open the full Google Drive folder for the DOCX reports behind this module, including detailed SSDs, decision surfaces and audit notes.')}
+${docBundle(['ops07','ops07a','ops07b','ops07c','ops07d','ops07e','playbook08'],'Open the exact Ops source document instead of the folder: the overview report, each 07A-E stage report, and the coordination playbook.')}
 <div class="tablewrap"><table><tr><th>Companion</th><th>Stage</th><th>What the LMS now carries forward</th></tr>
-<tr><td>07A</td><td>Quote & Sign</td><td>Five actors, eleven messages, two gates. Quote is governance: role-risk classification, loaded-cost bridge, funding/deposit posture, and MSA/SOW boundary before anyone signs.</td></tr>
-<tr><td>07B</td><td>Onboarding</td><td>Seven actors, twelve messages, five gates. The job is to manufacture a lawful employment relationship and clean master file: NIK validation, e-Meterai, Disnaker within three working days, BPJS within thirty days, and a payroll dry run.</td></tr>
-<tr><td>07C</td><td>Payroll & Filing</td><td>The monthly product. Ten rules keep the loop boring: freeze changes, lock funding, maker-checker gross-to-net, release payments, file PPh 21/BPJS, and ship the evidence pack.</td></tr>
-<tr><td>07D</td><td>Support & Change</td><td>The quiet churn driver: bank changes, dependents, raises, devices, leave, allowances, emergency payroll, BEC guard, and SOW-addendum rule when work changes.</td></tr>
-<tr><td>07E</td><td>Offboarding</td><td>The highest-liability stage. Eight actors, fourteen messages, funding-before-notice, counsel sign-off, bipartit to mediasi to PHI dispute branch, and a termination case file instead of a button.</td></tr></table></div>
+<tr><td><a href="${docUrl('ops07a')}" target="_blank" rel="noopener">07A ↗</a></td><td>Quote & Sign</td><td>Five actors, eleven messages, two gates. Quote is governance: role-risk classification, loaded-cost bridge, funding/deposit posture, and MSA/SOW boundary before anyone signs.</td></tr>
+<tr><td><a href="${docUrl('ops07b')}" target="_blank" rel="noopener">07B ↗</a></td><td>Onboarding</td><td>Seven actors, twelve messages, five gates. The job is to manufacture a lawful employment relationship and clean master file: NIK validation, e-Meterai, Disnaker within three working days, BPJS within thirty days, and a payroll dry run.</td></tr>
+<tr><td><a href="${docUrl('ops07c')}" target="_blank" rel="noopener">07C ↗</a></td><td>Payroll & Filing</td><td>The monthly product. Ten rules keep the loop boring: freeze changes, lock funding, maker-checker gross-to-net, release payments, file PPh 21/BPJS, and ship the evidence pack.</td></tr>
+<tr><td><a href="${docUrl('ops07d')}" target="_blank" rel="noopener">07D ↗</a></td><td>Support & Change</td><td>The quiet churn driver: bank changes, dependents, raises, devices, leave, allowances, emergency payroll, BEC guard, and SOW-addendum rule when work changes.</td></tr>
+<tr><td><a href="${docUrl('ops07e')}" target="_blank" rel="noopener">07E ↗</a></td><td>Offboarding</td><td>The highest-liability stage. Eight actors, fourteen messages, funding-before-notice, counsel sign-off, bipartit to mediasi to PHI dispute branch, and a termination case file instead of a button.</td></tr></table></div>
 <div class="grid3">
  <div class="card"><h4 style="margin-top:0">MSA skeleton link</h4><p class="mini">The MSA/SOW split is now explicit: SG can hold the commercial MSA, but the Indonesian PT signs/owns employment and statutory execution. Statutory sums stay outside ordinary liability caps.</p></div>
  <div class="card"><h4 style="margin-top:0">AI posture</h4><p class="mini">AI is internal process leverage: prepare registers, compare variance, draft evidence packs, and flag exceptions. Clients buy employment rails, not "AI payroll."</p></div>
@@ -1107,8 +1136,8 @@ ${ssd('07A SSD · Quote & Sign',['Client','Navv OS','Navv SG','Navv ID PT','Coun
 ['Learning output','Learner can explain why quote is governance, not pricing admin.'],
 ['Proof artifact','Quote pack + role-risk memo + funding/deposit posture.'],
 ['Failure mode','Underpriced role, wrong authority profile, or unfunded statutory exposure.']
-])}
-${driveBox('07A_Navv_EOR_Ops_Series_Quote_and_Sign_2026-07-08.docx')}
+],'ops07a')}
+${driveBox('07A_Navv_EOR_Ops_Series_Quote_and_Sign_2026-07-08.docx','Open the detailed Quote & Sign stage report behind this subsection.',docUrl('ops07a'),'Open DOCX ↗')}
 ${res('https://www.hibob.com/financial-metrics/fully-burdened-labor-rate/','Concept','HiBob — fully-burdened labor rate + calculator','Burden-rate definition, formula, the 18–35% bands.')}
 ${res('https://www.compareor.com/blog/eor-pricing-models-explained-per-employee-fee-vs-percentage-of-salary','Analysis','CompareOR — EOR pricing: flat fee vs % of payroll','The two models + the incentive-misalignment argument.')}
 ${res('https://pamgro.com/blog/employer-of-record-cost/','Guide','PamGro — EOR cost: pass-through vs margin','Exactly where margin hides (add-ons, FX, deposits).')}`;
@@ -1129,8 +1158,8 @@ ${ssd('07B SSD · Onboarding',['Client','Employee','Navv OS','Navv ID PT','Disna
 ['Learning output','Learner understands onboarding as manufacturing a lawful employment relationship.'],
 ['Proof artifact','Complete employee master file + signed contract pack + registration evidence.'],
 ['Failure mode','Missing NIK/tax/BPJS data causes payroll, filing, or legal-employer defects.']
-])}
-${driveBox('07B_Navv_EOR_Ops_Series_Onboarding_2026-07-08.docx')}
+],'ops07b')}
+${driveBox('07B_Navv_EOR_Ops_Series_Onboarding_2026-07-08.docx','Open the detailed Onboarding stage report behind this subsection.',docUrl('ops07b'),'Open DOCX ↗')}
 ${vid('https://www.youtube.com/watch?v=WHo8Y9pCqrE','What Is an EOR? Employer of Record Explained','YouTube · the legal-vs-managerial split')}
 ${res('https://www.uscis.gov/i-9','Concept','US I-9 / right-to-work verification','The Western analogue to KTP/NIK identity checks — the "why" of onboarding KYC.')}
 ${res('https://www.briffa.com/blog/ip-clauses-in-employment-contracts-and-assignments/','Legal','Briffa — IP clauses in employment contracts','Why copyright and patents need different clauses.')}
@@ -1153,8 +1182,8 @@ ${ssd('07C SSD · Payroll Run',['Client','Navv OS','Payroll Maker','Payroll Chec
 ['Learning output','Learner can narrate the monthly payroll loop as a controlled production cycle.'],
 ['Proof artifact','Approved payroll register + variance report + payslip/payment proof.'],
 ['Failure mode','Late change, wrong tax category, or unfunded payroll becomes client-visible immediately.']
-])}
-${driveBox('07C_Navv_EOR_Ops_Series_Payroll_and_Filing_2026-07-08.docx')}
+],'ops07c')}
+${driveBox('07C_Navv_EOR_Ops_Series_Payroll_and_Filing_2026-07-08.docx','Open the detailed Payroll & Filing stage report behind this subsection.',docUrl('ops07c'),'Open DOCX ↗')}
 ${vid('https://m.youtube.com/watch?v=LHpAdteqVYA','The 6 Steps of the Payroll Cycle','YouTube · maps directly onto this stage')}
 ${vid('https://m.youtube.com/watch?v=iaN_ehGXMuU','Gross Pay vs. Net Pay Explained','YouTube · the core gross-to-net concept')}
 ${vid('https://www.youtube.com/watch?v=Gg13_s25WRg','Perhitungan Gaji Lengkap: PPh 21 + BPJS','YouTube · a full Indonesian payslip build')}
@@ -1178,8 +1207,8 @@ ${ssd('07C SSD · Filing & Remittance',['Navv OS','Finance','BPJS','Coretax','Cl
 ['Learning output','Learner separates money movement from filing/reporting duties.'],
 ['Proof artifact','BPJS proof + PPh 21 proof + SPT status + monthly evidence pack.'],
 ['Failure mode','Deposit made but filing missed, or proof not captured, means compliance is not auditable.']
-])}
-${driveBox('07C_Navv_EOR_Ops_Series_Payroll_and_Filing_2026-07-08.docx')}
+],'ops07c')}
+${driveBox('07C_Navv_EOR_Ops_Series_Payroll_and_Filing_2026-07-08.docx','Open the detailed Payroll & Filing stage report behind this subsection.',docUrl('ops07c'),'Open DOCX ↗')}
 ${res('https://www.irs.gov/businesses/small-businesses-self-employed/trust-fund-taxes','Concept','IRS — trust fund taxes','Defines withholding as money "held in trust" — the core idea, universal.')}
 ${res('https://www.deel.com/blog/global-payroll-compliance-checklist-2026/','Guide','Deel — global payroll compliance checklist 2026','The compliance-monitoring function, EOR framing.')}
 ${res('https://globaleorservices.org/how-payroll-works-with-an-eor-inside-the-system/','Reference','Global EOR Services — how payroll works inside an EOR','Maps withhold → remit → report onto the product.')}`;
@@ -1200,8 +1229,8 @@ ${ssd('07D SSD · Support & Change',['Employee','Client Manager','Navv OS','HR O
 ['Learning output','Learner sees support as controlled change management, not ad hoc chat.'],
 ['Proof artifact','Support log + approved change queue + SOW addendum where needed.'],
 ['Failure mode','Uncontrolled bank/salary/scope changes create payroll errors, BEC risk, or legal drift.']
-])}
-${driveBox('07D_Navv_EOR_Ops_Series_Support_and_Change_2026-07-08.docx')}`;
+],'ops07d')}
+${driveBox('07D_Navv_EOR_Ops_Series_Support_and_Change_2026-07-08.docx','Open the detailed Support & Change stage report behind this subsection.',docUrl('ops07d'),'Open DOCX ↗')}`;
 
 SUB['ops/s5']=()=>`
 <div class="stage"><div class="stage-h danger"><div class="stage-n">5</div><div class="stage-t">Offboarding & termination — the highest-risk stage ⚠</div></div><div class="stage-b">
@@ -1221,8 +1250,8 @@ ${ssd('07E SSD · Offboarding & Termination',['Client','Navv OS','Counsel','Navv
 ['Learning output','Learner understands termination as a legal workflow, not an HR button.'],
 ['Proof artifact','Termination case file + funding proof + final payroll/BPJS/tax closeout.'],
 ['Failure mode','Wrong ground, weak evidence, or unfunded severance exposes Navv ID PT.']
-])}
-${driveBox('07E_Navv_EOR_Ops_Series_Offboarding_2026-07-08.docx')}
+],'ops07e')}
+${driveBox('07E_Navv_EOR_Ops_Series_Offboarding_2026-07-08.docx','Open the detailed Offboarding stage report behind this subsection.',docUrl('ops07e'),'Open DOCX ↗')}
 ${vid('https://www.youtube.com/watch?v=z9o3C2dJMMg','Termination & Offboarding: What Employers Need to Know','YouTube · 2026 legal-compliance walkthrough')}
 ${vid('https://www.youtube.com/watch?v=4u4KRKQ8jUo','How to Fire an Employee the Right Way','YouTube · the termination-meeting mechanics')}
 ${res('https://www.wisemonk.io/blogs/employer-of-record-compliance','Analysis','Wisemonk — EOR compliance & risks','Why termination is "the highest-risk area of EOR compliance."')}
@@ -1244,7 +1273,8 @@ ${[
 ['Cycle review','After every payroll: exceptions, late funding, calculation issues, client feedback','Ops post-mortem before adding automation']
 ].map(t=>`<div class="tl"><div class="d">${t[0]}</div><div class="t">${t[1]}</div><div class="x">${t[2]}</div></div>`).join('')}</div>
 <div class="callout green"><b>First-10 operating rule</b><p>Each employee gets one folder, one monthly register line, one compliance evidence pack, and one exception log. If the manual packet is messy, automation will only make the mess faster.</p></div>
-<div class="callout red"><b>Do not build a one-click termination button</b><p>The client may request termination, but Navv controls the legal process because Navv is the Indonesian employer. Termination branches by reason, evidence and counsel approval.</p></div>`;
+<div class="callout red"><b>Do not build a one-click termination button</b><p>The client may request termination, but Navv controls the legal process because Navv is the Indonesian employer. Termination branches by reason, evidence and counsel approval.</p></div>
+${docBundle(['ops07','playbook08','ops07a','ops07b','ops07c','ops07d','ops07e'],'Use these direct documents for the first-10 runbook: operating overview, coordination playbook, and all five stage reports.')}`;
 
 SUB['ops/run']=()=>`
 <p><span class="pill why">Theory · the operating model</span>Two structures for an EOR. The <b>owned-entity model</b> (we own the local PT; contract from our own company, payroll on our own banking, liability sits with an org directly subject to local law — faster, standardised) vs the <b>aggregator / in-country-partner model</b> (the platform subcontracts the actual employment to a local partner the client never vets — more coverage, but lag and diffused accountability). Our model is owned-entity in Indonesia — the defensible choice, and the wedge against Remofirst/Skuad's partner networks.</p>
@@ -1252,6 +1282,7 @@ SUB['ops/run']=()=>`
 <div class="card"><h4 style="margin-top:0">Roles</h4><p class="mini">Payroll specialist → administrator → lead; compliance & legal (in-house + local counsel); onboarding/HR ops; client success; finance/treasury. At small scale one person wears several hats — the key-person risk we know (Faishal lesson).</p></div>
 <div class="card"><h4 style="margin-top:0">The ratio that sets the cost model</h4><p class="mini">The key operating metric is the <b>payroll-to-headcount ratio</b>. Benchmarks span widely — ~633 employees/specialist (KPMG) to ~1,425 (Deloitte) — the spread <i>is</i> the automation opportunity. At our small scale, target ~1 admin per 75–100, moving toward the high end as AI preps the registers.</p></div></div>
 <div class="callout"><b>The one control that keeps it honest — maker-checker / four-eyes</b><p>Segregation of duties: the person who edits the employee master file is never the one who runs the final payroll. A "maker" initiates, a separate "checker" approves — so successful fraud now requires collusion. Every action is logged (user, timestamp) into a tamper-proof audit trail. The SLA gold standard is <b>99.5–99.9% on-time-and-accurate</b> each cycle. Non-negotiable at any scale.</p></div>
+${docBundle(['ops07','playbook08','msa'],'Open the operating-model source, coordination playbook, and MSA skeleton directly.')}
 ${vid('https://www.youtube.com/watch?v=b0T5N7h7o3Y','ACH Rules & Regulations Explained','YouTube · how the disbursement rails + compliance work')}
 ${res('https://www.deel.com/blog/owned-entity-vs-in-country-partner/','Analysis','Deel — owned entity vs in-country partner','The core structural fork, from the market leader.')}
 ${res('https://blog.xtrm.com/posts/maker-checker-process','Concept','XTRM — the maker-checker process','Four-eyes + tamper-proof audit trail, explained.')}
