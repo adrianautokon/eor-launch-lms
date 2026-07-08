@@ -13,11 +13,12 @@
   --gold:#e0b84a;--gold2:#f0d68a;--golddim:#c8961e;
   --text:#f4f4f8;--text2:#b6b6c4;--muted:#8a8a98;
   --glass:rgba(255,255,255,.055);--glass2:rgba(255,255,255,.085);--gline:rgba(255,255,255,.10);
-  --blur:18px;
+ --blur:18px;
   --green:#34d399;--greenbg:rgba(52,211,153,.12);--greenink:#6ee7b7;
   --red:#fb7185;--redbg:rgba(251,113,133,.12);--redink:#fda4af;
   --amber:#fbbf24;--amberbg:rgba(251,191,36,.12);--amberink:#fcd34d;
   --blue:#7aa2ff;--bluebg:rgba(122,162,255,.12);--blueink:#a9c1ff;
+  --violet:#c084fc;--violetbg:rgba(192,132,252,.12);--violetink:#d8b4fe;
   --radius:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -105,6 +106,16 @@ section.view{animation:fade .3s cubic-bezier(.2,.7,.2,1);}
 .pathcard .pl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--gold);margin-bottom:5px;}
 .pathcard .pt{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
 .pathcard .pd{font-size:12px;color:var(--muted);line-height:1.45;}
+.proofgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:15px;margin:16px 0;}
+.prooflist{display:grid;gap:8px;margin-top:8px;}
+.proofitem{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--gline);border-radius:12px;background:rgba(255,255,255,.04);}
+.proofitem .step{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--gold);}
+.proofitem .txt{font-size:12.5px;color:var(--text2);line-height:1.45;}
+.evidencebar{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0;}
+.evidencebar .ev{border:1px solid var(--gline);border-radius:12px;padding:10px;background:rgba(255,255,255,.04);min-height:78px;}
+.evidencebar .ev b{display:block;font-size:12px;margin-bottom:3px;}
+.evidencebar .ev span{font-size:11px;color:var(--muted);line-height:1.35;display:block;}
+.sourcechip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 8px;border:1px solid var(--gline);border-radius:99px;background:rgba(255,255,255,.05);color:var(--text2);margin:0 4px 6px 0;}
 .sub .subhead .no{font-size:12px;font-weight:800;color:var(--gold);letter-spacing:.5px;}
 .sub .subhead h3{margin:0;font-size:20px;}
 
@@ -259,6 +270,9 @@ tr:hover td{background:rgba(255,255,255,.04);}
   .sidebar.open{transform:none;box-shadow:0 0 60px rgba(0,0,0,.6);}
   .menubtn{display:inline-flex;}
   .grid2,.grid3,.grid4{grid-template-columns:1fr;}
+  .proofgrid{grid-template-columns:1fr;}
+  .evidencebar{grid-template-columns:1fr 1fr;}
+  .proofitem{grid-template-columns:1fr;}
   .content{padding:24px 17px 90px;}.topbar{padding:11px 17px;}
   h2.title{font-size:23px;}.hero{padding:24px 20px;}.hero h2{font-size:22px;}
   .subnav{top:51px;}
@@ -298,13 +312,13 @@ const MODS=[
  {id:'competition',ix:'4',group:'The Case',nav:'Competition',subs:[['landscape','The landscape'],['win','How we win'],['profiles','Profiles']]},
  {id:'whateor',ix:'5',group:'The Machine',nav:'What Is an EOR',subs:[['def','Definition + the test'],['tax','EOR vs PEO vs the rest'],['split','EOR holds / client keeps'],['chain','The value chain'],['myths','Liability myths']]},
  {id:'setup',ix:'6',group:'The Machine',nav:'Legal & Setup',subs:[['seq','The setup sequence'],['entity','Entity: PT vs PT PMA'],['lic','Licences & registrations'],['risk','Permenaker 7/2026 risk'],['check','Setup checklist']]},
- {id:'ops',ix:'7',group:'The Machine',nav:'Operations (As-Is)',subs:[['overview','Lifecycle overview'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s5','5 · Offboard'],['run','How it is run']]},
+ {id:'ops',ix:'7',group:'The Machine',nav:'Operations (As-Is)',subs:[['overview','Lifecycle overview'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s5','5 · Offboard'],['first10','First-10 runbook'],['run','How it is run']]},
  {id:'playbook',ix:'8',group:'The Machine',nav:'Coordination Playbook',subs:[['swimlane','End-to-end swimlane'],['triangle','The legal triangle'],['raci','RACI across the lifecycle'],['manpower','EOR team & hiring ladder'],['clock','The monthly payroll clock'],['termination','Termination decision tree'],['rolerisk','Role-risk taxonomy'],['thr','THR as a monthly liability'],['memos','Counsel memo checklist']]},
- {id:'compliance',ix:'9',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['thr','THR'],['sev','Severance']]},
+ {id:'compliance',ix:'9',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['thr','THR'],['sev','Severance'],['term','Termination workflow']]},
  {id:'econ',ix:'10',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator']]},
  {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line']]},
  {id:'quality',ix:'12',group:'The Machine',nav:'Quality, Risk & Controls',subs:[['modes','Failure modes'],['nums','The benchmark numbers'],['ctrl','The controls'],['seam','Trust vs reliability']]},
- {id:'gtm',ix:'13',group:'Execute',nav:'Go-to-Market',subs:[['icp','The advanced-market ICP'],['pseo','Programmatic SEO engine'],['wedges','Conversion wedges'],['pricing','Pricing posture'],['check','GTM checklist']]},
+ {id:'gtm',ix:'13',group:'Execute',nav:'Go-to-Market',subs:[['icp','The advanced-market ICP'],['sg','Singapore beachhead'],['roles','Role-risk taxonomy'],['pseo','Programmatic SEO engine'],['wedges','Conversion wedges'],['pricing','Pricing posture'],['check','GTM checklist']]},
  {id:'roadmap',ix:'14',group:'Execute',nav:'Launch Roadmap',subs:[['phases','The four phases'],['gates','The gates'],['check','Execution checklist']]},
  {id:'resources',ix:'15',group:'Execute',nav:'Resources & Learn',subs:[['video','Videos'],['thesis','The thesis'],['reg','Regulation & payroll'],['biz','EOR business & payments']]},
  {id:'glossary',ix:'16',group:'Execute',nav:'Glossary',subs:[['biz','EOR business terms'],['contract','Contract-stack terms'],['law','Employment law'],['tax','Tax & statutory'],['entity','Entity & licensing'],['docs','Documents & IDs']]},
@@ -368,7 +382,7 @@ function buildModule(m){
   return `<div class="kick">${m.group} · ${m.ix}</div><h2 class="title">${m.nav}</h2>${moduleIntro(m.id)}${subnav}${body}${navButtons(m)}`;
 }
 const SUBNAV_GROUPS={
- setup:[['Structure & sequence',['structure','seq']],['Entity & licences',['entity','lic']],['Risk & counsel',['risk','memos']],['Execution',['check']]],
+ setup:[['Structure & sequence',['seq']],['Entity & licences',['entity','lic']],['Risk & counsel',['risk']],['Execution',['check']]],
  ops:[['Overview',['overview']],['Lifecycle stages',['s0','s1','s2','s3','s4','s5']],['Runbook',['first10','run']]],
  compliance:[['Calendar & costs',['cal','stack']],['Contributions & tax',['bpjs','pph']],['Holiday pay & exit',['thr','sev','term']]],
  gtm:[['Market & ICP',['icp','sg','roles']],['Acquisition',['pseo','wedges']],['Monetisation',['pricing','check']]]
@@ -450,21 +464,39 @@ function moduleIntro(id){return INTRO[id]?`<p class="sub0">${INTRO[id]}</p>`:'';
 function C_home(){return `
 <div class="hero"><div class="kick">Navv Studio · New venture · Confidential</div>
 <h2>Launch a global Employer-of-Record, staffed from Indonesia</h2>
-<p>Advanced-market companies — US, UK, EU, Canada, Australia, Singapore — want Indonesian remote talent but can't legally employ there. We become the Indonesian employer. This OS fuses the <b>investment case</b> (thesis, market, competition), the <b>operational reality</b> (legal structure, compliance, economics, payments) and the <b>execution plan</b> (Singapore-first beachhead, Gate 0–3 roadmap). Learn it, then run it.</p></div>
+<p>Advanced-market companies — US, UK, EU, Canada, Australia, Singapore — want Indonesian remote talent but cannot legally employ there. Navv becomes the Indonesian employer and runs the compliance machine: contracts, payroll, BPJS, PPh 21, THR, offboarding, evidence. This OS is the operating synthesis of the companion reports: learn the thesis, prove the legal model, run the first payrolls, then productize only what has worked manually.</p></div>
 <div class="grid4">
  <div class="stat gold"><div class="v">SG-first</div><div class="k">beachhead — global buyers from day one</div></div>
  <div class="stat green"><div class="v">~2M</div><div class="k">ID digital freelancers — the addressable pool</div></div>
  <div class="stat blue"><div class="v">$5.5–6B</div><div class="k">global EOR market, ~7% CAGR</div></div>
  <div class="stat red"><div class="v">Gate 0</div><div class="k">counsel memos before you capitalise</div></div>
 </div>
+<div class="proofgrid">
+ <div class="card"><h4 style="margin-top:0">How to read this OS</h4>
+  <div class="prooflist">
+   <div class="proofitem"><div class="step">Source</div><div class="txt">The DOCX companion reports are the research layer: market, legal setup, operations, compliance, payments, quality controls, and GTM.</div></div>
+   <div class="proofitem"><div class="step">Synthesis</div><div class="txt">The LMS compresses those reports into founder decisions, runbooks, calculators, charts, and checklists.</div></div>
+   <div class="proofitem"><div class="step">Proof</div><div class="txt">Every launch gate ends with an artifact: counsel memo, role-risk score, payroll register, BPJS/PPh proof, THR funding log, or termination case file.</div></div>
+  </div>
+ </div>
+ <div class="chartbox" style="margin:0"><h4>Operating risk concentrates in three places</h4><canvas id="ch_home_risk"></canvas><div class="src">Source synthesis: Operations, Compliance, Quality & Controls companion reports.</div></div>
+</div>
 <h3>Start here — four learning paths</h3>
 <div class="pathgrid">
- <div class="pathcard" onclick="go('setup','structure')"><div class="pl">Legal & setup</div><div class="pt">Structure canvas → counsel memos</div><div class="pd">Entity, KBLI, Permenaker 7/2026 risk, and the checklist before PT PMA capital.</div></div>
+ <div class="pathcard" onclick="go('setup','seq')"><div class="pl">Legal & setup</div><div class="pt">Structure canvas → counsel memos</div><div class="pd">Entity, KBLI, Permenaker 7/2026 risk, and the checklist before PT PMA capital.</div></div>
  <div class="pathcard" onclick="go('ops','first10')"><div class="pl">Operations</div><div class="pt">Lifecycle + first 10 runbook</div><div class="pd">Quote to offboard, then the operational playbook for your first hires.</div></div>
- <div class="pathcard" onclick="go('compliance','thr')"><div class="pl">Compliance</div><div class="pt">THR, severance, termination tree</div><div class="pd">Indonesian payroll mechanics — the corridor-native edge you sell.</div></div>
+ <div class="pathcard" onclick="go('compliance','term')"><div class="pl">Compliance</div><div class="pt">THR, severance, termination tree</div><div class="pd">Indonesian payroll mechanics — the corridor-native edge you sell.</div></div>
  <div class="pathcard" onclick="go('gtm','sg')"><div class="pl">Go-to-market</div><div class="pt">Singapore-first beachhead</div><div class="pd">ICP, role-risk taxonomy, pSEO wedges, and pricing posture.</div></div>
  <div class="pathcard" onclick="go('econ','calc')"><div class="pl">Unit economics</div><div class="pt">Ops P&L + cost calculator</div><div class="pd">Staffing ladder, break-even, and live per-seat economics.</div></div>
  <div class="pathcard" onclick="go('roadmap','phases')"><div class="pl">Launch roadmap</div><div class="pt">Gate 0–3 execution model</div><div class="pd">Legal clearance → entity → first clients → systemise. Productise only when ops are proven.</div></div>
+</div>
+<h3>The monthly proof pack</h3>
+<div class="evidencebar">
+ <div class="ev"><b>Quote pack</b><span>Role-risk memo, loaded-cost bridge, deposit tier, client obligation summary.</span></div>
+ <div class="ev"><b>Master file</b><span>KTP/NIK, tax status, BPJS status, bank, contract, IP and no-authority docs.</span></div>
+ <div class="ev"><b>Payroll register</b><span>Gross-to-net, variance report, maker-checker approval, funding lock.</span></div>
+ <div class="ev"><b>Compliance proof</b><span>Payslip, bank proof, BPJS proof, PPh 21 deposit and filing status.</span></div>
+ <div class="ev"><b>Exception log</b><span>Late funding, missing data, portal failure, support issues, next-cycle carryovers.</span></div>
 </div>
 <h3>The launch, in four gates</h3>
 <div class="roadmap">
@@ -547,9 +579,11 @@ COMP.oyster=()=>profile({name:'Oyster HR',tier:'low',pos:'Distributed-first, val
 COMP.atlas=()=>profile({name:'Atlas HXM',tier:'low',pos:'"The world\'s first Direct EOR" — 160+ owned entities. But the wrong customer for us entirely.',fee:'~$500–700 (quote-only)',entity:'Owned, but SEA "thinner" 🔺',scale:'~500 staff; Series B up to $200M (Sixth Street 2022)',strengths:['Direct-employment marketing','Enterprise procurement fit','Broad owned footprint'],weak:['Quote-only + possible $5k–20k implementation','SEA soft spot — often partner-based there','Severe leadership churn'],bestfor:'A large enterprise with a procurement process — eorHQ says "1–5 employees: don\'t use Atlas."',beat:'~70% cheaper, a published flat price, zero procurement friction; their SEA soft spot IS our corridor.',news:'Reported leadership churn (3 CEOs, 3 CFOs in <2 years per Glassdoor) + recurring layoffs — frame as continuity risk.',src:'Sources: Atlas site; eorHQ; Glassdoor (directional).'});
 
 /* ================= CHART SPECS ================= */
+CHARTS.home=()=>makeChart('ch_home_risk',{type:'bar',data:{labels:['Quote','Onboard','Payroll','File/remit','Support','Offboard'],datasets:[{label:'Operating frequency',data:[3,3,5,5,4,1],backgroundColor:'rgba(122,162,255,.55)'},{label:'Liability severity',data:[4,3,5,4,2,5],backgroundColor:'rgba(251,113,133,.58)'}]},options:{plugins:{legend:{position:'bottom'}},scales:{x:{...GRID,ticks:{font:{size:10}}},y:{min:0,max:5,...GRID,ticks:{stepSize:1}}}}});
 CHARTS.competition=()=>{drawBench();const L=['Oyster','Deel','Remote','Atlas','Multiplier','Aspire','Glints','RainTech','Skuad','Remofirst','Emerhub cap','RecruitGo','OUR TARGET'];const V=[699,599,599,600,400,399,299,300,199,199,250,166,179];
  makeChart('ch_ladder',{type:'bar',data:{labels:L,datasets:[{data:V,backgroundColor:L.map(n=>n==='OUR TARGET'?'#e0b84a':(n==='Deel'||n==='Remote'?'#fb7185':'#7c8494'))}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{...GRID,ticks:{callback:v=>'$'+v}},y:{...GRID,ticks:{font:{size:10}}}}}});};
 CHARTS.opportunity=()=>makeChart('ch_budget',{type:'bar',data:{labels:['Software budget','Services budget'],datasets:[{data:[1,6],backgroundColor:['#5b6472','#e0b84a']}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{...GRID,ticks:{callback:v=>'$'+v}},y:GRID}}});
+CHARTS.ops=()=>makeChart('ch_ops_spine',{type:'radar',data:{labels:['Risk prevention','Data completeness','Cash control','Proof created','Human judgement'],datasets:[{label:'Quote',data:[5,3,5,2,4],borderColor:'#e0b84a',backgroundColor:'rgba(224,184,74,.14)',pointBackgroundColor:'#e0b84a'},{label:'Payroll',data:[4,5,5,5,3],borderColor:'#7aa2ff',backgroundColor:'rgba(122,162,255,.12)',pointBackgroundColor:'#7aa2ff'},{label:'Termination',data:[5,4,5,5,5],borderColor:'#fb7185',backgroundColor:'rgba(251,113,133,.11)',pointBackgroundColor:'#fb7185'}]},options:{plugins:{legend:{position:'bottom'}},scales:{r:{min:0,max:5,ticks:{stepSize:1,color:'#8a8a98',backdropColor:'transparent'},grid:{color:'rgba(255,255,255,.1)'},angleLines:{color:'rgba(255,255,255,.1)'},pointLabels:{color:'#b6b6c4',font:{size:11}}}}}});
 CHARTS.whynow=()=>{makeChart('ch_arb',{type:'bar',data:{labels:['Graphic designer','UX designer','Accountant','VA / CS','Software dev'],datasets:[{label:'Cost multiple (Western ÷ Indonesia)',data:[10,4.1,2.5,4,2.1],backgroundColor:'#e0b84a'}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{...GRID,ticks:{callback:v=>v+'×'}},y:GRID}}});
  makeChart('ch_remote',{type:'bar',data:{labels:['2019','2022','2024','2026'],datasets:[{label:'Remote share of workforce (%)',data:[15,42,48,52],backgroundColor:'#7aa2ff'}]},options:{plugins:{legend:{display:false}},scales:{y:{...GRID,ticks:{callback:v=>v+'%'}},x:GRID}}});};
 CHARTS.market=()=>{makeChart('ch_eormkt',{type:'line',data:{labels:['2025','2027','2029','2031','2033'],datasets:[{label:'Global EOR market (mid-cluster, $B)',data:[5.8,6.7,7.7,9,10.5],borderColor:'#e0b84a',backgroundColor:'rgba(224,184,74,.12)',fill:true,tension:.3,pointRadius:2}]},options:{plugins:{legend:{display:false}},scales:{y:{...GRID,ticks:{callback:v=>'$'+v+'B'}},x:GRID}}});
@@ -561,6 +595,7 @@ CHARTS.econ=()=>{const {ns,cost,rev}=ecoModel();
  makeChart('ch_staff',{type:'bar',data:{labels:['25','75','150','300'],datasets:[{label:'AI-run (us)',data:[1,1,2,4],backgroundColor:'#e0b84a'},{label:'Manual',data:[1,3,6,11],backgroundColor:'#5b6472'}]},options:{plugins:{legend:{position:'bottom'}},scales:{x:GRID,y:GRID}}});
  makeChart('ch_setup',{type:'doughnut',data:{labels:['Ops runway $12k','WC buffer $10k','Legal $6k','PT+licence $4k','Infra $1k'],datasets:[{data:[12,10,6,4,1],backgroundColor:['#e0b84a','#f0d68a','#fb7185','#7aa2ff','#5b6472'],borderWidth:2,borderColor:'#12121a'}]},options:{plugins:{legend:{position:'right',labels:{boxWidth:12,font:{size:10}}}},cutout:'58%'}});
  runCalc();};
+CHARTS.quality=()=>makeChart('ch_controls',{type:'bar',data:{labels:['Payroll error','Late filing','Client default','Botched termination','Data leak','Key-person ops'],datasets:[{label:'Without controls',data:[5,4,5,5,4,4],backgroundColor:'rgba(251,113,133,.58)'},{label:'With first-10 controls',data:[2,2,2,2,2,2],backgroundColor:'rgba(52,211,153,.58)'}]},options:{plugins:{legend:{position:'bottom'}},scales:{x:{...GRID,ticks:{font:{size:10}}},y:{min:0,max:5,...GRID,ticks:{stepSize:1}}}}});
 
 /* ================= CALCULATORS ================= */
 const FX=16150;
@@ -890,6 +925,7 @@ SUB['setup/check']=()=>{const items=['Incorporate the PT / PT PMA (notary + AHU)
 SUB['ops/overview']=()=>`
 <p class="lead">This is the hardest module to learn and the most important to get right — so we teach it like a university course. An EOR is simply a <b>payroll + employment operation performed on behalf of a client, through a legal entity the client doesn't own</b>. So ~90% of this is generic payroll operations; the EOR-specific twist is flagged where it bites. Each stage gives you the <b>theory</b> (why it exists, the load-bearing concepts) then the <b>mechanics</b> (the step-by-step).</p>
 <div class="grid4"><div class="stat"><div class="v" style="font-size:15px">0 · Quote</div><div class="k">loaded cost + margin</div></div><div class="stat"><div class="v" style="font-size:15px">1 · Onboard</div><div class="k">manufacturing a legal relationship</div></div><div class="stat gold"><div class="v" style="font-size:15px">2 · Payroll ⚠</div><div class="k">gross-to-net, the core engine</div></div><div class="stat red"><div class="v" style="font-size:15px">5 · Offboard ⚠</div><div class="k">highest-risk stage</div></div></div>
+<div class="chartbox"><h4>The three control spines: quote, payroll, termination</h4><canvas id="ch_ops_spine"></canvas><div class="src">Each stage is scored 1-5 on the dimensions the operating reports identify as load-bearing.</div></div>
 <div class="callout blue"><b>The mental model</b><p>Money and risk concentrate in three places: the <b>quote</b> (where margin is set), the monthly <b>payroll run</b> (where trust is won or lost), and <b>termination</b> (where liability lives). A corridor-native operator must be strongest exactly there.</p></div>
 ${vid('https://www.youtube.com/watch?v=3VsargKk16o','Payroll Process Explained Step by Step','YouTube · the end-to-end payroll walkthrough — watch first')}
 ${vid('https://www.youtube.com/watch?v=NfaNNtwDHGE','What is Payroll? Introduction to Payroll (QuickBooks)','YouTube · a CPA breaks down keeping, calculating, processing')}`;
@@ -1132,6 +1168,7 @@ SUB['quality/nums']=()=>`
 <div class="stat red"><div class="v">49%</div><div class="k">of employees job-hunt after just two payroll mistakes</div></div><div class="stat green"><div class="v">99.9%</div><div class="k">on-time-accurate = industry SLA norm (APAC self-reports ~69%)</div></div><div class="stat green"><div class="v">&lt;1%</div><div class="k">error rate automation typically achieves</div></div></div>
 <p>Every one of these is an argument for the AI-in-the-process model — and for the human sign-off layer that catches the 40% manual-entry errors before the employee does.</p>`;
 SUB['quality/ctrl']=()=>`
+<div class="chartbox"><h4>Controls reduce severity by turning hidden risk into reviewable artifacts</h4><canvas id="ch_controls"></canvas><div class="src">Illustrative first-10 control target: maker-checker, funding lock, counsel gates, evidence pack, access control.</div></div>
 <div class="tablewrap"><table><tr><th>Control</th><th>What it does</th></tr>
 <tr><td>Maker-checker (four-eyes)</td><td>Every sensitive op split into initiate + independent approve; disbursement locked until the chain completes</td></tr>
 <tr><td>Audit trail</td><td>Tamper-proof read-only logs (user, timestamp, IP) — our AutoKon evidence-pack DNA, applied to payroll</td></tr>
