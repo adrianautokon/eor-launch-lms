@@ -73,7 +73,7 @@ nav.modnav{padding:8px 0 44px;}
 .navsub.active .sd{opacity:1;}
 
 .main{min-width:0;}
-.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;padding:11px 40px;
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;min-height:38px;padding:8px 40px;
   background:rgba(10,10,16,.6);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);border-bottom:1px solid var(--gline);}
 .menubtn{display:none;align-items:center;justify-content:center;width:38px;height:34px;border-radius:10px;border:1px solid var(--gline);background:var(--glass);color:var(--text);cursor:pointer;flex-shrink:0;font-size:16px;}
 .topbar .crumb{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -81,20 +81,21 @@ nav.modnav{padding:8px 0 44px;}
 .topbar .bar{margin-left:auto;width:130px;height:7px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;flex-shrink:0;}
 .topbar .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--golddim),var(--gold2));width:0;transition:width .4s;}
 .topbar .pct{font-size:12px;font-weight:700;color:var(--gold);min-width:32px;}
-.content{padding:32px 40px 110px;max-width:1140px;}
+.content{padding:24px 40px 110px;max-width:1140px;}
 section.view{animation:fade .3s cubic-bezier(.2,.7,.2,1);}
 @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 .scrim{display:none;position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.5);}
 
 /* subnav pills inside a module */
-.subnav{position:sticky;top:53px;z-index:30;padding:12px 0 14px;margin-bottom:6px;background:linear-gradient(180deg,rgba(8,8,13,.92),rgba(8,8,13,.55));backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.04);}
-.subnav-track{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
-.subnav-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);padding:6px 2px 6px 6px;flex-basis:100%;margin-top:2px;}
-.subnav-label:first-child{margin-top:0;padding-left:0;}
-.subnav button{font-size:12px;font-weight:600;color:var(--text2);padding:6px 12px;border-radius:99px;border:1px solid var(--gline);background:var(--glass);cursor:pointer;font-family:inherit;transition:.12s;white-space:nowrap;flex-shrink:0;}
+.subnav{position:sticky;top:38px;z-index:30;padding:7px 0 8px;margin-bottom:4px;background:linear-gradient(180deg,rgba(8,8,13,.96),rgba(8,8,13,.74));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.04);}
+.subnav-track{display:flex;gap:6px;flex-wrap:nowrap;align-items:center;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none;padding-bottom:1px;}
+.subnav-track::-webkit-scrollbar{display:none;}
+.subnav-label{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.65px;color:var(--muted);padding:4px 4px 4px 9px;margin-left:4px;border-left:1px solid rgba(255,255,255,.1);white-space:nowrap;flex:0 0 auto;}
+.subnav-label:first-child{margin-left:0;padding-left:0;border-left:0;}
+.subnav button{font-size:11.5px;font-weight:650;color:var(--text2);padding:5px 10px;border-radius:99px;border:1px solid var(--gline);background:var(--glass);cursor:pointer;font-family:inherit;transition:.12s;white-space:nowrap;flex:0 0 auto;}
 .subnav button:hover{background:var(--glass2);color:#fff;}
 .subnav button.active{background:linear-gradient(135deg,rgba(224,184,74,.2),rgba(224,184,74,.06));color:#fff;border-color:rgba(224,184,74,.4);box-shadow:0 0 0 1px rgba(224,184,74,.15);}
-.sub{scroll-margin-top:128px;padding-top:8px;margin-bottom:18px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.04);}
+.sub{scroll-margin-top:92px;padding-top:8px;margin-bottom:18px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.04);}
 .sub:last-of-type{border-bottom:none;margin-bottom:4px;}
 .sub .subhead{display:flex;align-items:baseline;gap:10px;margin:20px 0 8px;padding-top:4px;}
 .pathgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 8px;}
@@ -150,6 +151,25 @@ th{background:rgba(255,255,255,.06);text-align:left;padding:9px 11px;font-weight
 td{padding:9px 11px;border-top:1px solid var(--gline);vertical-align:top;color:var(--text2);}
 tr:hover td{background:rgba(255,255,255,.04);}
 .mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:var(--blueink);}
+
+.seqwrap{margin:14px 0 18px;padding:14px;border:1px solid var(--gline);border-radius:14px;background:rgba(255,255,255,.035);overflow-x:auto;-webkit-overflow-scrolling:touch;box-shadow:0 10px 30px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.05);}
+.seqwrap .seqtitle{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px;}
+.seqwrap .seqtitle h4{margin:0;color:#fff;}
+.seqwrap .seqtitle span{font-size:11px;color:var(--muted);white-space:nowrap;}
+.seqsvg{display:block;min-width:1040px;width:100%;height:auto;}
+.seqsvg text{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+.seqactor{fill:rgba(255,255,255,.075);stroke:rgba(255,255,255,.18);stroke-width:1;}
+.seqactor-t{fill:#f4f4f8;font-size:12px;font-weight:750;text-anchor:middle;}
+.seqlife{stroke:rgba(255,255,255,.14);stroke-width:1;stroke-dasharray:5 7;}
+.seqmsg{stroke:#7aa2ff;stroke-width:2;marker-end:url(#seqArrow);}
+.seqmsg.alt{stroke:#e0b84a;marker-end:url(#seqArrowGold);}
+.seqmsg.risk{stroke:#fb7185;marker-end:url(#seqArrowRed);}
+.seqnum{fill:#08080d;font-size:10px;font-weight:800;text-anchor:middle;dominant-baseline:middle;}
+.seqbadge{fill:#f0d68a;}
+.seqbadge.blue{fill:#a9c1ff;}
+.seqbadge.red{fill:#fda4af;}
+.seqtext{fill:#d7d7e0;font-size:11px;font-weight:650;}
+.seqnote{fill:#8a8a98;font-size:10px;}
 
 .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;margin:0 4px 4px 0;}
 .pill.local{background:var(--amberbg);color:var(--amberink);}.pill.deel{background:var(--bluebg);color:var(--blueink);}
@@ -274,7 +294,7 @@ tr:hover td{background:rgba(255,255,255,.04);}
   .proofitem{grid-template-columns:1fr;}
   .content{padding:24px 17px 90px;}.topbar{padding:11px 17px;}
   h2.title{font-size:23px;}.hero{padding:24px 20px;}.hero h2{font-size:22px;}
-  .subnav{top:51px;}
+  .subnav{top:48px;}
 }
 </style>
 </head>
@@ -380,11 +400,18 @@ function go(mod,sub,keep){
   const c=document.getElementById('content');
   c.innerHTML=`<section class="view">${buildModule(m)}</section>`;
   renderNav();renderCharts(m.id);
-  if(!keep){if(sub){const el=document.getElementById('sub-'+sub);if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),40);else window.scrollTo(0,0);}else window.scrollTo(0,0);}
+  if(!keep){if(sub){const el=document.getElementById('sub-'+sub);if(el){setTimeout(()=>scrollToSub(sub,'auto'),90);setTimeout(()=>scrollToSub(sub,'auto'),560);}else window.scrollTo(0,0);}else window.scrollTo(0,0);}
   if(window.innerWidth<=760)closeNav();
   if(m.id==='econ')setTimeout(runCalc,60);
   if(m.id==='market')setTimeout(runSom,60);if(m.id==='playbook')setTimeout(renderSwimlane,60);
   setTimeout(attachScrollSpy,80);
+}
+function scrollToSub(sub,behavior='auto'){
+  const el=document.getElementById('sub-'+sub);if(!el)return;
+  const topbar=document.querySelector('.topbar')?.getBoundingClientRect().height||0;
+  const subnav=document.querySelector('.subnav')?.getBoundingClientRect().height||0;
+  const y=window.scrollY+el.getBoundingClientRect().top-topbar-subnav-12;
+  window.scrollTo({top:Math.max(0,y),behavior});
 }
 function buildModule(m){
   if(m.id==='home')return C_home();
@@ -398,7 +425,7 @@ function buildModule(m){
 }
 const SUBNAV_GROUPS={
  setup:[['Structure & sequence',['seq']],['Entity & licences',['entity','lic']],['Risk & counsel',['risk']],['Execution',['check']]],
- ops:[['Overview',['overview']],['Lifecycle stages',['s0','s1','s2','s3','s4','s5']],['Runbook',['first10','run']]],
+ ops:[['Overview',['overview','series']],['Lifecycle stages',['s0','s1','s2','s3','s4','s5']],['Runbook',['first10','run']]],
  compliance:[['Calendar & costs',['cal','stack']],['Contributions & tax',['bpjs','pph']],['Holiday pay & exit',['thr','sev','term']]],
  gtm:[['Market & ICP',['icp','sg','roles']],['Acquisition',['pseo','wedges']],['Monetisation',['pricing','check']]]
 };
@@ -425,16 +452,15 @@ function attachScrollSpy(){
     let best=null,bestR=0;
     vis.forEach((r,id)=>{if(r>bestR){bestR=r;best=id;}});
     if(best)setActive(best);
-  },{rootMargin:'-128px 0px -55% 0px',threshold:[0,.15,.35,.55,.75,1]});
+  },{rootMargin:'-92px 0px -55% 0px',threshold:[0,.15,.35,.55,.75,1]});
   subs.forEach(el=>subSpy.observe(el));
   if(cur.sub)setActive(cur.sub);
 }
 function jumpSub(mod,sub){
   cur.sub=sub;
-  const el=document.getElementById('sub-'+sub);
-  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  scrollToSub(sub,'smooth');
   document.querySelectorAll('.subnav button').forEach(b=>b.classList.remove('active'));
-  const p=document.getElementById('pill-'+sub);if(p)p.classList.add('active');
+  const p=document.getElementById('pill-'+sub);if(p){p.classList.add('active');p.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
   location.hash=`${mod}/${sub}`;
   const m=MODS.find(x=>x.id===mod);
   if(m&&m.subs){const t=(m.subs.find(s=>s[0]===sub)||['',''])[1];document.getElementById('crumb').innerHTML=`${m.nav} <b>›</b> ${t}`;}
@@ -953,6 +979,44 @@ ${vid('https://www.youtube.com/watch?v=NfaNNtwDHGE','What is Payroll? Introducti
 
 SUB['ops/series']=()=>`
 <p class="lead">The enhanced report pack splits the old "operations as-is" chapter into five stage documents. Read them as the actual operating syllabus: one stage, one sequence diagram, one decision surface, one evidence trail.</p>
+<div class="seqwrap">
+ <div class="seqtitle"><h4>System sequence diagram — quote to monthly proof pack</h4><span>Source: 07A-E ops series + MSA/SOW skeleton</span></div>
+ <svg class="seqsvg" viewBox="0 0 1120 740" role="img" aria-label="System sequence diagram showing Client, Navv OS, Navv SG, Navv ID PT, Employee and Rails/Regulators across quote, onboarding, payroll and proof pack">
+  <defs>
+   <marker id="seqArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7aa2ff"/></marker>
+   <marker id="seqArrowGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#e0b84a"/></marker>
+   <marker id="seqArrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#fb7185"/></marker>
+  </defs>
+  <rect x="1" y="1" width="1118" height="738" rx="18" fill="rgba(255,255,255,.015)" stroke="rgba(255,255,255,.08)"/>
+  <g>
+   <rect class="seqactor" x="25" y="24" width="130" height="42" rx="12"/><text class="seqactor-t" x="90" y="50">Client</text>
+   <rect class="seqactor" x="205" y="24" width="130" height="42" rx="12"/><text class="seqactor-t" x="270" y="50">Navv OS</text>
+   <rect class="seqactor" x="385" y="24" width="130" height="42" rx="12"/><text class="seqactor-t" x="450" y="50">Navv SG</text>
+   <rect class="seqactor" x="565" y="24" width="130" height="42" rx="12"/><text class="seqactor-t" x="630" y="50">Navv ID PT</text>
+   <rect class="seqactor" x="745" y="24" width="130" height="42" rx="12"/><text class="seqactor-t" x="810" y="50">Employee</text>
+   <rect class="seqactor" x="925" y="24" width="150" height="42" rx="12"/><text class="seqactor-t" x="1000" y="50">Rails / Regulators</text>
+  </g>
+  <g>
+   <line class="seqlife" x1="90" y1="72" x2="90" y2="706"/><line class="seqlife" x1="270" y1="72" x2="270" y2="706"/><line class="seqlife" x1="450" y1="72" x2="450" y2="706"/><line class="seqlife" x1="630" y1="72" x2="630" y2="706"/><line class="seqlife" x1="810" y1="72" x2="810" y2="706"/><line class="seqlife" x1="1000" y1="72" x2="1000" y2="706"/>
+  </g>
+  <g>
+   <circle class="seqbadge blue" cx="180" cy="105" r="10"/><text class="seqnum" x="180" y="105">1</text><line class="seqmsg" x1="100" y1="105" x2="258" y2="105"/><text class="seqtext" x="114" y="94">Hire request + role / worker data</text>
+   <circle class="seqbadge" cx="450" cy="145" r="10"/><text class="seqnum" x="450" y="145">2</text><line class="seqmsg alt" x1="282" y1="145" x2="618" y2="145"/><text class="seqtext" x="320" y="134">Role-risk, loaded cost, KBLI / SOW check</text>
+   <circle class="seqbadge" cx="450" cy="185" r="10"/><text class="seqnum" x="450" y="185">3</text><line class="seqmsg alt" x1="620" y1="185" x2="282" y2="185"/><text class="seqtext" x="316" y="174">Quote, deposit, funding gate, constraints</text>
+   <circle class="seqbadge blue" cx="180" cy="225" r="10"/><text class="seqnum" x="180" y="225">4</text><line class="seqmsg" x1="258" y1="225" x2="102" y2="225"/><text class="seqtext" x="116" y="214">Quote pack + MSA/SOW instructions</text>
+   <circle class="seqbadge" cx="270" cy="265" r="10"/><text class="seqnum" x="270" y="265">5</text><line class="seqmsg alt" x1="100" y1="265" x2="438" y2="265"/><text class="seqtext" x="150" y="254">MSA signed / deposit agreed</text><text class="seqnote" x="150" y="278">SG commercial layer if used</text>
+   <circle class="seqbadge blue" cx="720" cy="305" r="10"/><text class="seqnum" x="720" y="305">6</text><line class="seqmsg" x1="642" y1="305" x2="798" y2="305"/><text class="seqtext" x="652" y="294">Employment, IP, no-authority docs</text>
+   <circle class="seqbadge blue" cx="720" cy="345" r="10"/><text class="seqnum" x="720" y="345">7</text><line class="seqmsg" x1="798" y1="345" x2="642" y2="345"/><text class="seqtext" x="652" y="334">KTP/NIK, tax, BPJS, bank, dependents</text>
+   <circle class="seqbadge" cx="815" cy="385" r="10"/><text class="seqnum" x="815" y="385">8</text><line class="seqmsg alt" x1="642" y1="385" x2="988" y2="385"/><text class="seqtext" x="690" y="374">Disnaker, BPJS, Coretax setup</text><text class="seqnote" x="690" y="398">3-day / 30-day gates tracked</text>
+   <circle class="seqbadge" cx="545" cy="425" r="10"/><text class="seqnum" x="545" y="425">9</text><line class="seqmsg alt" x1="100" y1="425" x2="988" y2="425"/><text class="seqtext" x="340" y="414">Payroll funding via Airwallex + FX buffer</text>
+   <circle class="seqbadge" cx="815" cy="465" r="10"/><text class="seqnum" x="815" y="465">10</text><line class="seqmsg alt" x1="988" y1="465" x2="642" y2="465"/><text class="seqtext" x="704" y="454">IDR lands before payroll lock</text>
+   <circle class="seqbadge blue" cx="720" cy="505" r="10"/><text class="seqnum" x="720" y="505">11</text><line class="seqmsg" x1="642" y1="505" x2="798" y2="505"/><text class="seqtext" x="662" y="494">Net pay + payslip</text>
+   <circle class="seqbadge" cx="815" cy="545" r="10"/><text class="seqnum" x="815" y="545">12</text><line class="seqmsg alt" x1="642" y1="545" x2="988" y2="545"/><text class="seqtext" x="692" y="534">PPh 21 / BPJS remit + file</text>
+   <circle class="seqbadge blue" cx="180" cy="585" r="10"/><text class="seqnum" x="180" y="585">13</text><line class="seqmsg" x1="258" y1="585" x2="102" y2="585"/><text class="seqtext" x="116" y="574">Monthly evidence pack + exception log</text>
+   <circle class="seqbadge red" cx="360" cy="635" r="10"/><text class="seqnum" x="360" y="635">14</text><line class="seqmsg risk" x1="100" y1="625" x2="258" y2="625"/><line class="seqmsg risk" x1="282" y1="645" x2="618" y2="645"/><text class="seqtext" x="116" y="614">Change / offboarding request</text><text class="seqtext" x="318" y="634">Counsel gate + termination case file</text><text class="seqnote" x="318" y="658">Funding-before-notice if exit risk exists</text>
+  </g>
+ </svg>
+</div>
 <div class="tablewrap"><table><tr><th>Companion</th><th>Stage</th><th>What the LMS now carries forward</th></tr>
 <tr><td>07A</td><td>Quote & Sign</td><td>Five actors, eleven messages, two gates. Quote is governance: role-risk classification, loaded-cost bridge, funding/deposit posture, and MSA/SOW boundary before anyone signs.</td></tr>
 <tr><td>07B</td><td>Onboarding</td><td>Seven actors, twelve messages, five gates. The job is to manufacture a lawful employment relationship and clean master file: NIK validation, e-Meterai, Disnaker within three working days, BPJS within thirty days, and a payroll dry run.</td></tr>
@@ -1637,7 +1701,6 @@ SUB['glossary/docs']=()=>GLOSSARY.filter(t=>t.c==='docs').map(gcard).join('');
 window.addEventListener('hashchange',()=>{const [mod,sub]=location.hash.slice(1).split('/');if(MODS.find(m=>m.id===mod))go(mod,sub);});
 let bootTries=0;const boot=setInterval(()=>{bootTries++;if(window.Chart||bootTries>60){clearInterval(boot);const [mod,sub]=location.hash.slice(1).split('/');go(MODS.find(m=>m.id===mod)?mod:'home',sub);}},70);
 renderNav();refreshProgress();
-const [imod,isub]=location.hash.slice(1).split('/');go(MODS.find(m=>m.id===imod)?imod:'home',isub);
 </script>
 </body>
 </html>
