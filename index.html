@@ -170,6 +170,34 @@ tr:hover td{background:rgba(255,255,255,.04);}
 .seqbadge.red{fill:#fda4af;}
 .seqtext{fill:#d7d7e0;font-size:11px;font-weight:650;}
 .seqnote{fill:#8a8a98;font-size:10px;}
+.ssd{border:1px solid rgba(122,162,255,.24);background:rgba(122,162,255,.055);border-radius:14px;padding:13px 14px;margin:14px 0;overflow:hidden;}
+.ssd-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:10px;}
+.ssd-h h4{margin:0;color:#fff;}
+.ssd-h a{font-size:11px;font-weight:700;color:var(--blueink);white-space:nowrap;}
+.ssd-actors{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.ssd-actor{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.45px;color:var(--text2);padding:5px 8px;border:1px solid var(--gline);border-radius:999px;background:rgba(255,255,255,.045);}
+.ssd-grid{display:grid;grid-template-columns:26px minmax(95px,.65fr) 24px minmax(95px,.65fr) minmax(180px,1.25fr) minmax(130px,.85fr);gap:7px;align-items:start;}
+.ssd-step{display:contents;}
+.ssd-n{width:22px;height:22px;border-radius:7px;background:var(--blueink);color:#08080d;font-size:11px;font-weight:850;display:flex;align-items:center;justify-content:center;}
+.ssd-from,.ssd-to{font-size:11px;font-weight:800;color:#fff;}
+.ssd-arrow{color:var(--gold2);font-weight:900;text-align:center;}
+.ssd-msg{font-size:12px;color:var(--text2);line-height:1.35;}
+.ssd-gate{font-size:11px;color:var(--muted);line-height:1.35;}
+.ssd-out{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.ssd-out div{font-size:11.5px;color:var(--text2);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:8px;}
+.ssd-out b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--gold2);margin-bottom:3px;}
+.drivebox{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid rgba(224,184,74,.22);background:rgba(224,184,74,.06);border-radius:12px;padding:10px 12px;margin:12px 0;}
+.drivebox .dt{font-size:12px;font-weight:750;color:#fff;}
+.drivebox .dd{font-size:11.5px;color:var(--muted);}
+.drivebox a{font-size:11px;font-weight:800;white-space:nowrap;color:var(--gold2);}
+.simbox{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;border:1px solid rgba(47,211,154,.24);background:rgba(47,211,154,.055);border-radius:14px;padding:16px;margin:14px 0;}
+.simbox h4{margin:0 0 6px;color:#fff;}
+.simbox p{margin:0;color:var(--text2);}
+.simbox .mini{margin-top:8px;}
+.simmeta{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.simmeta div{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);border-radius:10px;padding:10px;}
+.simmeta b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.55px;color:var(--greenink);margin-bottom:4px;}
+.simbtn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:10px;background:var(--greenink);color:#07110d!important;font-weight:850;text-decoration:none;margin-top:12px;}
 
 .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;margin:0 4px 4px 0;}
 .pill.local{background:var(--amberbg);color:var(--amberink);}.pill.deel{background:var(--bluebg);color:var(--blueink);}
@@ -295,6 +323,14 @@ tr:hover td{background:rgba(255,255,255,.04);}
   .content{padding:24px 17px 90px;}.topbar{padding:11px 17px;}
   h2.title{font-size:23px;}.hero{padding:24px 20px;}.hero h2{font-size:22px;}
   .subnav{top:48px;}
+  .ssd-grid{grid-template-columns:24px 1fr;gap:5px 8px;}
+  .ssd-arrow{display:none;}
+  .ssd-from,.ssd-to,.ssd-msg,.ssd-gate{grid-column:2;}
+  .ssd-to::before{content:'→ ';color:var(--gold2);}
+  .ssd-out{grid-template-columns:1fr;}
+  .drivebox{align-items:flex-start;flex-direction:column;}
+  .simbox{grid-template-columns:1fr;}
+  .simmeta{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -350,6 +386,7 @@ const MODS=[
  {id:'ops',ix:'7',group:'The Machine',nav:'Operations (As-Is)',subs:[['overview','Lifecycle overview'],['series','07A-E ops series'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s5','5 · Offboard'],['first10','First-10 runbook'],['run','How it is run']]},
  {id:'playbook',ix:'8',group:'The Machine',nav:'Coordination Playbook',subs:[['swimlane','End-to-end swimlane'],['triangle','The legal triangle'],['raci','RACI across the lifecycle'],['manpower','EOR team & hiring ladder'],['clock','The monthly payroll clock'],['termination','Termination decision tree'],['rolerisk','Role-risk taxonomy'],['thr','THR as a monthly liability'],['memos','Counsel memo checklist']]},
  {id:'compliance',ix:'9',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['thr','THR'],['sev','Severance'],['term','Termination workflow']]},
+ {id:'sim',ix:'9.5',group:'The Machine',nav:'EOR Desk Sim',subs:[['play','Play the module quiz']]},
  {id:'econ',ix:'10',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator']]},
  {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line']]},
  {id:'quality',ix:'12',group:'The Machine',nav:'Quality, Risk & Controls',subs:[['modes','Failure modes'],['nums','The benchmark numbers'],['ctrl','The controls'],['seam','Trust vs reliability']]},
@@ -479,6 +516,20 @@ function toggleNav(){document.getElementById('sidebar').classList.toggle('open')
 function closeNav(){document.getElementById('sidebar').classList.remove('open');document.getElementById('scrim').style.display='none';}
 function vid(url,t,s){return `<div class="videocard" onclick="window.open('${url}','_blank')"><div class="play">▶</div><div><div class="vt">${t}</div><div class="vs">${s}</div></div></div>`;}
 function res(url,tag,t,d){return `<a class="reslink" href="${url}" target="_blank"><span class="rtag">${tag}</span><div class="rt">${t}</div><div class="rd">${d}</div></a>`;}
+const DRIVE='https://drive.google.com/drive/folders/1KGw7TCS5PM2qZ6PRlBYHFbQlz2F4z_5m?usp=sharing';
+const SIM='https://navv-desk-sim.vercel.app/';
+function driveBox(doc,why='Open the full DOCX source pack for details, diagrams, and audit trail.'){
+  return `<div class="drivebox"><div><div class="dt">${doc}</div><div class="dd">${why}</div></div><a href="${DRIVE}" target="_blank">Open Drive ↗</a></div>`;
+}
+function ssd(title,actors,rows,out){
+  return `<div class="ssd"><div class="ssd-h"><h4>${title}</h4><a href="${DRIVE}" target="_blank">Full source ↗</a></div>
+  <div class="ssd-actors">${actors.map(a=>`<span class="ssd-actor">${a}</span>`).join('')}</div>
+  <div class="ssd-grid">${rows.map((r,i)=>`<div class="ssd-step"><div class="ssd-n">${i+1}</div><div class="ssd-from">${r[0]}</div><div class="ssd-arrow">→</div><div class="ssd-to">${r[1]}</div><div class="ssd-msg">${r[2]}</div><div class="ssd-gate">${r[3]||''}</div></div>`).join('')}</div>
+  <div class="ssd-out">${out.map(o=>`<div><b>${o[0]}</b>${o[1]}</div>`).join('')}</div></div>`;
+}
+function simBox(){
+  return `<div class="simbox"><div><h4>Play the EOR desk simulation</h4><p>Use the game as the checkpoint after compliance and operations: it turns quote, onboarding, payroll, filing, support and offboarding into scenario decisions before the learner studies unit economics.</p><p class="mini">Best placement: after <b>Compliance Deep-Dive</b>, before <b>Unit Economics</b>. The learner should understand the rules before being tested on tradeoffs.</p><a class="simbtn" href="${SIM}" target="_blank">Open simulation</a></div><div class="simmeta"><div><b>Mode</b>Scenario quiz / operator practice</div><div><b>Use after</b>Ops + compliance modules</div><div><b>Checks</b>Judgement, sequencing, risk gates</div><div><b>Feeds into</b>Pricing, break-even, staffing math</div></div></div>`;
+}
 
 /* module intros (short) */
 const INTRO={
@@ -490,6 +541,7 @@ const INTRO={
  setup:'Everything required to legally run the Indonesian employing entity — structure canvas first, then 78101/78300 KBLI clearance, licences, Permenaker risk, and counsel memos before you capitalise.',
  ops:'How an EOR runs today, quote to offboard — lifecycle stages, the first-10-employees runbook, and how a small operator differs from Deel-class scale.',
  compliance:'Indonesian payroll mechanics in depth — deadline calendar, cost stack, BPJS, PPh 21/TER, THR dashboard, severance, and the termination decision tree.',
+ sim:'A playable checkpoint before the money model: make operator decisions, feel the stage risks, then connect those decisions to cost, staffing and margin.',
  econ:'A service business: an ops P&L, not a SaaS P&L. The shape, plus a live cost calculator.',
  pay:'The new spine of the global model: collect from clients anywhere, convert, pay Indonesia — via Airwallex.',
  quality:'Quality in payroll means accurate, on-time, compliant, every cycle. Where it breaks, what it costs, how to control it.',
@@ -523,10 +575,12 @@ function C_home(){return `
  <div class="chartbox" style="margin:0"><h4>Operating risk concentrates in three places</h4><canvas id="ch_home_risk"></canvas><div class="src">Source synthesis: Operations, Compliance, Quality & Controls companion reports.</div></div>
 </div>
 <h3>Start here — four learning paths</h3>
+${driveBox('Full Google Drive source pack','Use this when a learner wants the full DOCX reports, MSA skeleton, glossary, audit, and comment-response map behind the LMS synthesis.')}
 <div class="pathgrid">
  <div class="pathcard" onclick="go('setup','seq')"><div class="pl">Legal & setup</div><div class="pt">Structure canvas → counsel memos</div><div class="pd">Entity, KBLI, Permenaker 7/2026 risk, and the checklist before PT PMA capital.</div></div>
  <div class="pathcard" onclick="go('ops','first10')"><div class="pl">Operations</div><div class="pt">Lifecycle + first 10 runbook</div><div class="pd">Quote to offboard, then the operational playbook for your first hires.</div></div>
  <div class="pathcard" onclick="go('compliance','term')"><div class="pl">Compliance</div><div class="pt">THR, severance, termination tree</div><div class="pd">Indonesian payroll mechanics — the corridor-native edge you sell.</div></div>
+ <div class="pathcard" onclick="go('sim','play')"><div class="pl">Simulation quiz</div><div class="pt">Play the EOR desk sim</div><div class="pd">Scenario practice after ops/compliance, before unit economics.</div></div>
  <div class="pathcard" onclick="go('gtm','sg')"><div class="pl">Go-to-market</div><div class="pt">Singapore-first beachhead</div><div class="pd">ICP, role-risk taxonomy, pSEO wedges, and pricing posture.</div></div>
  <div class="pathcard" onclick="go('econ','calc')"><div class="pl">Unit economics</div><div class="pt">Ops P&L + cost calculator</div><div class="pd">Staffing ladder, break-even, and live per-seat economics.</div></div>
  <div class="pathcard" onclick="go('roadmap','phases')"><div class="pl">Launch roadmap</div><div class="pt">Gate 0–3 execution model</div><div class="pd">Legal clearance → entity → first clients → systemise. Productise only when ops are proven.</div></div>
@@ -1014,9 +1068,15 @@ SUB['ops/series']=()=>`
    <circle class="seqbadge" cx="815" cy="545" r="10"/><text class="seqnum" x="815" y="545">12</text><line class="seqmsg alt" x1="642" y1="545" x2="988" y2="545"/><text class="seqtext" x="692" y="534">PPh 21 / BPJS remit + file</text>
    <circle class="seqbadge blue" cx="180" cy="585" r="10"/><text class="seqnum" x="180" y="585">13</text><line class="seqmsg" x1="258" y1="585" x2="102" y2="585"/><text class="seqtext" x="116" y="574">Monthly evidence pack + exception log</text>
    <circle class="seqbadge red" cx="360" cy="635" r="10"/><text class="seqnum" x="360" y="635">14</text><line class="seqmsg risk" x1="100" y1="625" x2="258" y2="625"/><line class="seqmsg risk" x1="282" y1="645" x2="618" y2="645"/><text class="seqtext" x="116" y="614">Change / offboarding request</text><text class="seqtext" x="318" y="634">Counsel gate + termination case file</text><text class="seqnote" x="318" y="658">Funding-before-notice if exit risk exists</text>
-  </g>
+ </g>
  </svg>
 </div>
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">Module outcomes</h4><p class="mini">By the end, a learner should be able to trace one worker from quote to proof pack, name the legal employer at every moment, and explain why quote, payroll and termination are the three control spines.</p></div>
+ <div class="card"><h4 style="margin-top:0">Lab artifacts</h4><p class="mini">Each stage asks for one artifact: quote pack, clean master file, approved payroll register, filing evidence pack, support/change log, or termination case file. The LMS teaches the artifact, not just the concept.</p></div>
+ <div class="card"><h4 style="margin-top:0">Assessment gates</h4><p class="mini">A learner should pass only when they can identify the funding gate, maker-checker gate, counsel gate, statutory deadline and evidence trail for the stage.</p></div>
+</div>
+${driveBox('Operations source bundle: 07A-E, 07 Operations As-Is, 08 Coordination Playbook','Open the full Google Drive folder for the DOCX reports behind this module, including detailed SSDs, decision surfaces and audit notes.')}
 <div class="tablewrap"><table><tr><th>Companion</th><th>Stage</th><th>What the LMS now carries forward</th></tr>
 <tr><td>07A</td><td>Quote & Sign</td><td>Five actors, eleven messages, two gates. Quote is governance: role-risk classification, loaded-cost bridge, funding/deposit posture, and MSA/SOW boundary before anyone signs.</td></tr>
 <tr><td>07B</td><td>Onboarding</td><td>Seven actors, twelve messages, five gates. The job is to manufacture a lawful employment relationship and clean master file: NIK validation, e-Meterai, Disnaker within three working days, BPJS within thirty days, and a payroll dry run.</td></tr>
@@ -1036,6 +1096,19 @@ SUB['ops/s0']=()=>`
 <p><span class="pill info">Mechanics</span>Build a quote: (1) gross in local currency → (2) layer employer statutory contributions → (3) add mandatory benefits + THR + accrued leave → (4) apply burden rate → loaded cost → (5) add the service fee (flat or % of payroll) = the quoted price → (6) add an FX buffer + deposit terms. The <b>deposit</b> (~1 month of loaded cost) exists because the EOR <i>fronts</i> payroll before invoicing — a credit-risk control, not a fee.</p>
 <p class="mini"><span class="pill risk">EOR twist</span>The % -of-payroll pricing model (8–15%) misaligns incentives for a <i>compliance</i> vendor — it earns more when your people earn more. Flat-fee is the honest model, and our wedge.</p>
 <p class="mini">→ Feel the loaded-cost maths in the <a onclick="go('econ','calc')">cost calculator</a>.</p></div></div>
+${ssd('07A SSD · Quote & Sign',['Client','Navv OS','Navv SG','Navv ID PT','Counsel/Ops'],[
+['Client','Navv OS','Role, worker, salary, location, start date, manager and authority profile','Reject sales/contract-closing authority early.'],
+['Navv OS','Counsel/Ops','Classify role risk and SOW wording under Permenaker support-service logic','Gate: role-risk score.'],
+['Navv OS','Navv ID PT','Build loaded-cost bridge: gross, BPJS, THR, severance reserve, fee, FX, deposit','Gate: margin and funding lock.'],
+['Navv OS','Client','Issue quote pack, client obligations, no-authority guardrails and funding calendar','Output becomes the commercial truth.'],
+['Client','Navv SG','Sign MSA / commercial layer where used','SG can sell; ID still employs.'],
+['Navv ID PT','Client','Sign Indonesia SOW / worker schedule where required','Gate: legal employer boundary is explicit.']
+],[
+['Learning output','Learner can explain why quote is governance, not pricing admin.'],
+['Proof artifact','Quote pack + role-risk memo + funding/deposit posture.'],
+['Failure mode','Underpriced role, wrong authority profile, or unfunded statutory exposure.']
+])}
+${driveBox('07A_Navv_EOR_Ops_Series_Quote_and_Sign_2026-07-08.docx')}
 ${res('https://www.hibob.com/financial-metrics/fully-burdened-labor-rate/','Concept','HiBob — fully-burdened labor rate + calculator','Burden-rate definition, formula, the 18–35% bands.')}
 ${res('https://www.compareor.com/blog/eor-pricing-models-explained-per-employee-fee-vs-percentage-of-salary','Analysis','CompareOR — EOR pricing: flat fee vs % of payroll','The two models + the incentive-misalignment argument.')}
 ${res('https://pamgro.com/blog/employer-of-record-cost/','Guide','PamGro — EOR cost: pass-through vs margin','Exactly where margin hides (add-ons, FX, deposits).')}`;
@@ -1045,6 +1118,19 @@ SUB['ops/s1']=()=>`
 <p><span class="pill why">Theory</span>Onboarding has two layers: the <b>legal/compliance layer</b> (identity, right-to-work, contract, statutory registration — what makes employment <i>lawful</i>) and the <b>experience layer</b> (culture, ramp). EOR liability lives in the first. Three concepts carry it: <b>identity/right-to-work verification</b> (the KYC of employment — in Indonesia, KTP/NIK which now doubles as the tax ID), the <b>employment contract</b> (fixed-term PKWT vs permanent PKWTT, with 9 mandatory clauses), and <b>IP assignment</b> (copyright can pass by a work-for-hire clause, but inventions need an <i>explicit</i> assignment — so tech hires sign a Confidential Information & Inventions Assignment before day one).</p>
 <p><span class="pill info">Mechanics · day-0 to day-30</span>Preboard: collect docs, verify identity, issue contract + IP agreement, register with BPJS + tax, provision access — so day one is culture, not forms. Day 1: welcome, systems, a buddy (56% of new hires say a buddy speeds productivity). Days 2–30: absorb the work, manager check-ins (new hires are 3.4× more likely to rate onboarding successful with an active manager), close with a 30-day review. Strong onboarding lifts retention ~82%.</p>
 <p class="mini"><span class="pill risk">Indonesia specifics</span>PKWT must be written, in Bahasa, registered with Disnaker ≤3 working days; both BPJS within 30 days of start; no probation on a PKWT.</p></div></div>
+${ssd('07B SSD · Onboarding',['Client','Employee','Navv OS','Navv ID PT','Disnaker','BPJS/Coretax'],[
+['Navv OS','Employee','Collect KTP/NIK, NPWP/NIK, bank, BPJS status, dependents, emergency contact','Gate: master-data completeness.'],
+['Navv OS','Client','Confirm role, manager, start date, devices, work protocol and no-authority instructions','Gate: client obligations accepted.'],
+['Navv ID PT','Employee','Issue Bahasa/bilingual employment, IP, confidentiality and no-authority documents','Gate: signed/e-Meterai where needed.'],
+['Navv ID PT','Disnaker','Register PKWT / outsourcing arrangement within deadline where required','Gate: ≤3 working days.'],
+['Navv ID PT','BPJS/Coretax','Set up tax/BPJS records and payroll category','Gate: BPJS ≤30 days.'],
+['Navv OS','Client + Employee','Run payroll dry-run and day-one readiness check','Output: clean master file.']
+],[
+['Learning output','Learner understands onboarding as manufacturing a lawful employment relationship.'],
+['Proof artifact','Complete employee master file + signed contract pack + registration evidence.'],
+['Failure mode','Missing NIK/tax/BPJS data causes payroll, filing, or legal-employer defects.']
+])}
+${driveBox('07B_Navv_EOR_Ops_Series_Onboarding_2026-07-08.docx')}
 ${vid('https://www.youtube.com/watch?v=WHo8Y9pCqrE','What Is an EOR? Employer of Record Explained','YouTube · the legal-vs-managerial split')}
 ${res('https://www.uscis.gov/i-9','Concept','US I-9 / right-to-work verification','The Western analogue to KTP/NIK identity checks — the "why" of onboarding KYC.')}
 ${res('https://www.briffa.com/blog/ip-clauses-in-employment-contracts-and-assignments/','Legal','Briffa — IP clauses in employment contracts','Why copyright and patents need different clauses.')}
@@ -1056,6 +1142,19 @@ SUB['ops/s2']=()=>`
 <div class="worked"><div class="wt">Gross-to-net waterfall</div><div class="wl"><span>1. Earnings → gross pay</span><span>base + OT + bonus + allowances</span></div><div class="wl"><span>2. − pre-tax deductions</span><span>lowers taxable base</span></div><div class="wl"><span>3. − statutory deductions</span><span>income tax + social security on the reduced base</span></div><div class="wl"><span>4. − post-tax deductions</span><span>garnishments, dues</span></div><div class="wl tot"><span>= Net pay (take-home)</span><span>Net = Gross − pre-tax − tax − post-tax</span></div></div>
 <p><span class="pill info">Mechanics · cutoff → payslip</span>(1) cutoff freezes inputs → (2) gather + validate hours/OT/leave/joiners/leavers → (3) compute gross → (4) run the gross-to-net engine (in Indonesia: employee BPJS JHT 2% + JP 1% + Kesehatan 1%, then PPh 21 via the TER method) → (5) produce the <b>payroll register</b> (the control artifact: every employee's gross, withholdings, net for the period) → (6) <b>review & approve</b> (maker-checker) → (7) generate the bank file → (8) disburse via the local rail → (9) issue mandatory payslips → (10) post-payroll: remit, post to GL, reconcile.</p>
 <p class="mini"><span class="pill risk">Why it's a trust event</span>~40% of payroll errors trace to manual data entry, and <b>80% are first caught by the employee</b>, not the system. 49% of employees job-hunt after just two payroll mistakes. This is the stage that makes or breaks the client relationship.</p></div></div>
+${ssd('07C SSD · Payroll Run',['Client','Navv OS','Payroll Maker','Payroll Checker','Finance','Employee'],[
+['Client','Navv OS','Submit monthly changes before cutoff: leave, allowances, bank changes, starts/exits','Gate: cutoff freeze.'],
+['Navv OS','Payroll Maker','Prepare gross-to-net register and variance report','Gate: exception list created.'],
+['Payroll Maker','Payroll Checker','Independent review of register, TER category, BPJS bases and prior-cycle variance','Gate: maker-checker approval.'],
+['Navv OS','Finance','Confirm client funding and generate payout file','Gate: funding lock before release.'],
+['Finance','Employee','Release net salary and payslip','Gate: payment proof.'],
+['Navv OS','Client','Log exceptions and carryovers for next cycle','Output feeds support/change queue.']
+],[
+['Learning output','Learner can narrate the monthly payroll loop as a controlled production cycle.'],
+['Proof artifact','Approved payroll register + variance report + payslip/payment proof.'],
+['Failure mode','Late change, wrong tax category, or unfunded payroll becomes client-visible immediately.']
+])}
+${driveBox('07C_Navv_EOR_Ops_Series_Payroll_and_Filing_2026-07-08.docx')}
 ${vid('https://m.youtube.com/watch?v=LHpAdteqVYA','The 6 Steps of the Payroll Cycle','YouTube · maps directly onto this stage')}
 ${vid('https://m.youtube.com/watch?v=iaN_ehGXMuU','Gross Pay vs. Net Pay Explained','YouTube · the core gross-to-net concept')}
 ${vid('https://www.youtube.com/watch?v=Gg13_s25WRg','Perhitungan Gaji Lengkap: PPh 21 + BPJS','YouTube · a full Indonesian payslip build')}
@@ -1068,6 +1167,19 @@ SUB['ops/s3']=()=>`
 <p><span class="pill why">Theory</span>The employer does not <i>own</i> withheld taxes — it collects them as an <b>agent for the tax authority and holds them in trust</b>. (The US literally calls these "trust fund taxes," with a 100% recovery penalty that can pierce the corporate veil.) That framing is <i>the</i> reason payroll compliance is non-negotiable, and why the EOR's promise — "we keep you compliant" — is kept or broken here. Two calendars, often confused: the <b>deposit/remittance schedule</b> (when money moves) and the <b>filing calendar</b> (when returns reconcile). Deposit ≠ file.</p>
 <p><span class="pill info">Mechanics · Indonesia</span>BPJS Kesehatan by the 10th (EDABU) · BPJS-TK by the 15th (SIPP) · PPh 21 <b>deposited</b> by the 15th and the SPT Masa <b>filed</b> by the 20th (Coretax e-Bupot 21) · December = the annual recalculation (rekonsiliasi Desember) + Form 1721-A1. The compliance-monitoring function runs continuously: track rule changes, auto-apply to payroll, flag min-wage/leave issues.</p>
 <p class="mini">→ The full calendar + rates live in the <a onclick="go('compliance','cal')">Compliance Deep-Dive</a>.</p></div></div>
+${ssd('07C SSD · Filing & Remittance',['Navv OS','Finance','BPJS','Coretax','Client','Employee'],[
+['Navv OS','Finance','Split the approved register into salary, BPJS, PPh 21 and evidence-pack tasks','Gate: register approved.'],
+['Finance','BPJS','Pay BPJS Kesehatan / TK via the correct portal and VA','Gate: deadline tracker.'],
+['Finance','Coretax','Deposit PPh 21 and file SPT Masa / e-Bupot 21','Gate: deposit ≠ filing.'],
+['Coretax/BPJS','Navv OS','Return receipts, bukti potong and filing proof','Gate: proof attached.'],
+['Navv OS','Employee','Issue payslip / tax proof where appropriate','Output: employee evidence.'],
+['Navv OS','Client','Send monthly proof pack and exception log','Output: compliance as product.']
+],[
+['Learning output','Learner separates money movement from filing/reporting duties.'],
+['Proof artifact','BPJS proof + PPh 21 proof + SPT status + monthly evidence pack.'],
+['Failure mode','Deposit made but filing missed, or proof not captured, means compliance is not auditable.']
+])}
+${driveBox('07C_Navv_EOR_Ops_Series_Payroll_and_Filing_2026-07-08.docx')}
 ${res('https://www.irs.gov/businesses/small-businesses-self-employed/trust-fund-taxes','Concept','IRS — trust fund taxes','Defines withholding as money "held in trust" — the core idea, universal.')}
 ${res('https://www.deel.com/blog/global-payroll-compliance-checklist-2026/','Guide','Deel — global payroll compliance checklist 2026','The compliance-monitoring function, EOR framing.')}
 ${res('https://globaleorservices.org/how-payroll-works-with-an-eor-inside-the-system/','Reference','Global EOR Services — how payroll works inside an EOR','Maps withhold → remit → report onto the product.')}`;
@@ -1076,7 +1188,20 @@ SUB['ops/s4']=()=>`
 <div class="stage"><div class="stage-h"><div class="stage-n">4</div><div class="stage-t">Support & change management</div></div><div class="stage-b">
 <p><span class="pill why">Theory</span>Between onboarding and offboarding the relationship is maintained: leave, raises, promotions, dependent changes (which move the tax bracket and BPJS), benefits questions, and the monthly consolidated invoice. This is the quiet churn driver — poor support loses clients even when payroll is perfect.</p>
 <p><span class="pill info">Mechanics</span>A named human handling employee + client queries in-timezone; a change log that feeds the next payroll run; one pre-funded invoice per cycle (net salary + deductions + employer burden + fee). A monthly <b>compliance evidence pack</b> — proof every filing was made — is both a support artifact and a product no competitor packages.</p>
-<p class="mini"><span class="pill deel">Contrast</span>The small operator does this by WhatsApp (personal, doesn't scale); the platform does 24/7 chat + self-service portal (scales, impersonal). The seam between them is where our AI-in-the-process eventually sits.</p></div></div>`;
+<p class="mini"><span class="pill deel">Contrast</span>The small operator does this by WhatsApp (personal, doesn't scale); the platform does 24/7 chat + self-service portal (scales, impersonal). The seam between them is where our AI-in-the-process eventually sits.</p></div></div>
+${ssd('07D SSD · Support & Change',['Employee','Client Manager','Navv OS','HR Ops','Finance','Counsel'],[
+['Employee/Client','Navv OS','Raise support or change request: bank, dependents, leave, raise, device, allowance, work scope','Gate: request classified.'],
+['Navv OS','HR Ops','Validate documents and payroll impact','Gate: master-data change approval.'],
+['Navv OS','Finance','If off-cycle pay is needed, run mini-cycle and funding check','Gate: funding lock.'],
+['Navv OS','Counsel','If work scope changes, check SOW/addendum and role-risk impact','Gate: no silent scope creep.'],
+['Navv OS','Client + Employee','Confirm resolution and next payroll effect','Output: support log.'],
+['Navv OS','Payroll Run','Carry approved changes into next cutoff','Output: clean change queue.']
+],[
+['Learning output','Learner sees support as controlled change management, not ad hoc chat.'],
+['Proof artifact','Support log + approved change queue + SOW addendum where needed.'],
+['Failure mode','Uncontrolled bank/salary/scope changes create payroll errors, BEC risk, or legal drift.']
+])}
+${driveBox('07D_Navv_EOR_Ops_Series_Support_and_Change_2026-07-08.docx')}`;
 
 SUB['ops/s5']=()=>`
 <div class="stage"><div class="stage-h danger"><div class="stage-n">5</div><div class="stage-t">Offboarding & termination — the highest-risk stage ⚠</div></div><div class="stage-b">
@@ -1084,6 +1209,20 @@ SUB['ops/s5']=()=>`
 <p><span class="pill info">Mechanics · Indonesia</span>Written PHK notice ≥14 working days → compute severance (UP up to 9× + UPMK up to 10× + UPH, multiplied by termination ground) → if disputed: bipartite (30 days) → Disnaker mediation → PHI industrial court → Supreme Court cassation → final settlement + BPJS deregistration + final PPh 21 + 1721-A1. IT offboarding runs in parallel: revoke SSO/access within one business day (59% of firms report a breach linked to poor offboarding).</p>
 <p class="mini"><span class="pill risk">EOR twist</span><b>Our PT carries the liability, not the client.</b> If the client stops paying, we still owe the severance — which is why the deposit is non-negotiable. Severance is "significantly more generous than many client companies expect."</p>
 <p class="mini">→ Severance tables + a worked example in the <a onclick="go('compliance','sev')">Compliance Deep-Dive</a>.</p></div></div>
+${ssd('07E SSD · Offboarding & Termination',['Client','Navv OS','Counsel','Navv ID PT','Employee','Disnaker/PHI'],[
+['Client','Navv OS','Request termination/change exit with reason, evidence and desired last day','Gate: client cannot execute PHK directly.'],
+['Navv OS','Counsel','Classify legal ground and evidence strength','Gate: counsel sign-off before employee contact.'],
+['Navv OS','Navv ID PT','Calculate final payroll, severance/kompensasi, UPH, BPJS/tax closeout','Gate: funding-before-notice.'],
+['Navv ID PT','Employee','Issue notice / negotiate settlement / receive resignation as applicable','Gate: dated written trail.'],
+['Employee','Navv ID PT','Accept or dispute','Branch: accept → closeout; dispute → bipartit.'],
+['Navv ID PT','Disnaker/PHI','If disputed: bipartit → mediation → PHI → cassation path','Output: litigation-grade case file.'],
+['Navv OS','Client + Employee','Final evidence pack, access closure, BPJS/tax closeout','Output: clean exit.']
+],[
+['Learning output','Learner understands termination as a legal workflow, not an HR button.'],
+['Proof artifact','Termination case file + funding proof + final payroll/BPJS/tax closeout.'],
+['Failure mode','Wrong ground, weak evidence, or unfunded severance exposes Navv ID PT.']
+])}
+${driveBox('07E_Navv_EOR_Ops_Series_Offboarding_2026-07-08.docx')}
 ${vid('https://www.youtube.com/watch?v=z9o3C2dJMMg','Termination & Offboarding: What Employers Need to Know','YouTube · 2026 legal-compliance walkthrough')}
 ${vid('https://www.youtube.com/watch?v=4u4KRKQ8jUo','How to Fire an Employee the Right Way','YouTube · the termination-meeting mechanics')}
 ${res('https://www.wisemonk.io/blogs/employer-of-record-compliance','Analysis','Wisemonk — EOR compliance & risks','Why termination is "the highest-risk area of EOR compliance."')}
@@ -1185,8 +1324,19 @@ ${[
 <tr><td>Missing employee</td><td>Absence / abandonment route</td><td>Welfare check, written notices, documented outreach</td></tr></table></div>
 <div class="callout red"><b>Missing does not mean automatically fired</b><p>Day 1 welfare check; Day 2 formal written notice; Day 3-5 second notice and escalation; after the notice period counsel classifies whether this is resignation, abandonment, misconduct or termination. Then final pay, BPJS, tax and access closure happen.</p></div>`;
 
+/* ===== 9.5 · EOR DESK SIM ===== */
+SUB['sim/play']=()=>`
+${simBox()}
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">Why it belongs here</h4><p class="mini">A learner should play after the lifecycle, compliance calendar and termination logic are familiar. At that point the game becomes applied judgement, not guessing.</p></div>
+ <div class="card"><h4 style="margin-top:0">What it reinforces</h4><p class="mini">The sim should test the same gates the LMS teaches: role-risk classification, funding-before-payroll, maker-checker review, filing proof, support escalation and counsel-before-termination.</p></div>
+ <div class="card"><h4 style="margin-top:0">How to use the result</h4><p class="mini">Treat score/mistakes as a diagnostic. If a learner misses funding, filing or termination questions, send them back to Operations, Compliance or the Coordination Playbook before Unit Economics.</p></div>
+</div>
+<div class="callout green"><b>Quiz logic</b><p>The game is not separate marketing material. It is the practical checkpoint that turns the LMS from a reading path into a university-style module: study, simulate, then calculate the business model.</p></div>`;
+
 /* ===== 9 · UNIT ECONOMICS ===== */
 SUB['econ/pl']=()=>`
+${simBox()}
 <p class="lead">This is a service business — Dickson funds ops, not just software. So the model is an <b>ops P&L</b>, not a SaaS P&L. But the margin structure is software-like once the entity's fixed cost is amortised.</p>
 <div class="tablewrap"><table><tr><th>Driver</th><th>Reality</th></tr>
 <tr><td>Headline fee</td><td>Only ~40–60% of true cost; the rest is employer contributions, benefits admin, FX, setup/termination fees, deposits</td></tr>
