@@ -293,6 +293,22 @@ tr:hover td{background:rgba(255,255,255,.04);}
 .calc .line.tot{font-weight:750;font-size:16px;border-top:1px solid var(--gline);margin-top:5px;padding-top:9px;color:#fff;}
 .calc .line .neg{color:var(--red);}.calc .line .pos{color:var(--greenink);}
 .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 8px;border-radius:6px;background:rgba(224,184,74,.16);color:var(--gold2);}
+.simgrid{display:grid;grid-template-columns:minmax(290px,.95fr) minmax(340px,1.25fr);gap:14px;align-items:start;margin:14px 0;}
+.simform{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;}
+.simform .full{grid-column:1/-1;}
+.simform input[type=checkbox]{width:auto;margin-right:7px;vertical-align:middle;}
+.info-dot{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border:1px solid rgba(224,184,74,.45);border-radius:50%;margin-left:5px;color:var(--gold2);background:rgba(224,184,74,.1);font-size:10px;font-weight:800;line-height:1;cursor:help;}
+.resultgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0 12px;}
+.resultcard{background:rgba(255,255,255,.045);border:1px solid var(--gline);border-radius:13px;padding:12px 13px;min-height:92px;}
+.resultcard .rk{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);}
+.resultcard .rv{font-size:20px;font-weight:800;color:#fff;margin:5px 0 2px;letter-spacing:-.2px;}
+.resultcard .rx{font-size:12px;color:var(--text2);line-height:1.45;}
+.learnlist{display:grid;gap:8px;margin:10px 0;}
+.learnitem{border:1px solid var(--gline);background:rgba(255,255,255,.035);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--text2);}
+.learnitem b{color:var(--text);}
+.riskflags{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0 3px;}
+.riskflags span{font-size:11px;font-weight:700;color:var(--amberink);background:var(--amberbg);border:1px solid rgba(251,191,36,.18);border-radius:999px;padding:5px 8px;}
+.sourcegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
 
 .hero{background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid var(--gline);border-radius:20px;padding:32px 32px;color:#fff;margin-bottom:20px;backdrop-filter:blur(24px) saturate(1.4);box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);position:relative;overflow:hidden;}
 .hero::after{content:'';position:absolute;top:-40%;right:-10%;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(224,184,74,.28),transparent 68%);pointer-events:none;}
@@ -334,6 +350,9 @@ tr:hover td{background:rgba(255,255,255,.04);}
   .doclinks{justify-content:flex-start;width:100%;}
   .simbox{grid-template-columns:1fr;}
   .simmeta{grid-template-columns:1fr;}
+  .simgrid,.sourcegrid{grid-template-columns:1fr;}
+  .resultgrid{grid-template-columns:1fr;}
+  .simform{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -388,7 +407,7 @@ const MODS=[
  {id:'setup',ix:'6',group:'The Machine',nav:'Legal & Setup',subs:[['seq','Setup overview'],['entityseq','06A · Entity sequence'],['contract','06B · Contract stack'],['entity','Entity: PT vs PT PMA'],['lic','Licences & registrations'],['risk','Permenaker 7/2026 risk'],['memos','Counsel memos'],['check','Setup checklist']]},
  {id:'ops',ix:'7',group:'The Machine',nav:'Operations Lifecycle',subs:[['overview','Lifecycle overview'],['series','07A-E lifecycle series'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s4deep','4.1 · People ops deep dive'],['s5','5 · Offboard'],['first10','First-10 runbook'],['run','How it is run']]},
  {id:'playbook',ix:'8',group:'The Machine',nav:'Coordination Playbook',subs:[['swimlane','End-to-end swimlane'],['triangle','The legal triangle'],['raci','RACI across the lifecycle'],['manpower','EOR team & hiring ladder'],['clock','The monthly payroll clock'],['esc','08A · Escalation & dunning'],['termination','Termination decision tree'],['rolerisk','Role-risk taxonomy'],['thr','THR as a monthly liability'],['memos','Counsel memo checklist']]},
- {id:'compliance',ix:'9',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['thr','THR'],['sev','Severance'],['term','Termination workflow']]},
+ {id:'compliance',ix:'9',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['lab','Payroll validation lab'],['simcalc','Payroll simulator lab'],['thr','THR'],['sev','Severance'],['term','Termination workflow']]},
  {id:'sim',ix:'9.5',group:'The Machine',nav:'EOR Desk Sim',subs:[['play','Play the module quiz']]},
  {id:'econ',ix:'10',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator']]},
  {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line'],['ai','11A · AI ops stack']]},
@@ -443,6 +462,7 @@ function go(mod,sub,keep){
   if(!keep){if(sub){const el=document.getElementById('sub-'+sub);if(el){setTimeout(()=>scrollToSub(sub,'auto'),90);setTimeout(()=>scrollToSub(sub,'auto'),560);}else window.scrollTo(0,0);}else window.scrollTo(0,0);}
   if(window.innerWidth<=760)closeNav();
   if(m.id==='econ')setTimeout(runCalc,60);
+  if(m.id==='compliance')setTimeout(runPayrollSim,80);
   if(m.id==='market')setTimeout(runSom,60);if(m.id==='playbook')setTimeout(renderSwimlane,60);
   setTimeout(attachScrollSpy,80);
 }
@@ -466,7 +486,7 @@ function buildModule(m){
 const SUBNAV_GROUPS={
  setup:[['Structure & sequence',['seq']],['Entity & licences',['entity','lic']],['Risk & counsel',['risk']],['Execution',['check']]],
  ops:[['Overview',['overview','series']],['Lifecycle stages',['s0','s1','s2','s3','s4','s5']],['Runbook',['first10','run']]],
- compliance:[['Calendar & costs',['cal','stack']],['Contributions & tax',['bpjs','pph']],['Holiday pay & exit',['thr','sev','term']]],
+ compliance:[['Calendar & costs',['cal','stack']],['Contributions & tax',['bpjs','pph','lab','simcalc']],['Holiday pay & exit',['thr','sev','term']]],
  gtm:[['Market & ICP',['icp','sg','roles']],['Acquisition',['pseo','wedges']],['Monetisation',['pricing','check']]]
 };
 function pillBtn(m,subId,label){return `<button onclick="jumpSub('${m.id}','${subId}')" id="pill-${subId}">${label}</button>`;}
@@ -522,31 +542,38 @@ function res(url,tag,t,d){return `<a class="reslink" href="${url}" target="_blan
 const DRIVE='https://drive.google.com/drive/folders/1KGw7TCS5PM2qZ6PRlBYHFbQlz2F4z_5m?usp=sharing';
 const SIM='https://navv-desk-sim.vercel.app/';
 const DOCS={
- d01:'https://docs.google.com/document/d/11y5e33grT2eK5_D0yJhHa5sdXZgr3wEk/edit',
- d02:'https://docs.google.com/document/d/1vagdDK0W2KK388-NKp7Qu_sRMKeVmW5v/edit',
- d03:'https://docs.google.com/document/d/14uLrJcFa6Ebam2RObhf9zmnxNe3f-p1t/edit',
- d04:'https://docs.google.com/document/d/129Y2vaYZ9mmp4f7H_PHx4v9uDemNydk2/edit',
- whateor05:'https://docs.google.com/document/d/1fNZn6TglvWdHuUQ-N2dLm3o6vkrmSEiO/edit',
- setup06:'https://docs.google.com/document/d/1ldN7n24GqriYQgZusqkaBZymindoQrlD/edit',
- setup06a:'https://docs.google.com/document/d/1ZxNx8HIP2ahfCOaPpimLjdcsa32EQGr3/edit',
- setup06b:'https://docs.google.com/document/d/1qAn_IUJ17dvoCloTeC65DEaCdgwF7Fa0/edit',
- ops07:'https://docs.google.com/document/d/1MuTbTHucS4JcSDRKZz43FNWiZ6OJFH0_/edit',
- ops07a:'https://docs.google.com/document/d/1SVCf8EsrVSKXZNtQdwStefOpiX1g1p7I/edit',
- ops07b:'https://docs.google.com/document/d/1At2zu8BQlZCgSXkejCum-U44DOcDdPZ4/edit',
- ops07c:'https://docs.google.com/document/d/1bAih--3EaJ-QazofxoWFguH_1_FaRPMp/edit',
- ops07d:'https://docs.google.com/document/d/11l_BsW_czUzztMv4Bm_QJd72jpsqKwGe/edit',
- ops07d1:'https://docs.google.com/document/d/1_QYTwpeAPCDR9543CsOqoSmaGEz7RSV3/edit',
- ops07e:'https://docs.google.com/document/d/1iDdYXkHTEpLpCjdzyxCsbhwCfNf6PpX5/edit',
- playbook08:'https://docs.google.com/document/d/1DO_BsxKBDtsDcWM1VGmCdJAPqQlUwmLc/edit',
- playbook08a:'https://docs.google.com/document/d/16OQHMki-xNQ8ma9M8z_sxk0Vd8lBsEgH/edit',
- compliance09:'https://docs.google.com/document/d/1q9yzpb4QQ6NpOr16WH63rg-MobiybRuO/edit',
- econ10:'https://docs.google.com/document/d/1SlQkrjjBq3ESYZ63CKn_aX8fkEnJLIFA/edit',
- pay11:'https://docs.google.com/document/d/1ucdHZk7vq_-pEql7RVelqGVCc0itswtV/edit',
- pay11a:'https://docs.google.com/document/d/11Oc1juTA7NkNDpwpWOndLnKxV0_Lv4FY/edit',
- quality12:'https://docs.google.com/document/d/1Jg6-QA1poAEFEJvoRpicB55zI-Lv0eGN/edit',
- gtm13:'https://docs.google.com/document/d/1I_EqteyETWqH2-KKadT2PXjlC4kn42A5/edit',
- glossary14:'https://docs.google.com/document/d/1_heCtmlgRhgQM4oy2iWSzRh0iOjzFsy1/edit',
- msa:'https://docs.google.com/document/d/1J7b3Xz2gyl10VgIYlKdK02yxisi8GKhI/edit'
+ d01:'https://docs.google.com/document/d/14D8TcnG-YZH7aWiRPHyIFeg57fM3taQE/edit?rtpof=true&sd=true',
+ d02:'https://docs.google.com/document/d/1VMuPJTxQ6gtSKeypmNUYddda_4Hk9_dj/edit?rtpof=true&sd=true',
+ d03:'https://docs.google.com/document/d/1qiHoePWOm-dNQ2qtnX6xhgUI9XqXyZyj/edit?rtpof=true&sd=true',
+ d04:'https://docs.google.com/document/d/1r-5zRnSafe4ax4z8THAeF5UNxNPiNsSu/edit?rtpof=true&sd=true',
+ whateor05:'https://docs.google.com/document/d/1lcblNtS43QKyguAGzfUZU6f4m3vTNn4u/edit?rtpof=true&sd=true',
+ setup06:'https://docs.google.com/document/d/1XYEw-3bVO4IG5lUroUsRb3OrPhmfZ53i/edit?rtpof=true&sd=true',
+ setup06a:'https://docs.google.com/document/d/1vksYoGUMU45fYc9x4HCEMl-WJcfn92zW/edit?rtpof=true&sd=true',
+ setup06b:'https://docs.google.com/document/d/1G-bzHum0R4fWTAbYAbXP9Ybm3u6o9iJ6/edit?rtpof=true&sd=true',
+ setup06c:'https://docs.google.com/document/d/1-WsNHvhEVYnv-DEtodOi5-_M_BCi0mlY/edit?rtpof=true&sd=true',
+ setup06d:'https://docs.google.com/document/d/1hmqn8nZTlyaULpfjvGs8W08jXJz2xt8y/edit?rtpof=true&sd=true',
+ ops07:'https://docs.google.com/document/d/19jyy-zxR-Y-ksuhgQ4BYS_1Kb4q0szql/edit?rtpof=true&sd=true',
+ ops07a:'https://docs.google.com/document/d/19s2OE1YCA39Ckfq1FxT7-exX63Me93Wu/edit?rtpof=true&sd=true',
+ ops07b:'https://docs.google.com/document/d/15DIbsKF-wqaynsLCMZH_E7Dp0aI4iUro/edit?rtpof=true&sd=true',
+ ops07c:'https://docs.google.com/document/d/1wC7Cg9qIQEZkdyaUWZCSZg2Iu_5FoHe9/edit?rtpof=true&sd=true',
+ ops07d:'https://docs.google.com/document/d/1nu3cTlbi_Yj1i25mT6V2prACzI9Fv2pi/edit?rtpof=true&sd=true',
+ ops07d1:'https://docs.google.com/document/d/1atqkppy4YjkGqBmzmd4bNRbr5qtaYVOb/edit?rtpof=true&sd=true',
+ ops07e:'https://docs.google.com/document/d/1OUe7-URAYx94J6nPeDu_mKIWjdi7zzC6/edit?rtpof=true&sd=true',
+ playbook08:'https://docs.google.com/document/d/1ANAdwcwj0-69vKGQ_anaQWhJj5JV4OOy/edit?rtpof=true&sd=true',
+ playbook08a:'https://docs.google.com/document/d/1kYHCQyXJMP74b1vCQFNtGRXNIRBBjHLw/edit?rtpof=true&sd=true',
+ playbook08b:'https://docs.google.com/document/d/1Z8fIViGo9IDl55LJl9VPVqK7tTnTerSC/edit?rtpof=true&sd=true',
+ compliance09:'https://docs.google.com/document/d/1r4gkxuwHDgz8SmpLxqiZZWNud6TDa9o8/edit?rtpof=true&sd=true',
+ compliance09a:'https://docs.google.com/document/d/1MZxjFXyvaGBkLfGU9d-wzAFmli0fGqmQ/edit?rtpof=true&sd=true',
+ compliance09b:'https://docs.google.com/document/d/1YZsjFEKrM4WS_F0MIvZ53bDiGxgYYEw4/edit?rtpof=true&sd=true',
+ econ10:'https://docs.google.com/document/d/1MeuTHwtxuFUjs3xTcTb7GpQ5-xDrDCsi/edit?rtpof=true&sd=true',
+ pay11:'https://docs.google.com/document/d/1LvAiVsBnvNxdlEtJNXMVbSNNbXfDKOZk/edit?rtpof=true&sd=true',
+ pay11a:'https://docs.google.com/document/d/10FQMml7QPnZ-E0Y0As2WciH9t0RVY2C9/edit?rtpof=true&sd=true',
+ quality12:'https://docs.google.com/document/d/18h_wI_EVqQ8EyZBgeblt9twcsU8SsHaR/edit?rtpof=true&sd=true',
+ quality12a:'https://docs.google.com/document/d/1sJ0-LB8QsRJvcFftG7g_FDaE7WS_vzZO/edit?rtpof=true&sd=true',
+ gtm13:'https://docs.google.com/document/d/1nJg8I3LHSWvQlK5yJFk51_ntUWOwAcyR/edit?rtpof=true&sd=true',
+ gtm13a:'https://docs.google.com/document/d/1o2336F1DAgQN47c0-UiJTiWXnVP2MDEQ/edit?rtpof=true&sd=true',
+ glossary14:'https://docs.google.com/document/d/1vQLn_gfu8kmuSoXiGuljhTJxUfnmi-DL/edit?rtpof=true&sd=true',
+ msa:'https://docs.google.com/document/d/1rZ38eIlW9u1A0gy6KKxD_RaJQr6wF7T-/edit?rtpof=true&sd=true'
 };
 const DOC_TITLES={
  d01:'01 Opportunity',
@@ -557,6 +584,8 @@ const DOC_TITLES={
  setup06:'06 Legal Setup',
  setup06a:'06A Entity Setup Sequence',
  setup06b:'06B Contract Stack & Signing Ops',
+ setup06c:'06C KBLI 2025 + Permenaker Counsel Gate',
+ setup06d:'06D Company Regulation & Internal Rules Pack',
  ops07:'07 Operations Lifecycle',
  ops07a:'07A Quote & Sign',
  ops07b:'07B Onboarding',
@@ -566,12 +595,17 @@ const DOC_TITLES={
  ops07e:'07E Offboarding',
  playbook08:'08 Coordination Playbook',
  playbook08a:'08A Escalation & Dunning',
+ playbook08b:'08B Regulatory Change Ops',
  compliance09:'09 Compliance Deep Dive',
+ compliance09a:'09A Payroll Validation Lab',
+ compliance09b:'09B Payroll Simulator Spec',
  econ10:'10 Unit Economics',
  pay11:'11 Payments / Airwallex',
  pay11a:'11A AI Ops Stack Assessment',
  quality12:'12 Quality Risk Controls',
+ quality12a:'12A PDP Data Architecture & AI Boundary',
  gtm13:'13 Go To Market',
+ gtm13a:'13A Primary Research Lab',
  glossary14:'14 Glossary',
  msa:'15 MSA Template Skeleton'
 };
@@ -751,7 +785,8 @@ CHARTS.whynow=()=>{makeChart('ch_arb',{type:'bar',data:{labels:['Graphic designe
  makeChart('ch_remote',{type:'bar',data:{labels:['2019','2022','2024','2026'],datasets:[{label:'Remote share of workforce (%)',data:[15,42,48,52],backgroundColor:'#7aa2ff'}]},options:{plugins:{legend:{display:false}},scales:{y:{...GRID,ticks:{callback:v=>v+'%'}},x:GRID}}});};
 CHARTS.market=()=>{makeChart('ch_eormkt',{type:'line',data:{labels:['2025','2027','2029','2031','2033'],datasets:[{label:'Global EOR market (mid-cluster, $B)',data:[5.8,6.7,7.7,9,10.5],borderColor:'#e0b84a',backgroundColor:'rgba(224,184,74,.12)',fill:true,tension:.3,pointRadius:2}]},options:{plugins:{legend:{display:false}},scales:{y:{...GRID,ticks:{callback:v=>'$'+v+'B'}},x:GRID}}});
  makeChart('ch_talent',{type:'doughnut',data:{labels:['Digital freelancers ~2M','Developers (est.)','Design/creative','BPO/knowledge'],datasets:[{data:[2000,700,600,500],backgroundColor:['#e0b84a','#7aa2ff','#34d399','#f0d68a'],borderWidth:2,borderColor:'#12121a'}]},options:{plugins:{legend:{position:'right',labels:{boxWidth:12,font:{size:10}}}},cutout:'56%'}});};
-CHARTS.compliance=()=>makeChart('ch_coststack',{type:'bar',data:{labels:['Loaded employer cost'],datasets:[{label:'Gross',data:[100],backgroundColor:'#5b6472'},{label:'Employer BPJS ~11%',data:[11],backgroundColor:'#e0b84a'},{label:'THR accrual ~8.3%',data:[8.3],backgroundColor:'#f0d68a'},{label:'Severance accrual ~4%',data:[4],backgroundColor:'#fbe3a0'}]},options:{indexAxis:'y',plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true,...GRID,ticks:{callback:v=>v+'%'}},y:{stacked:true,...GRID}}}});
+CHARTS.compliance=()=>{makeChart('ch_coststack',{type:'bar',data:{labels:['Loaded employer cost'],datasets:[{label:'Gross',data:[100],backgroundColor:'#5b6472'},{label:'Employer BPJS ~11%',data:[11],backgroundColor:'#e0b84a'},{label:'THR accrual ~8.3%',data:[8.3],backgroundColor:'#f0d68a'},{label:'Severance accrual ~4%',data:[4],backgroundColor:'#fbe3a0'}]},options:{indexAxis:'y',plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true,...GRID,ticks:{callback:v=>v+'%'}},y:{stacked:true,...GRID}}}});
+ setTimeout(runPayrollSim,60);};
 CHARTS.econ=()=>{const {ns,cost,rev}=ecoModel();
  makeChart('ch_be',{type:'line',data:{labels:ns,datasets:[{label:'Revenue',data:ns.map(rev),borderColor:'#e0b84a',backgroundColor:'rgba(224,184,74,.12)',fill:true,tension:.2,pointRadius:2},{label:'Cost',data:ns.map(cost),borderColor:'#fb7185',tension:.2,pointRadius:2}]},options:{plugins:{legend:{position:'bottom'}},scales:{y:{...GRID,ticks:{callback:v=>'$'+(v/1000)+'k'}},x:GRID}}});
  const ms=ns.filter(n=>n>0);makeChart('ch_margin',{type:'line',data:{labels:ms,datasets:[{data:ms.map(n=>Math.round((rev(n)-cost(n))/rev(n)*100)),borderColor:'#34d399',backgroundColor:'rgba(52,211,153,.12)',fill:true,tension:.25,pointRadius:2}]},options:{plugins:{legend:{display:false}},scales:{y:{min:-100,max:100,...GRID,ticks:{callback:v=>v+'%'}},x:GRID}}});
@@ -788,6 +823,68 @@ function runCalc(){const out=document.getElementById('calcOut');if(!out)return;
   <div class="line"><span>− Employee BPJS (JHT+JP+Kes)</span><span class="neg">${fmt(dJHT+dJP+dKes)}</span></div>
   <div class="line"><span>− PPh 21 (TER-${cat}, ${(terRate(cat,gross)*100).toFixed(2)}%)</span><span class="neg">${fmt(pph)}</span></div>
   <div class="line tot"><span>Net take-home</span><span class="pos">${fmt(net)}</span></div>`;}
+function getN(id,fb=0){const el=document.getElementById(id);return el?+(el.value||fb):fb;}
+function setT(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
+function pct(v){return (v*100).toFixed(v<.01?2:1)+'%';}
+function upMonths(m){const y=m/12;if(y<1)return 1;if(y<2)return 2;if(y<3)return 3;if(y<4)return 4;if(y<5)return 5;if(y<6)return 6;if(y<7)return 7;if(y<8)return 8;return 9;}
+function upmkMonths(m){const y=m/12;if(y<3)return 0;if(y<6)return 2;if(y<9)return 3;if(y<12)return 4;if(y<15)return 5;if(y<18)return 6;if(y<21)return 7;if(y<24)return 8;return 10;}
+const EXIT_PRESETS={
+ standard:{name:'Standard PHK scenario',up:1,upmk:1,pisah:false,note:'1× UP + 1× UPMK + UPH. Use only after the legal ground and evidence are validated.'},
+ effloss:{name:'Efficiency / closure with losses',up:.5,upmk:1,pisah:false,note:'0.5× UP + 1× UPMK + UPH. Counsel confirms loss/closure basis.'},
+ violation:{name:'Violation after warning ladder',up:.5,upmk:1,pisah:false,note:'0.5× UP + 1× UPMK + UPH, evidence and policy trail required.'},
+ resign:{name:'Employee resignation',up:0,upmk:0,pisah:true,note:'Usually UPH + uang pisah where policy/contract/PP/PKB provides it.'},
+ retire:{name:'Retirement',up:1.75,upmk:1,pisah:false,note:'High-liability preset; validate against company policy and insurance/benefit offset.'},
+ death:{name:'Death / prolonged illness threshold',up:2,upmk:1,pisah:false,note:'2× UP + 1× UPMK + UPH; family/beneficiary workflow applies.'}
+};
+function runPayrollSim(){
+ const out=document.getElementById('payrollSimOut');if(!out)return;
+ const base=getN('psBase',25000000),fixed=getN('psFixed',0),benefits=getN('psBenefits',0),minWage=getN('psMinWage',0);
+ const wageBase=base+fixed,statBase=minWage&&wageBase<minWage?minWage:wageBase;
+ const tenure=getN('psTenure',12),empType=(document.getElementById('psType')||{}).value||'PKWTT',cat=(document.getElementById('psTer')||{}).value||'A';
+ const jkk=getN('psJkk',.0024),feeUsd=getN('psFee',249),fx=getN('psFx',FX),depositMonths=getN('psDeposit',1),reservePct=getN('psReserve',4)/100,fxPct=getN('psFxBuffer',1.5)/100;
+ const scenarioKey=(document.getElementById('psExit')||{}).value||'standard',scenario=EXIT_PRESETS[scenarioKey]||EXIT_PRESETS.standard;
+ const manualUph=getN('psUph',0),manualPisah=getN('psPisah',0),tapera=!!document.getElementById('psTapera')?.checked;
+ setT('psTenureV',tenure+' mo');setT('psDepositV',depositMonths+' mo');setT('psReserveV',pct(reservePct));setT('psFxBufferV',pct(fxPct));
+ const jpBase=Math.min(statBase,11086300),kesBase=Math.min(statBase,12000000);
+ const erJht=statBase*.037,erJp=jpBase*.02,erJkk=statBase*jkk,erJkm=statBase*.003,erKes=kesBase*.04,employerBpjs=erJht+erJp+erJkk+erJkm+erKes;
+ const eeJht=statBase*.02,eeJp=jpBase*.01,eeKes=kesBase*.01,employeeBpjs=eeJht+eeJp+eeKes;
+ const ter=terRate(cat,wageBase),pph=ter*wageBase;
+ const taperaEmployer=tapera?statBase*.005:0,taperaEmployee=tapera?statBase*.025:0;
+ const net=wageBase-employeeBpjs-pph-taperaEmployee;
+ const thrEntitlement=tenure>=1?(Math.min(tenure,12)/12)*wageBase:0,thrAccrual=wageBase/12;
+ const pkwtComp=empType==='PKWT'&&tenure>=1?(tenure/12)*wageBase:0;
+ const up=upMonths(tenure),upmk=upmkMonths(tenure);
+ const pkwttSev=empType==='PKWTT'?((up*scenario.up+upmk*scenario.upmk)*wageBase+manualUph+(scenario.pisah?manualPisah:0)):0;
+ const exitExposure=empType==='PKWT'?pkwtComp:pkwttSev;
+ const exitReserve=empType==='PKWT'?wageBase/12:wageBase*reservePct;
+ const feeIdr=feeUsd*fx,passThrough=wageBase+employerBpjs+thrAccrual+exitReserve+benefits+taperaEmployer,fxBuffer=passThrough*fxPct,monthlyInvoice=passThrough+feeIdr+fxBuffer,deposit=monthlyInvoice*depositMonths;
+ const flags=[];
+ if(minWage&&wageBase<minWage)flags.push('Below entered local minimum wage: quote cannot proceed as-is.');
+ if(fixed>0)flags.push('Fixed allowance included in BPJS, THR and exit wage base.');
+ if(wageBase>11086300)flags.push('JP ceiling triggered: pension contribution stops at Rp11.0863M base.');
+ if(wageBase>12000000)flags.push('BPJS Kesehatan cap triggered at Rp12M.');
+ if(tenure>=36)flags.push('UPMK service-pay threshold triggered.');
+ if(empType==='PKWT')flags.push('PKWT path: compensation accrues; probation is not allowed.');
+ if(empType==='PKWTT')flags.push('PKWTT path: PHK reason and evidence drive the multiplier.');
+ flags.push('TER is Jan-Nov withholding; December still needs annual true-up.');
+ if(tapera)flags.push('Tapera shown only as watch-item sensitivity, not base 2026 payroll.');
+ out.innerHTML=`<div class="resultgrid">
+  <div class="resultcard"><div class="rk">Employee net pay</div><div class="rv">${fmt(net)}</div><div class="rx">Gross minus employee BPJS ${fmt(employeeBpjs)}, TER-${cat} PPh 21 ${fmt(pph)}${tapera?`, Tapera watch ${fmt(taperaEmployee)}`:''}.</div></div>
+  <div class="resultcard"><div class="rk">Client monthly estimate</div><div class="rv">${fmt(monthlyInvoice)}</div><div class="rx">Gross + employer load + THR + exit reserve + benefits + fee + FX buffer.</div></div>
+  <div class="resultcard"><div class="rk">Employer BPJS</div><div class="rv">${fmt(employerBpjs)}</div><div class="rx">JHT ${fmt(erJht)}, JP ${fmt(erJp)}, JKK ${fmt(erJkk)}, JKM ${fmt(erJkm)}, Kesehatan ${fmt(erKes)}.</div></div>
+  <div class="resultcard"><div class="rk">THR liability</div><div class="rv">${fmt(thrEntitlement)}</div><div class="rx">Current entitlement by tenure; budget monthly at ${fmt(thrAccrual)}.</div></div>
+  <div class="resultcard"><div class="rk">Exit exposure now</div><div class="rv">${fmt(exitExposure)}</div><div class="rx">${empType==='PKWT'?'PKWT compensation to date.':scenario.name+': '+scenario.note}</div></div>
+  <div class="resultcard"><div class="rk">Funding guardrail</div><div class="rv">${fmt(deposit)}</div><div class="rx">${depositMonths} month deposit on loaded monthly estimate. Deposit is risk collateral, not revenue.</div></div>
+ </div>
+ <div class="riskflags">${flags.map(f=>`<span>${f}</span>`).join('')}</div>
+ <div class="chartbox"><h4>Cost waterfall from one salary</h4><canvas id="ch_payroll_waterfall"></canvas><div class="src">Driven by the fields on the left. Watch how caps, fixed allowances, tenure and exit type move the picture.</div></div>
+ <div class="learnlist">
+  <div class="learnitem"><b>What moved net pay?</b> The worker sees employee BPJS and PPh 21 TER; employer BPJS and reserves are client-side cost, not employee deductions.</div>
+  <div class="learnitem"><b>What moved the invoice?</b> Employer BPJS, THR accrual, exit reserve, fee and FX buffer are separated so statutory pass-through is not mistaken for Navv margin.</div>
+  <div class="learnitem"><b>What needs a human check?</b> JKK risk tier, TER category, local minimum wage, Tapera timing, and PHK ground/evidence remain validation gates before live quoting.</div>
+ </div>`;
+ makeChart('ch_payroll_waterfall',{type:'bar',data:{labels:['Gross','Employer BPJS','THR accrual','Exit reserve','Benefits','Fee','FX buffer'],datasets:[{data:[wageBase,employerBpjs,thrAccrual,exitReserve,benefits,feeIdr,fxBuffer],backgroundColor:['#5b6472','#e0b84a','#f0d68a','#fb7185','#7aa2ff','#34d399','#c084fc']}]},options:{plugins:{legend:{display:false}},scales:{y:{...GRID,ticks:{callback:v=>'Rp'+Math.round(v/1000000)+'M'}},x:{...GRID,ticks:{font:{size:10}}}}}});
+}
 function runSom(){const out=document.getElementById('somOut');if(!out)return;
  const co=+document.getElementById('somCo').value,seats=+document.getElementById('somSeats').value,fee=+document.getElementById('somFee').value;
  const totalSeats=Math.round(co*seats),arr=totalSeats*fee*12;
@@ -981,7 +1078,7 @@ SUB['whateor/myths']=()=>`
 /* ===== 6 · LEGAL & SETUP (detailed) ===== */
 SUB['setup/seq']=()=>`
 <p class="lead">This is the one-time build of the Indonesian employing entity — the supply side that stays the same no matter where clients come from. It runs in six phases over roughly <b>8–12 weeks</b> and ~<b>$3–7k in fees</b> (excluding capital). OSS is the spine: the NIB fans out to Coretax, WLKP and BPJS. This is where "buy the expertise, don't DIY" applies hardest.</p>
-${docBundle(['setup06','setup06a','setup06b','msa'],'The legal setup parent now has two child companions: entity setup sequence and contract/signing operations. Read the parent first, then the children.')}
+${docBundle(['setup06','setup06a','setup06b','setup06c','setup06d','msa'],'Read the legal setup parent, the entity/contract-stack children, the KBLI/Permenaker counsel gate, the company-regulation pack, and the MSA skeleton.')}
 <div class="callout red"><b>⚠ Resolve this before spending a rupiah — the 78101 / 78300 KBLI question</b><p>The enhanced legal report now treats <b>KBLI 78101</b> (labour placement, Medium-High risk, Manpower-verified) and/or <b>KBLI 78300</b> (HR-function provision, Low risk, NIB-only) as the likely PT PMA route. <b>KBLI 78200</b> is no longer the base assumption; it is the blocked/conflict case because OSS appears to close large-scale PMA access. Commission Memo B with a notary and employment counsel before incorporating.</p></div>
 <h4>Phase A — Pre-incorporation (weeks 0–2)</h4>
 <div class="moneyflow">
@@ -1015,7 +1112,7 @@ ${[
 ['12','BPJS Ketenagakerjaan → NPP','Register via SIPP for the company number, then enrol employees (JKK/JKM/JHT/JP/JKP). <b>1–3 working days · free reg.</b>'],
 ['13','BPJS Kesehatan via EDABU','Register the company → business code + virtual account → add employees + families. 4% employer / 1% employee.'],
 ['14','WLKP manpower report','Via SISNAKER within 30 days of establishment; annual renewal. Penalty up to 3 months / IDR 1M.'],
-['15','Register the alih daya / PKWT agreements','Each PKWT recorded with Disnaker ≤3 working days of signing — else it converts by law to permanent PKWTT.']
+['15','Record PKWT + Perjanjian Alih Daya where applicable','PKWT is recorded within the statutory deadline; late/missing recording is a serious defect, not a settled automatic-conversion shortcut. If Navv uses the alih-daya/EOR structure, the Perjanjian Alih Daya is separately recorded with local Dinas within 3 working days under Permenaker 7/2026.']
 ].map(s=>`<div class="mfstep"><div class="mfn">${s[0]}</div><div><div class="mft">${s[1]}</div><div class="mfd">${s[2]}</div></div></div>`).join('')}
 </div>
 <h4>Phase F — Banking & rails (weeks 4–8)</h4>
@@ -1047,7 +1144,7 @@ ${docBundle(['setup06b','msa','ops07a','ops07b'],'Use 06B for signing mechanics,
 <tr><td>Indonesia SOW / schedule</td><td>Worker, role, salary, start date, no-authority boundary, work protocol</td><td>The bridge between client commercial intent and Indonesian employment execution.</td></tr>
 <tr><td>Employment agreement</td><td>PKWT/PKWTT, Bahasa/bilingual wording, wage, rights, IP/confidentiality</td><td>Signed by Navv ID PT and employee; not by the client.</td></tr>
 <tr><td>Signing evidence file</td><td>PSrE audit trail, e-Meterai certificate, PKWT recording receipt</td><td>Becomes procurement proof and dispute evidence.</td></tr></table></div>
-<div class="callout red"><b>Corrected rule</b><p>The old "register the alih daya agreement in 3 working days" framing is not the live statutory anchor. The hard statutory item is PKWT recording within the required deadline; voluntary agreement registration is practice/risk insurance where available.</p></div>`;
+<div class="callout red"><b>Corrected rule</b><p>PKWT recording and Perjanjian Alih Daya recording are separate controls. PKWT recording remains required under the employment-contract route; where Navv uses an alih-daya/EOR structure, Permenaker 7/2026 also makes the outsourcing agreement a live statutory artifact to record with local Dinas within 3 working days after signing. Counsel must confirm the local Dinas workflow, annex format, and whether a client/worker schedule can satisfy the practical submission package.</p></div>`;
 SUB['setup/structure']=()=>`
 <p class="lead">The operating company is not a SaaS wrapper. Navv is the Indonesian legal employer; the client directs the work but does not sign Indonesian employment documents or become the local employer.</p>
 <div class="moneyflow">
@@ -1075,7 +1172,7 @@ SUB['setup/lic']=()=>`
 <div class="tablewrap"><table><tr><th>Item</th><th>Portal / body</th><th>Detail</th></tr>
 <tr><td>NIB (business ID)</td><td class="mono">oss.go.id</td><td>Risk-based (PP 28/2025); for low-risk the NIB is the licence. Also triggers the corporate NPWP.</td></tr>
 <tr><td>KBLI 78101 / 78300</td><td>OSS (KBLI 2025)</td><td>78101 likely primary for labour placement; 78300 candidate secondary for HR-function provision. Drives risk class, Manpower verification, and JKK tier. ⚠ Memo B must settle the exact route.</td></tr>
-<tr><td>Alih daya licence</td><td>OSS + Disnaker</td><td>PP 35/2021 Pasal 20. Register each client/PKWT agreement with Disnaker ≤3 working days.</td></tr>
+<tr><td>Alih daya licence / recording</td><td>OSS + Disnaker</td><td>PP 35/2021 Art. 20 + Permenaker 7/2026. Hold the OSS business licensing posture, record the Perjanjian Alih Daya where the alih-daya/EOR structure is used, and record PKWT separately under the employment-contract workflow.</td></tr>
 <tr><td>SISNAKER / SIAPkerja</td><td class="mono">account.kemnaker.go.id</td><td>Gateway to WLKP + JKP administration.</td></tr>
 <tr><td>WLKP report</td><td class="mono">wajiblapor.kemnaker.go.id</td><td>≤30 days of establishment; annual renewal.</td></tr>
 <tr><td>BPJS reg → NPP</td><td>SIPP + EDABU</td><td>BPJS-TK company number + BPJS-Kesehatan enrolment.</td></tr>
@@ -1200,12 +1297,12 @@ SUB['ops/s1']=()=>`
 <div class="stage"><div class="stage-h"><div class="stage-n">1</div><div class="stage-t">Onboard — manufacturing a legal relationship</div></div><div class="stage-b">
 <p><span class="pill why">Theory</span>Onboarding has two layers: the <b>legal/compliance layer</b> (identity, right-to-work, contract, statutory registration — what makes employment <i>lawful</i>) and the <b>experience layer</b> (culture, ramp). EOR liability lives in the first. Three concepts carry it: <b>identity/right-to-work verification</b> (the KYC of employment — in Indonesia, KTP/NIK which now doubles as the tax ID), the <b>employment contract</b> (fixed-term PKWT vs permanent PKWTT, with 9 mandatory clauses), and <b>IP assignment</b> (copyright can pass by a work-for-hire clause, but inventions need an <i>explicit</i> assignment — so tech hires sign a Confidential Information & Inventions Assignment before day one).</p>
 <p><span class="pill info">Mechanics · day-0 to day-30</span>Preboard: collect docs, verify identity, issue contract + IP agreement, register with BPJS + tax, provision access — so day one is culture, not forms. Day 1: welcome, systems, a buddy (56% of new hires say a buddy speeds productivity). Days 2–30: absorb the work, manager check-ins (new hires are 3.4× more likely to rate onboarding successful with an active manager), close with a 30-day review. Strong onboarding lifts retention ~82%.</p>
-<p class="mini"><span class="pill risk">Indonesia specifics</span>PKWT must be written, in Bahasa, registered with Disnaker ≤3 working days; both BPJS within 30 days of start; no probation on a PKWT.</p></div></div>
+<p class="mini"><span class="pill risk">Indonesia specifics</span>PKWT must be written, in Bahasa, and recorded within the statutory deadline; treat late/missing recording as a serious control defect, not casual admin. Both BPJS registrations should be completed in the onboarding window; no probation on a PKWT.</p></div></div>
 ${ssd('07B SSD · Onboarding',['Client','Employee','Navv OS','Navv ID PT','Disnaker','BPJS/Coretax'],[
 ['Navv OS','Employee','Collect KTP/NIK, NPWP/NIK, bank, BPJS status, dependents, emergency contact','Gate: master-data completeness.'],
 ['Navv OS','Client','Confirm role, manager, start date, devices, work protocol and no-authority instructions','Gate: client obligations accepted.'],
 ['Navv ID PT','Employee','Issue Bahasa/bilingual employment, IP, confidentiality and no-authority documents','Gate: signed/e-Meterai where needed.'],
-['Navv ID PT','Disnaker','Register PKWT / outsourcing arrangement within deadline where required','Gate: ≤3 working days.'],
+['Navv ID PT','Disnaker','Record PKWT and, where the alih-daya structure is used, record the Perjanjian Alih Daya separately','Gate: statutory recording evidence archived.'],
 ['Navv ID PT','BPJS/Coretax','Set up tax/BPJS records and payroll category','Gate: BPJS ≤30 days.'],
 ['Navv OS','Client + Employee','Run payroll dry-run and day-one readiness check','Output: clean master file.']
 ],[
@@ -1352,7 +1449,7 @@ SUB['ops/run']=()=>`
 <div class="card"><h4 style="margin-top:0">Roles</h4><p class="mini">Payroll specialist → administrator → lead; compliance & legal (in-house + local counsel); onboarding/HR ops; client success; finance/treasury. At small scale one person wears several hats — the key-person risk we know (Faishal lesson).</p></div>
 <div class="card"><h4 style="margin-top:0">The ratio that sets the cost model</h4><p class="mini">The key operating metric is the <b>payroll-to-headcount ratio</b>. Benchmarks span widely — ~633 employees/specialist (KPMG) to ~1,425 (Deloitte) — the spread <i>is</i> the automation opportunity. At our small scale, target ~1 admin per 75–100, moving toward the high end as AI preps the registers.</p></div></div>
 <div class="callout"><b>The one control that keeps it honest — maker-checker / four-eyes</b><p>Segregation of duties: the person who edits the employee master file is never the one who runs the final payroll. A "maker" initiates, a separate "checker" approves — so successful fraud now requires collusion. Every action is logged (user, timestamp) into a tamper-proof audit trail. The SLA gold standard is <b>99.5–99.9% on-time-and-accurate</b> each cycle. Non-negotiable at any scale.</p></div>
-${docBundle(['ops07','setup06b','playbook08','playbook08a','ops07d1','msa'],'Open the operating-model source, contract-stack source, coordination/escalation playbooks, support deep dive, and MSA skeleton directly.')}
+${docBundle(['ops07','setup06b','playbook08','playbook08a','playbook08b','ops07d1','msa'],'Open the operating-model source, contract-stack source, coordination/regulatory-change/escalation playbooks, support deep dive, and MSA skeleton directly.')}
 ${vid('https://www.youtube.com/watch?v=b0T5N7h7o3Y','ACH Rules & Regulations Explained','YouTube · how the disbursement rails + compliance work')}
 ${res('https://www.deel.com/blog/owned-entity-vs-in-country-partner/','Analysis','Deel — owned entity vs in-country partner','The core structural fork, from the market leader.')}
 ${res('https://blog.xtrm.com/posts/maker-checker-process','Concept','XTRM — the maker-checker process','Four-eyes + tamper-proof audit trail, explained.')}
@@ -1363,12 +1460,13 @@ ${res('https://opsdog.com/products/payroll-headcount-ratio','Benchmark','OpsDog 
 /* ===== 8 · COMPLIANCE ===== */
 SUB['compliance/cal']=()=>`
 <p>The as-is is governed by this calendar. Every date is a potential SLA breach if a manual step slips.</p>
+${docBundle(['compliance09','compliance09a','compliance09b'],'Read the compliance parent, payroll validation lab, and simulator spec directly from the updated Drive pack.')}
 <div class="timeline">
 ${[['Mid–late month','Payroll cutoff','Freeze attendance & variable inputs'],['~25th–month end','Disburse net pay + payslips','Payslip legally mandatory (PP 36/2021 Pasal 53)'],['10th (following month)','BPJS Kesehatan payment','Miss it and coverage suspends'],['15th (following month)','BPJS-TK + PPh 21 deposit','SIPP + Coretax e-Billing; BPJS late = 2%/mo'],['20th (following month)','SPT Masa PPh 21 filing','Coretax'],['1 March (annual)','JP wage-ceiling reset','2026 = IDR 11,086,300 — update payroll first'],['≥7 days before Idul Fitri','Pay THR in full','2026 deadline: 14 March · late = 5% fine'],['December run','PPh 21 recalculation + Form 1721-A1','The "rekonsiliasi Desember"']].map(t=>`<div class="tl"><div class="d">${t[0]}</div><div class="t">${t[1]}</div><div class="x">${t[2]}</div></div>`).join('')}</div>`;
 SUB['compliance/stack']=()=>`
 <p>"Loaded cost" is what the client actually pays to employ someone — well above gross salary. This is the number the quote must get right.</p>
 <div class="chartbox"><canvas id="ch_coststack"></canvas><div class="src">On top of gross: employer BPJS ≈10.24–11.74%, THR accrual ≈8.3%, severance accrual ≈4%. Fully-loaded ≈115–118% of gross before your fee.</div></div>
-<p class="mini">→ Feel it live in the <a onclick="go('econ','calc')">cost calculator</a>.</p>`;
+<p class="mini">→ Feel it live in the <a onclick="go('compliance','simcalc')">Payroll Simulator Lab</a>; use the Unit Economics calculator later to compare fee strategy.</p>`;
 SUB['compliance/bpjs']=()=>`
 <p>Two separate systems, two portals, two deadlines. Basis = base salary + fixed allowances.</p>
 <div class="tablewrap"><table><tr><th>Programme</th><th>Employer</th><th>Employee</th><th>Ceiling / notes</th></tr>
@@ -1378,6 +1476,8 @@ SUB['compliance/bpjs']=()=>`
 <tr><td>BPJS-TK · JKM (death)</td><td>0.30%</td><td>—</td><td>No cap</td></tr>
 <tr><td>BPJS Kesehatan (health)</td><td>4%</td><td>1%</td><td>Wage cap IDR 12,000,000; up to 5 family covered</td></tr></table></div>
 ${vid('https://www.youtube.com/watch?v=Gg13_s25WRg','Perhitungan Gaji Lengkap dengan PPh 21, BPJS Kesehatan & Ketenagakerjaan','YouTube · a full payslip build, deduction by deduction')}
+${res('https://www.bpjsketenagakerjaan.go.id/artikel/18913/artikel-berapa-besaran-iuran-jht%2C-jkk%2C-jkm%2C-jp-dan-jkp','Primary','BPJS Ketenagakerjaan — JHT/JKK/JKM/JP/JKP rates','Official contribution-rate explainer for wage recipients.')}
+${res('https://peraturan.bpk.go.id/Details/136650/perpres-no-64-tahun-2020','Primary','Perpres 64/2020 — BPJS Kesehatan PPU contribution','5% health contribution split 4% employer / 1% employee.')}
 ${res('https://www.aniday.com/en/blog/indonesia-payroll-guide-bpjs-contributions-and-pph-21-tax-3361','Guide','Aniday — Indonesia payroll: BPJS + PPh 21 (2026)','A clean English employer-grade walk-through.')}`;
 SUB['compliance/pph']=()=>`
 <p>Since Jan 2024, monthly PPh 21 uses the <b>TER</b> (average effective rate) method: <b>TER rate × monthly gross</b> for Jan–Nov, where the rate comes from the employee's PTKP-status category (A/B/C) and income band. December reverts to the annual progressive scale (5%–35%) and trues up (the "rekonsiliasi Desember"). Everything files through <b>Coretax</b> (live since Jan 2025) via e-Bupot 21 + SPT Masa, with Form 1721-A1 issued annually.</p>
@@ -1385,7 +1485,62 @@ SUB['compliance/pph']=()=>`
 ${vid('https://www.youtube.com/watch?v=iaG4cW4h4oU','Cara Menghitung & Lapor SPT PPh 21 Coretax 2025','YouTube · the TER method + bukti potong in Coretax')}
 ${vid('https://www.youtube.com/watch?v=vQihzAw_GdQ','Kelas Pajak — Perhitungan & Pelaporan PPh 21 dengan TER','YouTube · a deeper class on TER + reporting')}
 ${res('https://pajak.go.id/en/withholding-article-21-tax','Primary','DJP — Withholding Article 21 Tax','The tax authority\'s own source on PPh 21.')}
+${res('https://pajak.go.id/id/artikel/serba-serbi-ter-pph-pasal-21-pajak-baru-atau-formula-baru','Primary','DJP — TER PPh 21 explainer','TER is a monthly formula; December still performs annual reconciliation.')}
+${res('https://kalkulator.pajak.go.id/','Tool','DJP official PPh 21 calculator','Use as the cross-check for filing-grade cases.')}
 ${res('https://recruitgo.com/indonesia-income-tax-calculator/','Tool','RecruitGo — Indonesia income-tax (TER) calculator','Cross-check our calculator against a live one.')}`;
+SUB['compliance/lab']=()=>`
+<p class="lead">This lab turns payroll from a memorised formula into a validation ritual. Before money moves, Navv should know which rate table was used, who checked it, what changed since last month, and which items still require counsel or payroll-vendor confirmation.</p>
+${docBundle(['compliance09','compliance09a','compliance09b'],'Open the compliance parent, 09A validation lab and 09B simulator spec directly.')}
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">Case A · PKWTT senior engineer</h4><p class="mini">Rp35M/month, K/2. Validate TER category B, JP/Kesehatan caps, employer load, net pay and evidence pack. This is the high-salary cap lesson.</p></div>
+ <div class="card"><h4 style="margin-top:0">Case B · PKWT QA analyst</h4><p class="mini">Rp15M/month, TK/0, 12-month term. Validate no probation, PKWT compensation accrual, THR, and early-termination risk.</p></div>
+ <div class="card"><h4 style="margin-top:0">Case C · mid-cycle change</h4><p class="mini">Joiner, dependent update, THR eligibility or raise. Validate proration, BPJS timing, PPh 21 category movement and client invoice delta.</p></div>
+</div>
+<div class="tablewrap"><table><tr><th>Validation gate</th><th>What gets checked</th><th>Evidence to archive</th></tr>
+<tr><td>Master data</td><td>NIK/NPWP, PTKP, BPJS, bank, start date, employee type</td><td>Onboarding checklist + portal screenshots</td></tr>
+<tr><td>Rate version</td><td>JP ceiling, Kesehatan cap, JKK risk tier, TER table, FX, minimum wage</td><td>Rate table version and reviewer sign-off</td></tr>
+<tr><td>Monthly payroll</td><td>Gross-to-net, employer BPJS, client invoice, variance vs last cycle</td><td>Approved payroll register and variance note</td></tr>
+<tr><td>Annual liabilities</td><td>THR accrual/funding, December true-up, 1721-A1/BPA1</td><td>THR funding log and year-end reconciliation pack</td></tr>
+<tr><td>Exit case</td><td>PKWT compensation or PKWTT UP/UPMK/UPH, PHK ground, funding-before-notice</td><td>Counsel-approved termination calculation pack</td></tr></table></div>
+<div class="callout"><b>Teaching rule</b><p>The calculator below is allowed to be educational. Payroll execution is not. Every live quote still needs a versioned calculation sheet, DJP/BPJS cross-check where relevant, and human approval before a client sees numbers.</p></div>`;
+SUB['compliance/simcalc']=()=>`
+<p class="lead">A controlled sandbox for Indonesia EOR payroll economics: change salary, allowances, BPJS tier, TER category, tenure, contract type and deposit policy; then read what changed and why.</p>
+${docBundle(['compliance09','compliance09a','compliance09b','econ10','ops07c'],'The simulator synthesises the compliance parent, validation lab, simulator spec, unit economics and monthly payroll-loop report.')}
+<div class="callout blue"><b>Boundary</b><p>This is a source-backed learning and quote-control model, not a filing engine. It excludes overtime, daily-worker TER, exact December annual tax, irregular bonuses, expatriate cases, portal state, and legal advice on PHK grounds. Use DJP/BPJS/counsel validation before live quoting.</p></div>
+<div class="simgrid">
+ <div class="calc" oninput="runPayrollSim()" onchange="runPayrollSim()">
+  <div style="font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Payroll variables</div>
+  <div class="simform">
+   <label>Base salary IDR <span class="info-dot" title="Monthly basic salary. This plus fixed allowance forms the statutory wage base.">(i)</span><input id="psBase" type="number" value="25000000" min="0" step="500000"></label>
+   <label>Fixed allowance IDR <span class="info-dot" title="Tunjangan tetap is included in BPJS, THR and severance wage base.">(i)</span><input id="psFixed" type="number" value="0" min="0" step="250000"></label>
+   <label>Benefits/reimbursements IDR <span class="info-dot" title="Displayed as client pass-through unless reclassified as fixed allowance.">(i)</span><input id="psBenefits" type="number" value="1000000" min="0" step="250000"></label>
+   <label>Local minimum wage floor <span class="info-dot" title="Optional manual check. If entered above wage base, the simulator flags the quote and uses the floor for BPJS display.">(i)</span><input id="psMinWage" type="number" value="0" min="0" step="100000"></label>
+   <label>Employee type <span class="info-dot" title="PKWT accrues compensation; PKWTT uses severance scenarios.">(i)</span><select id="psType"><option value="PKWTT">PKWTT · permanent</option><option value="PKWT">PKWT · fixed term</option></select></label>
+   <label>TER category <span class="info-dot" title="A/B/C from PTKP status. Use DJP calculator for filing-grade validation.">(i)</span><select id="psTer"><option value="A">A · TK/0, TK/1, K/0</option><option value="B">B · TK/2, TK/3, K/1, K/2</option><option value="C">C · K/3</option></select></label>
+   <label>JKK risk tier <span class="info-dot" title="BPJS work-accident class. Office/tech is often low, but entity/role classification must be confirmed.">(i)</span><select id="psJkk"><option value="0.0024">Very low · 0.24%</option><option value="0.0054">Low · 0.54%</option><option value="0.0089">Medium · 0.89%</option><option value="0.0127">High · 1.27%</option><option value="0.0174">Very high · 1.74%</option></select></label>
+   <label>Tenure <span id="psTenureV">12 mo</span> <span class="info-dot" title="Moves THR entitlement, PKWT compensation, UP and UPMK.">(i)</span><input id="psTenure" type="range" value="12" min="0" max="120" step="1"></label>
+   <label>Navv fee USD/mo <span class="info-dot" title="Fee is revenue; statutory payroll lines are pass-through or reserves.">(i)</span><input id="psFee" type="number" value="249" min="0" step="10"></label>
+   <label>FX IDR/USD <span class="info-dot" title="Used only to convert the USD fee into IDR for the invoice view.">(i)</span><input id="psFx" type="number" value="16150" min="0" step="50"></label>
+   <label>FX buffer <span id="psFxBufferV">1.5%</span> <span class="info-dot" title="Transparent quote buffer against currency movement; not a hidden tax.">(i)</span><input id="psFxBuffer" type="range" value="1.5" min="0" max="4" step=".25"></label>
+   <label>Deposit <span id="psDepositV">1 mo</span> <span class="info-dot" title="Funding guardrail for payroll, THR and exit exposure. It is not revenue.">(i)</span><input id="psDeposit" type="range" value="1" min="0" max="3" step=".25"></label>
+   <label>PKWTT reserve <span id="psReserveV">4.0%</span> <span class="info-dot" title="Planning reserve only; real settlement depends on legal ground and evidence.">(i)</span><input id="psReserve" type="range" value="4" min="0" max="12" step=".5"></label>
+   <label>Exit scenario <span class="info-dot" title="Scenario presets from PP 35/2021 logic; counsel decides whether the ground is valid.">(i)</span><select id="psExit"><option value="standard">Standard PHK · 1×/1×</option><option value="effloss">Efficiency/losses · 0.5×/1×</option><option value="violation">Violation after SP · 0.5×/1×</option><option value="resign">Resignation · UPH + pisah</option><option value="retire">Retirement · 1.75×/1×</option><option value="death">Death/illness · 2×/1×</option></select></label>
+   <label>Manual UPH IDR <span class="info-dot" title="Unused leave, return cost and other compensation of rights.">(i)</span><input id="psUph" type="number" value="0" min="0" step="250000"></label>
+   <label>Uang pisah IDR <span class="info-dot" title="Only shown in scenarios where policy/contract/PP/PKB uses separation pay.">(i)</span><input id="psPisah" type="number" value="0" min="0" step="250000"></label>
+   <label class="full"><input id="psTapera" type="checkbox"> Tapera sensitivity only <span class="info-dot" title="Not in the base 2026 model; show as watch-item sensitivity until private-sector timing is confirmed.">(i)</span></label>
+  </div>
+ </div>
+ <div class="calc" id="payrollSimOut"></div>
+</div>
+<h4>Source anchors</h4>
+<div class="sourcegrid">
+${res('https://pajak.go.id/id/artikel/serba-serbi-ter-pph-pasal-21-pajak-baru-atau-formula-baru','Primary','DJP — TER PPh 21 explainer','Monthly TER and December true-up posture.')}
+${res('https://kalkulator.pajak.go.id/','Tool','DJP official calculator','Cross-check PPh 21 before filing or live quoting.')}
+${res('https://www.bpjsketenagakerjaan.go.id/artikel/18913/artikel-berapa-besaran-iuran-jht%2C-jkk%2C-jkm%2C-jp-dan-jkp','Primary','BPJS Ketenagakerjaan rates','JHT, JKK, JKM, JP and JKP rate reference.')}
+${res('https://peraturan.bpk.go.id/Details/136650/perpres-no-64-tahun-2020','Primary','Perpres 64/2020','BPJS Kesehatan 5% split for wage recipients.')}
+${res('https://peraturan.bpk.go.id/Details/161904/pp-no-35-tahun-2021','Primary','PP 35/2021','PKWT compensation, outsourcing, PHK and severance framework.')}
+${res('https://peraturan.bpk.go.id/Details/146101/permenaker-no-6-tahun-2016','Primary','Permenaker 6/2016','THR eligibility, timing and pro-rata posture.')}
+</div>`;
 SUB['compliance/thr']=()=>`
 <p><b>THR</b> (Tunjangan Hari Raya) is a mandatory religious-holiday allowance: one month's salary for ≥12 months' service (pro-rata for 1–&lt;12 months), paid <b>at least 7 days before</b> the holiday. Both PKWT and PKWTT qualify from ≥1 month's service. Late payment = a 5% fine (Permenaker 6/2016) plus an administrative sanction ladder.</p>
 <div class="worked"><div class="wt">Worked example · 2026</div><div class="wl"><span>Idul Fitri 1447H</span><span>Sat 21 / Sun 22 March 2026</span></div><div class="wl"><span>THR deadline</span><span>14 March 2026</span></div><div class="wl"><span>Employee, 8 months' service, gross Rp10M</span><span>pro-rata</span></div><div class="wl tot"><span>THR owed = 8/12 × Rp10M</span><span>Rp6,666,667</span></div></div>
@@ -1520,6 +1675,7 @@ ${docBundle(['pay11','pay11a'],'Read the payments rail first, then the AI ops as
 /* ===== 12 · QUALITY, RISK & CONTROLS ===== */
 SUB['quality/modes']=()=>`
 <p class="lead">Quality in payroll has a precise meaning: <b>accurate, on-time, compliant, every single cycle</b>. Here's where the as-is breaks and who's on the hook.</p>
+${docBundle(['quality12','quality12a'],'Open the quality/risk parent and the PDP data architecture + AI boundary child memo.')}
 <div class="tablewrap"><table><tr><th>Failure mode</th><th>Who's on the hook</th></tr>
 <tr><td>Misclassification (employee treated as contractor)</td><td>The client + the EOR; willful penalties + back-contributions ($40B class-action settlements in 2024)</td></tr>
 <tr><td>Permanent establishment</td><td>The client — a worker with signing authority can create a taxable presence even via an EOR</td></tr>
@@ -1547,6 +1703,7 @@ SUB['quality/seam']=()=>`
 /* ===== 12 · GO-TO-MARKET ===== */
 SUB['gtm/icp']=()=>`
 <p class="lead">Global from day one, focused on advanced markets. The buyer is an SME or startup in the US/UK/EU/AU/SG/JP/KR/TW/HK corridor that needs 1–20 Indonesian remote people and can't (or shouldn't) open a local entity for that.</p>
+${docBundle(['gtm13','gtm13a'],'Open the GTM parent and the primary-research lab behind the interview and market-learning plan.')}
 <div class="grid2"><div class="card"><h4 style="margin-top:0">Who fits</h4><p class="mini">Startups & SMEs hiring engineering, design, data, finance/back-office, or async support; already tempted to hire in Indonesia (or already paying contractors there); value speed + compliance over a big brand.</p></div>
 <div class="card"><h4 style="margin-top:0">Who doesn't (yet)</h4><p class="mini">Large enterprises with procurement (Deel/Atlas territory); US-realtime voice roles (timezone); companies wanting 50+ hires in one go (entity math flips).</p></div></div>
 <p>Lead with the buyer's problem — compliant Indonesia hiring, severance/PE risk removed — not with "we're an EOR." Speed, compliance, and no-entity risk removal are the three messages that convert.</p>
@@ -1643,7 +1800,7 @@ SUB['resources/reg']=()=>`
 ${res('https://www.hukumonline.com/klinik/a/legalitas-employer-of-record-di-indonesia-menurut-pp-35-2021-lt686bf29357fe7/','Primary','Hukumonline — legality of EOR in Indonesia','EOR as alih daya + Permenaker 7/2026.')}
 ${res('https://www.hukumonline.com/klinik/a/cara-hitung-pesangon-lt515b7ec90fe0c/','Primary','Hukumonline — severance calculation (2026)','The pesangon reference.')}
 ${res('https://pajak.go.id/en/withholding-article-21-tax','Primary','DJP — Withholding Article 21 Tax','PPh 21 from the tax authority.')}
-${res('https://www.hrforte.com/taxtok-hrforte/indonesia-2026-payroll-guide','Guide','HR Forte — 2026 Indonesia payroll guide','Current-year incl. the new Tapera levy.')}
+${res('https://www.hrforte.com/taxtok-hrforte/indonesia-2026-payroll-guide','Guide','HR Forte — 2026 Indonesia payroll guide','Use for comparison, but keep Tapera as a watch item until private-sector implementation timing is confirmed.')}
 ${res('https://indonesia.acclime.com/guides/payroll-taxes/','Guide','Acclime — Indonesia payroll taxes','Employer-grade reference.')}
 <p class="mini" style="margin-top:8px">Portals: <a href="https://oss.go.id" target="_blank">OSS</a> · <a href="https://www.pajak.go.id/en" target="_blank">Coretax</a> · <a href="https://sipp.bpjsketenagakerjaan.go.id/" target="_blank">BPJS-TK SIPP</a> · <a href="https://edabu.bpjs-kesehatan.go.id" target="_blank">BPJS Kesehatan EDABU</a> · <a href="https://wajiblapor.kemnaker.go.id/" target="_blank">WLKP</a></p>`;
 SUB['resources/biz']=()=>`
@@ -1723,7 +1880,7 @@ SUB['playbook/triangle']=()=>`
 <h3>The contract stack</h3>
 <ol>
 <li><b>Client MSA / EOR Service Agreement</b> — fee, payroll funding, deposit, indemnity, role & PE restrictions, confidentiality/DPA, termination-request process, client-caused liability.</li>
-<li><b>Indonesia SOW / Perjanjian Alih Daya</b> — outsourced work description, period, remote status, worker protections (BPJS, THR, leave, overtime, termination rights). ⚠ Mandatory + registered with Disnaker ≤3 days under Permenaker 7/2026.</li>
+<li><b>Indonesia SOW / Perjanjian Alih Daya</b> — outsourced work description, period, remote status, worker protections (BPJS, THR, leave, overtime, termination rights). ⚠ Mandatory where the alih-daya/EOR structure is used and recorded with local Dinas within 3 working days under Permenaker 7/2026.</li>
 <li><b>Employment Agreement (PKWT/PKWTT)</b> — Bahasa/bilingual, wage + fixed allowances, position, rights, IP/confidentiality, no-authority wording.</li>
 <li><b>IP / Confidentiality / Invention Assignment</b> — especially for software/product/design roles (Indonesia doesn't apply US "work-for-hire" — you need express assignment).</li>
 <li><b>Client-side Work Protocol</b> — prevents accidental PE/signing-authority; sets client-manager duties + requires performance documentation before any termination request.</li>
@@ -1785,7 +1942,7 @@ ${[['T-10','Collect payroll changes','Leave, OT, allowance, joiner/leaver, depen
 <div class="callout"><b>Why anchor to T</b><p>A fixed relative clock means the same checklist runs every month regardless of which calendar day payday falls on — the single biggest driver of the 99.5–99.9% accuracy SLA, and the thing that survives a key person being away.</p></div>`;
 SUB['playbook/esc']=()=>`
 <p class="lead"><b>08A is the escalation and dunning child under the Coordination Playbook.</b> The parent tells you who does what in normal operations; 08A tells you what happens when communication, client behavior, or money breaks.</p>
-${docBundle(['playbook08','playbook08a'],'Open the coordination parent and the escalation/dunning child.')}
+${docBundle(['playbook08','playbook08a','playbook08b'],'Open the coordination parent, escalation/dunning child, and regulatory-change ops child.')}
 <div class="grid3">
  <div class="card"><h4 style="margin-top:0">Channel rule</h4><p class="mini">WhatsApp is intake, never the system of record. Anything material gets transcribed to the HRIS/ticket record within 24 hours.</p></div>
  <div class="card"><h4 style="margin-top:0">Escalation rule</h4><p class="mini">Money, dignity/public conflict, statute-vs-client instruction, and weird files auto-escalate. The queue should not decide these cases.</p></div>
@@ -1874,7 +2031,7 @@ const GLOSSARY=[
 {c:'contract',t:'Master Services Agreement (MSA)',d:'The overarching commercial contract between EOR and client (fees, liability, IP, term, governing law).',w:'Where the big protections live — every SOW inherits it.'},
 {c:'contract',t:'EOR Service Agreement',d:'Defines the EOR relationship: EOR as sole legal employer, pricing, pre-funding, responsibility split.',w:'The document that puts liability where you intend.'},
 {c:'contract',t:'Statement of Work (SOW)',d:'A per-engagement document under the MSA specifying the worker, role, salary, benefits, start date.',w:'Where per-employee cost and contract type (PKWT/PKWTT) live.'},
-{c:'contract',t:'Perjanjian Alih Daya',d:'The Indonesian-law outsourcing contract between provider (EOR) and user company — now mandatory under Permenaker 7/2026.',w:'⚠ Must be registered with Disnaker within 3 business days; the office can refuse non-compliant scope.',s:'https://www.ahp.id/indonesias-new-outsourcing-rules-minister-of-manpower-regulation-no-7-of-2026-and-what-it-means-for-employers/'},
+{c:'contract',t:'Perjanjian Alih Daya',d:'The Indonesian-law outsourcing contract between provider (EOR) and user company — now mandatory where the alih-daya structure is used under Permenaker 7/2026.',w:'⚠ Must be recorded with local Dinas within 3 working days; the office can refuse non-compliant scope.',s:'https://www.ahp.id/indonesias-new-outsourcing-rules-minister-of-manpower-regulation-no-7-of-2026-and-what-it-means-for-employers/'},
 {c:'contract',t:'Employment agreement (PKWT / PKWTT)',d:'The contract between EOR and the individual worker under Indonesian law.',w:'The third leg of the triangle; its type sets the entire liability profile.'},
 {c:'contract',t:'IP assignment',d:'A clause transferring ownership of IP the worker creates to the client (employee → EOR → client).',w:'Or the client does not own what it paid for.'},
 {c:'contract',t:'Invention assignment',d:'A specific IP-assignment form covering inventions and patentable work.',w:'For technical roles the chain-of-title must be watertight through the EOR.'},
