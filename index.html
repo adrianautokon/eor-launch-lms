@@ -385,13 +385,13 @@ const MODS=[
  {id:'market',ix:'3',group:'The Case',nav:'Market — TAM/SAM/SOM',subs:[['method','How we size it'],['tam','TAM'],['sam','SAM'],['som','SOM (interactive)'],['assumptions','Assumption register'],['reach','Buyer geographies']]},
  {id:'competition',ix:'4',group:'The Case',nav:'Competition',subs:[['landscape','The landscape'],['win','How we win'],['profiles','Profiles']]},
  {id:'whateor',ix:'5',group:'The Machine',nav:'What Is an EOR',subs:[['def','Definition + the test'],['tax','EOR vs PEO vs the rest'],['split','EOR holds / client keeps'],['chain','The value chain'],['myths','Liability myths']]},
- {id:'setup',ix:'6',group:'The Machine',nav:'Legal & Setup',subs:[['seq','The setup sequence'],['entity','Entity: PT vs PT PMA'],['lic','Licences & registrations'],['risk','Permenaker 7/2026 risk'],['check','Setup checklist']]},
- {id:'ops',ix:'7',group:'The Machine',nav:'Operations (As-Is)',subs:[['overview','Lifecycle overview'],['series','07A-E ops series'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s5','5 · Offboard'],['first10','First-10 runbook'],['run','How it is run']]},
- {id:'playbook',ix:'8',group:'The Machine',nav:'Coordination Playbook',subs:[['swimlane','End-to-end swimlane'],['triangle','The legal triangle'],['raci','RACI across the lifecycle'],['manpower','EOR team & hiring ladder'],['clock','The monthly payroll clock'],['termination','Termination decision tree'],['rolerisk','Role-risk taxonomy'],['thr','THR as a monthly liability'],['memos','Counsel memo checklist']]},
+ {id:'setup',ix:'6',group:'The Machine',nav:'Legal & Setup',subs:[['seq','Setup overview'],['entityseq','06A · Entity sequence'],['contract','06B · Contract stack'],['entity','Entity: PT vs PT PMA'],['lic','Licences & registrations'],['risk','Permenaker 7/2026 risk'],['memos','Counsel memos'],['check','Setup checklist']]},
+ {id:'ops',ix:'7',group:'The Machine',nav:'Operations Lifecycle',subs:[['overview','Lifecycle overview'],['series','07A-E lifecycle series'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s4deep','4.1 · People ops deep dive'],['s5','5 · Offboard'],['first10','First-10 runbook'],['run','How it is run']]},
+ {id:'playbook',ix:'8',group:'The Machine',nav:'Coordination Playbook',subs:[['swimlane','End-to-end swimlane'],['triangle','The legal triangle'],['raci','RACI across the lifecycle'],['manpower','EOR team & hiring ladder'],['clock','The monthly payroll clock'],['esc','08A · Escalation & dunning'],['termination','Termination decision tree'],['rolerisk','Role-risk taxonomy'],['thr','THR as a monthly liability'],['memos','Counsel memo checklist']]},
  {id:'compliance',ix:'9',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['thr','THR'],['sev','Severance'],['term','Termination workflow']]},
  {id:'sim',ix:'9.5',group:'The Machine',nav:'EOR Desk Sim',subs:[['play','Play the module quiz']]},
  {id:'econ',ix:'10',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator']]},
- {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line']]},
+ {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line'],['ai','11A · AI ops stack']]},
  {id:'quality',ix:'12',group:'The Machine',nav:'Quality, Risk & Controls',subs:[['modes','Failure modes'],['nums','The benchmark numbers'],['ctrl','The controls'],['seam','Trust vs reliability']]},
  {id:'gtm',ix:'13',group:'Execute',nav:'Go-to-Market',subs:[['icp','The advanced-market ICP'],['sg','Singapore beachhead'],['roles','Role-risk taxonomy'],['pseo','Programmatic SEO engine'],['wedges','Conversion wedges'],['pricing','Pricing posture'],['check','GTM checklist']]},
  {id:'roadmap',ix:'14',group:'Execute',nav:'Launch Roadmap',subs:[['phases','The four phases'],['gates','The gates'],['check','Execution checklist']]},
@@ -522,24 +522,58 @@ function res(url,tag,t,d){return `<a class="reslink" href="${url}" target="_blan
 const DRIVE='https://drive.google.com/drive/folders/1KGw7TCS5PM2qZ6PRlBYHFbQlz2F4z_5m?usp=sharing';
 const SIM='https://navv-desk-sim.vercel.app/';
 const DOCS={
+ d01:'https://docs.google.com/document/d/11y5e33grT2eK5_D0yJhHa5sdXZgr3wEk/edit',
+ d02:'https://docs.google.com/document/d/1vagdDK0W2KK388-NKp7Qu_sRMKeVmW5v/edit',
+ d03:'https://docs.google.com/document/d/14uLrJcFa6Ebam2RObhf9zmnxNe3f-p1t/edit',
+ d04:'https://docs.google.com/document/d/129Y2vaYZ9mmp4f7H_PHx4v9uDemNydk2/edit',
+ whateor05:'https://docs.google.com/document/d/1fNZn6TglvWdHuUQ-N2dLm3o6vkrmSEiO/edit',
+ setup06:'https://docs.google.com/document/d/1ldN7n24GqriYQgZusqkaBZymindoQrlD/edit',
+ setup06a:'https://docs.google.com/document/d/1ZxNx8HIP2ahfCOaPpimLjdcsa32EQGr3/edit',
+ setup06b:'https://docs.google.com/document/d/1qAn_IUJ17dvoCloTeC65DEaCdgwF7Fa0/edit',
  ops07:'https://docs.google.com/document/d/1MuTbTHucS4JcSDRKZz43FNWiZ6OJFH0_/edit',
  ops07a:'https://docs.google.com/document/d/1SVCf8EsrVSKXZNtQdwStefOpiX1g1p7I/edit',
  ops07b:'https://docs.google.com/document/d/1At2zu8BQlZCgSXkejCum-U44DOcDdPZ4/edit',
  ops07c:'https://docs.google.com/document/d/1bAih--3EaJ-QazofxoWFguH_1_FaRPMp/edit',
  ops07d:'https://docs.google.com/document/d/11l_BsW_czUzztMv4Bm_QJd72jpsqKwGe/edit',
+ ops07d1:'https://docs.google.com/document/d/1_QYTwpeAPCDR9543CsOqoSmaGEz7RSV3/edit',
  ops07e:'https://docs.google.com/document/d/1iDdYXkHTEpLpCjdzyxCsbhwCfNf6PpX5/edit',
  playbook08:'https://docs.google.com/document/d/1DO_BsxKBDtsDcWM1VGmCdJAPqQlUwmLc/edit',
+ playbook08a:'https://docs.google.com/document/d/16OQHMki-xNQ8ma9M8z_sxk0Vd8lBsEgH/edit',
+ compliance09:'https://docs.google.com/document/d/1q9yzpb4QQ6NpOr16WH63rg-MobiybRuO/edit',
+ econ10:'https://docs.google.com/document/d/1SlQkrjjBq3ESYZ63CKn_aX8fkEnJLIFA/edit',
+ pay11:'https://docs.google.com/document/d/1ucdHZk7vq_-pEql7RVelqGVCc0itswtV/edit',
+ pay11a:'https://docs.google.com/document/d/11Oc1juTA7NkNDpwpWOndLnKxV0_Lv4FY/edit',
+ quality12:'https://docs.google.com/document/d/1Jg6-QA1poAEFEJvoRpicB55zI-Lv0eGN/edit',
+ gtm13:'https://docs.google.com/document/d/1I_EqteyETWqH2-KKadT2PXjlC4kn42A5/edit',
+ glossary14:'https://docs.google.com/document/d/1_heCtmlgRhgQM4oy2iWSzRh0iOjzFsy1/edit',
  msa:'https://docs.google.com/document/d/1J7b3Xz2gyl10VgIYlKdK02yxisi8GKhI/edit'
 };
 const DOC_TITLES={
- ops07:'07 Operations As-Is',
+ d01:'01 Opportunity',
+ d02:'02 Why Now',
+ d03:'03 Market TAM/SAM/SOM',
+ d04:'04 Competition',
+ whateor05:'05 What Is An EOR',
+ setup06:'06 Legal Setup',
+ setup06a:'06A Entity Setup Sequence',
+ setup06b:'06B Contract Stack & Signing Ops',
+ ops07:'07 Operations Lifecycle',
  ops07a:'07A Quote & Sign',
  ops07b:'07B Onboarding',
  ops07c:'07C Payroll & Filing',
  ops07d:'07D Support & Change',
+ ops07d1:'07D.1 Support People Ops Deep Dive',
  ops07e:'07E Offboarding',
  playbook08:'08 Coordination Playbook',
- msa:'MSA Template Skeleton'
+ playbook08a:'08A Escalation & Dunning',
+ compliance09:'09 Compliance Deep Dive',
+ econ10:'10 Unit Economics',
+ pay11:'11 Payments / Airwallex',
+ pay11a:'11A AI Ops Stack Assessment',
+ quality12:'12 Quality Risk Controls',
+ gtm13:'13 Go To Market',
+ glossary14:'14 Glossary',
+ msa:'15 MSA Template Skeleton'
 };
 function docUrl(key){return DOCS[key]||DRIVE;}
 function driveBox(doc,why='Open the full DOCX source pack for details, diagrams, and audit trail.',url=DRIVE,label='Open Drive ↗'){
@@ -595,7 +629,7 @@ function C_home(){return `
 <div class="proofgrid">
  <div class="card"><h4 style="margin-top:0">How to read this OS</h4>
   <div class="prooflist">
-   <div class="proofitem"><div class="step">Source</div><div class="txt">The enhanced DOCX pack is the research layer: market, legal setup, operations, compliance, payments, quality controls, GTM, 07A-E stage SSDs, glossary, and the MSA skeleton.</div></div>
+   <div class="proofitem"><div class="step">Source</div><div class="txt">The enhanced DOCX pack is the research layer: market, legal setup, 06A/06B setup sequences, 07A-E lifecycle stages, 07D.1 support deep dive, 08A escalation, 11A AI ops, glossary, and MSA skeleton.</div></div>
    <div class="proofitem"><div class="step">Synthesis</div><div class="txt">The LMS compresses those reports into founder decisions, runbooks, calculators, charts, and checklists.</div></div>
    <div class="proofitem"><div class="step">Proof</div><div class="txt">Every launch gate ends with an artifact: counsel memo, role-risk score, quote pack, signed contract pack, payroll register, BPJS/PPh proof, THR funding log, or termination case file.</div></div>
   </div>
@@ -616,7 +650,7 @@ ${driveBox('Full Google Drive source pack','Use this when a learner wants the fu
 <h3>Latest companion-pack alignment</h3>
 <div class="grid3">
  <div class="card"><h4 style="margin-top:0">Legal spine updated</h4><p class="mini">Memo B now tests <b>KBLI 78101</b> and/or <b>78300</b> as the likely PMA route, with 78200 treated as the blocked/conflict case. Kontrak Hukum is the cheap first-pass counsel path.</p></div>
- <div class="card"><h4 style="margin-top:0">Operations split into 07A-E</h4><p class="mini">The operating model now has one source doc per stage: Quote & Sign, Onboarding, Payroll & Filing, Support & Change, and Offboarding. The LMS mirrors those gates.</p></div>
+ <div class="card"><h4 style="margin-top:0">Operations hierarchy cleaned</h4><p class="mini">The operating model now has five lifecycle stage docs: Quote & Sign, Onboarding, Payroll & Filing, Support & Change, and Offboarding. 07D.1 sits under Support as the people-ops deep dive.</p></div>
  <div class="card"><h4 style="margin-top:0">Economics recalibrated</h4><p class="mini">First sourced office quote: Regus/Ciputra World for PT Navigasi Studio. The office is a licensing/KYC asset, not overhead fluff; v3.4 model points to ~$3.9k fixed base, ~$56k trough, and ~27-seat break-even.</p></div>
 </div>
 <h3>The monthly proof pack</h3>
@@ -947,6 +981,7 @@ SUB['whateor/myths']=()=>`
 /* ===== 6 · LEGAL & SETUP (detailed) ===== */
 SUB['setup/seq']=()=>`
 <p class="lead">This is the one-time build of the Indonesian employing entity — the supply side that stays the same no matter where clients come from. It runs in six phases over roughly <b>8–12 weeks</b> and ~<b>$3–7k in fees</b> (excluding capital). OSS is the spine: the NIB fans out to Coretax, WLKP and BPJS. This is where "buy the expertise, don't DIY" applies hardest.</p>
+${docBundle(['setup06','setup06a','setup06b','msa'],'The legal setup parent now has two child companions: entity setup sequence and contract/signing operations. Read the parent first, then the children.')}
 <div class="callout red"><b>⚠ Resolve this before spending a rupiah — the 78101 / 78300 KBLI question</b><p>The enhanced legal report now treats <b>KBLI 78101</b> (labour placement, Medium-High risk, Manpower-verified) and/or <b>KBLI 78300</b> (HR-function provision, Low risk, NIB-only) as the likely PT PMA route. <b>KBLI 78200</b> is no longer the base assumption; it is the blocked/conflict case because OSS appears to close large-scale PMA access. Commission Memo B with a notary and employment counsel before incorporating.</p></div>
 <h4>Phase A — Pre-incorporation (weeks 0–2)</h4>
 <div class="moneyflow">
@@ -995,6 +1030,24 @@ ${[
 ${vid('https://www.youtube.com/watch?v=Iz5e-2Q5GPU','How to Create the Latest 2026 OSS-RBA NIB','YouTube · the NIB walkthrough in OSS')}
 ${res('https://www.cekindo.com/blog/how-to-register-foreign-company-as-pt-pma-in-indonesia','Guide','Cekindo — how to register a PT PMA','Step-by-step incorporation flow from an incorporation firm.')}
 ${res('https://www.traceworthy.com/investment-activity-report-lkpm/','Reference','TraceWorthy — LKPM quarterly filing','Deadlines + the 4-idle-quarter auto-sanction ladder.')}`;
+SUB['setup/entityseq']=()=>`
+<p class="lead"><b>06A is the entity setup child doc.</b> It turns the parent legal setup doctrine into a nine-step PT PMA sequence: name booking, notarial deed, AHU/Kemenkumham, NPWP/Coretax, NIB, KBLI verification, bank/capital, BPJS, and first WLKP.</p>
+${driveBox('06A_Entity_Setup_Sequence.docx','Open the granular entity setup report: PP 28/2025, BKPM 5/2025, 78101 vs 78300, Kemnaker verification, virtual-office constraints, and ongoing entity compliance.',docUrl('setup06a'),'Open 06A DOCX ↗')}
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">Why it is a child</h4><p class="mini">It does not replace 06 Legal Setup. It operationalizes the incorporation path and should be read when the team is ready to execute the PT/PMA sequence.</p></div>
+ <div class="card"><h4 style="margin-top:0">Main fork</h4><p class="mini">Counsel must settle whether the primary code is 78101, 78300, or a paired structure. That choice affects verification burden, office needs, and licensing risk.</p></div>
+ <div class="card"><h4 style="margin-top:0">Golden gates</h4><p class="mini">Kemnaker KBLI verification and first WLKP filing. These are boring until missed; then they become procurement and compliance blockers.</p></div>
+</div>
+<div class="callout"><b>Keep in mind</b><p>The entity setup doc is about creating the employing vehicle. The contract-stack doc below is about what the vehicle signs once it exists.</p></div>`;
+SUB['setup/contract']=()=>`
+<p class="lead"><b>06B is the contract-stack child doc.</b> It clarifies the five-layer stack: commercial MSA, Indonesia SOW / worker schedule, employment agreement, IP/confidentiality/no-authority documents, and the operating evidence file.</p>
+${docBundle(['setup06b','msa','ops07a','ops07b'],'Use 06B for signing mechanics, then follow 07A/07B for the commercial-to-employment handoff.')}
+<div class="tablewrap"><table><tr><th>Contract layer</th><th>Operating job</th><th>LMS implication</th></tr>
+<tr><td>MSA / EOR service agreement</td><td>Commercial terms, fee, deposit, liability, suspension, dispute venue</td><td>Teach this before quote acceptance, not after onboarding.</td></tr>
+<tr><td>Indonesia SOW / schedule</td><td>Worker, role, salary, start date, no-authority boundary, work protocol</td><td>The bridge between client commercial intent and Indonesian employment execution.</td></tr>
+<tr><td>Employment agreement</td><td>PKWT/PKWTT, Bahasa/bilingual wording, wage, rights, IP/confidentiality</td><td>Signed by Navv ID PT and employee; not by the client.</td></tr>
+<tr><td>Signing evidence file</td><td>PSrE audit trail, e-Meterai certificate, PKWT recording receipt</td><td>Becomes procurement proof and dispute evidence.</td></tr></table></div>
+<div class="callout red"><b>Corrected rule</b><p>The old "register the alih daya agreement in 3 working days" framing is not the live statutory anchor. The hard statutory item is PKWT recording within the required deadline; voluntary agreement registration is practice/risk insurance where available.</p></div>`;
 SUB['setup/structure']=()=>`
 <p class="lead">The operating company is not a SaaS wrapper. Navv is the Indonesian legal employer; the client directs the work but does not sign Indonesian employment documents or become the local employer.</p>
 <div class="moneyflow">
@@ -1056,14 +1109,14 @@ SUB['ops/overview']=()=>`
 <div class="grid4"><div class="stat"><div class="v" style="font-size:15px">0 · Quote</div><div class="k">loaded cost + margin</div></div><div class="stat"><div class="v" style="font-size:15px">1 · Onboard</div><div class="k">manufacturing a legal relationship</div></div><div class="stat gold"><div class="v" style="font-size:15px">2 · Payroll ⚠</div><div class="k">gross-to-net, the core engine</div></div><div class="stat red"><div class="v" style="font-size:15px">5 · Offboard ⚠</div><div class="k">highest-risk stage</div></div></div>
 <div class="chartbox"><h4>The three control spines: quote, payroll, termination</h4><canvas id="ch_ops_spine"></canvas><div class="src">Each stage is scored 1-5 on the dimensions the operating reports identify as load-bearing.</div></div>
 <div class="callout blue"><b>The mental model</b><p>Money and risk concentrate in three places: the <b>quote</b> (where margin is set), the monthly <b>payroll run</b> (where trust is won or lost), and <b>termination</b> (where liability lives). A corridor-native operator must be strongest exactly there.</p></div>
-${docBundle(['ops07','ops07a','ops07c','ops07e'],'Start with the overview report, then open the three control-spine stage documents directly.')}
+${docBundle(['ops07','ops07a','ops07c','ops07d','ops07d1','ops07e'],'Start with the overview report, then open the three control spines plus the nested support deep dive.')}
 ${vid('https://www.youtube.com/watch?v=3VsargKk16o','Payroll Process Explained Step by Step','YouTube · the end-to-end payroll walkthrough — watch first')}
 ${vid('https://www.youtube.com/watch?v=NfaNNtwDHGE','What is Payroll? Introduction to Payroll (QuickBooks)','YouTube · a CPA breaks down keeping, calculating, processing')}`;
 
 SUB['ops/series']=()=>`
-<p class="lead">The enhanced report pack splits the old "operations as-is" chapter into five stage documents. Read them as the actual operating syllabus: one stage, one sequence diagram, one decision surface, one evidence trail.</p>
+<p class="lead">The enhanced report pack now has a clean lifecycle hierarchy: <b>five stages</b>, not six. <span class="mono">07D.1</span> is nested under Support & Change because people-ops edge cases are part of the support surface, with handoffs into offboarding when they become termination-adjacent.</p>
 <div class="seqwrap">
- <div class="seqtitle"><h4>System sequence diagram — quote to monthly proof pack</h4><span>Source: 07A-E ops series + MSA/SOW skeleton</span></div>
+ <div class="seqtitle"><h4>System sequence diagram — quote to monthly proof pack</h4><span>Source: 07A-E ops series, 07D.1 support deep dive + MSA/SOW skeleton</span></div>
  <svg class="seqsvg" viewBox="0 0 1120 740" role="img" aria-label="System sequence diagram showing Client, Navv OS, Navv SG, Navv ID PT, Employee and Rails/Regulators across quote, onboarding, payroll and proof pack">
   <defs>
    <marker id="seqArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7aa2ff"/></marker>
@@ -1105,12 +1158,13 @@ SUB['ops/series']=()=>`
  <div class="card"><h4 style="margin-top:0">Lab artifacts</h4><p class="mini">Each stage asks for one artifact: quote pack, clean master file, approved payroll register, filing evidence pack, support/change log, or termination case file. The LMS teaches the artifact, not just the concept.</p></div>
  <div class="card"><h4 style="margin-top:0">Assessment gates</h4><p class="mini">A learner should pass only when they can identify the funding gate, maker-checker gate, counsel gate, statutory deadline and evidence trail for the stage.</p></div>
 </div>
-${docBundle(['ops07','ops07a','ops07b','ops07c','ops07d','ops07e','playbook08'],'Open the exact Ops source document instead of the folder: the overview report, each 07A-E stage report, and the coordination playbook.')}
+${docBundle(['ops07','ops07a','ops07b','ops07c','ops07d','ops07d1','ops07e','playbook08'],'Open the exact Ops source document instead of the folder: the overview report, each 07A-E stage report, the nested 07D.1 people-ops deep dive, and the coordination playbook.')}
 <div class="tablewrap"><table><tr><th>Companion</th><th>Stage</th><th>What the LMS now carries forward</th></tr>
 <tr><td><a href="${docUrl('ops07a')}" target="_blank" rel="noopener">07A ↗</a></td><td>Quote & Sign</td><td>Five actors, eleven messages, two gates. Quote is governance: role-risk classification, loaded-cost bridge, funding/deposit posture, and MSA/SOW boundary before anyone signs.</td></tr>
 <tr><td><a href="${docUrl('ops07b')}" target="_blank" rel="noopener">07B ↗</a></td><td>Onboarding</td><td>Seven actors, twelve messages, five gates. The job is to manufacture a lawful employment relationship and clean master file: NIK validation, e-Meterai, Disnaker within three working days, BPJS within thirty days, and a payroll dry run.</td></tr>
 <tr><td><a href="${docUrl('ops07c')}" target="_blank" rel="noopener">07C ↗</a></td><td>Payroll & Filing</td><td>The monthly product. Ten rules keep the loop boring: freeze changes, lock funding, maker-checker gross-to-net, release payments, file PPh 21/BPJS, and ship the evidence pack.</td></tr>
-<tr><td><a href="${docUrl('ops07d')}" target="_blank" rel="noopener">07D ↗</a></td><td>Support & Change</td><td>The quiet churn driver: bank changes, dependents, raises, devices, leave, allowances, emergency payroll, BEC guard, and SOW-addendum rule when work changes.</td></tr>
+<tr><td><a href="${docUrl('ops07d')}" target="_blank" rel="noopener">07D ↗</a></td><td>Support & Change</td><td>The quiet churn driver: intake, classification, change control, employee/client support, and routing to the right playbook.</td></tr>
+<tr><td><a href="${docUrl('ops07d1')}" target="_blank" rel="noopener">07D.1 ↗</a></td><td>Support deep dive</td><td>Nested under 07D: leave, public holidays, claims, devices, IT access, travel, ad-hoc benefits, and the weird files. It is not a sixth lifecycle stage.</td></tr>
 <tr><td><a href="${docUrl('ops07e')}" target="_blank" rel="noopener">07E ↗</a></td><td>Offboarding</td><td>The highest-liability stage. Eight actors, fourteen messages, funding-before-notice, counsel sign-off, bipartit to mediasi to PHI dispute branch, and a termination case file instead of a button.</td></tr></table></div>
 <div class="grid3">
  <div class="card"><h4 style="margin-top:0">MSA skeleton link</h4><p class="mini">The MSA/SOW split is now explicit: SG can hold the commercial MSA, but the Indonesian PT signs/owns employment and statutory execution. Statutory sums stay outside ordinary liability caps.</p></div>
@@ -1230,7 +1284,23 @@ ${ssd('07D SSD · Support & Change',['Employee','Client Manager','Navv OS','HR O
 ['Proof artifact','Support log + approved change queue + SOW addendum where needed.'],
 ['Failure mode','Uncontrolled bank/salary/scope changes create payroll errors, BEC risk, or legal drift.']
 ],'ops07d')}
-${driveBox('07D_Navv_EOR_Ops_Series_Support_and_Change_2026-07-08.docx','Open the detailed Support & Change stage report behind this subsection.',docUrl('ops07d'),'Open DOCX ↗')}`;
+${docBundle(['ops07d','ops07d1'],'Open the support parent and its nested people-ops deep dive. 07D.1 is not a sixth stage; it is the ad-hoc support playbook.')}
+<div class="callout"><b>Where to go next</b><p>If the issue is a normal support/change request, stay in 07D. If it is leave, holidays, reimbursements, devices, IT access, travel, kasbon/EWA, fake documents, pinjol calls, ghosting, or another weird file, go to 07D.1. If it becomes an exit, hand off to 07E.</p></div>`;
+
+SUB['ops/s4deep']=()=>`
+<p class="lead"><b>07D.1 is the nested people-ops deep dive under Support & Change.</b> It exists because the support surface is where the spreadsheet model lies: recurring payroll work is forecastable, but ad-hoc people work arrives through WhatsApp, holidays, devices, claims, missing employees, fake notes, and client money pressure.</p>
+${driveBox('07D1_Support_People_Ops_Deep_Dive.docx','Open the granular support and people-ops playbook: recurring vs ad-hoc taxonomy, leave, public holidays, claims, devices, IT access, travel, benefits, and weird-file protocols.',docUrl('ops07d1'),'Open 07D.1 DOCX ↗')}
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">Recurring work</h4><p class="mini">Payroll, statutory filings, BPJS sweeps, THR, LKPM and WLKP. These are calendar-driven and can be priced from the clock.</p></div>
+ <div class="card"><h4 style="margin-top:0">Ad-hoc work</h4><p class="mini">Leave, devices, travel, reimbursements, claims, access, cash advances, benefits, and worker/client incidents. These drive support minutes and churn risk.</p></div>
+ <div class="card"><h4 style="margin-top:0">Weird files</h4><p class="mini">Ghosting, no-notice resignation, client non-payment, bad documentation, fake sick notes, pinjol collectors, death, detention, moonlighting and viral posts.</p></div>
+</div>
+<div class="callout blue"><b>Why it stays under 07D</b><p>This material is too operationally important to bury in an appendix, but it is still support/change management. Keeping it as 07D.1 preserves the five-stage lifecycle and gives the deep playbook a clear home.</p></div>
+<div class="tablewrap"><table><tr><th>Support domain</th><th>Default owner</th><th>Handoff trigger</th></tr>
+<tr><td>Leave / holiday / travel / benefits</td><td>People Ops PIC</td><td>Payroll impact or legal ambiguity</td></tr>
+<tr><td>Devices / IT access</td><td>People Ops + Client IT</td><td>Exit, security risk, or asset dispute</td></tr>
+<tr><td>Claims / reimbursements</td><td>People Ops + Finance</td><td>Fraud signal, policy exception, or off-cycle pay</td></tr>
+<tr><td>Weird files</td><td>Ops Lead</td><td>Counsel, escalation, or 07E offboarding path</td></tr></table></div>`;
 
 SUB['ops/s5']=()=>`
 <div class="stage"><div class="stage-h danger"><div class="stage-n">5</div><div class="stage-t">Offboarding & termination — the highest-risk stage ⚠</div></div><div class="stage-b">
@@ -1274,7 +1344,7 @@ ${[
 ].map(t=>`<div class="tl"><div class="d">${t[0]}</div><div class="t">${t[1]}</div><div class="x">${t[2]}</div></div>`).join('')}</div>
 <div class="callout green"><b>First-10 operating rule</b><p>Each employee gets one folder, one monthly register line, one compliance evidence pack, and one exception log. If the manual packet is messy, automation will only make the mess faster.</p></div>
 <div class="callout red"><b>Do not build a one-click termination button</b><p>The client may request termination, but Navv controls the legal process because Navv is the Indonesian employer. Termination branches by reason, evidence and counsel approval.</p></div>
-${docBundle(['ops07','playbook08','ops07a','ops07b','ops07c','ops07d','ops07e'],'Use these direct documents for the first-10 runbook: operating overview, coordination playbook, and all five stage reports.')}`;
+${docBundle(['ops07','playbook08','ops07a','ops07b','ops07c','ops07d','ops07d1','ops07e'],'Use these direct documents for the first-10 runbook: operating overview, coordination playbook, all five stage reports, and the nested support deep dive.')}`;
 
 SUB['ops/run']=()=>`
 <p><span class="pill why">Theory · the operating model</span>Two structures for an EOR. The <b>owned-entity model</b> (we own the local PT; contract from our own company, payroll on our own banking, liability sits with an org directly subject to local law — faster, standardised) vs the <b>aggregator / in-country-partner model</b> (the platform subcontracts the actual employment to a local partner the client never vets — more coverage, but lag and diffused accountability). Our model is owned-entity in Indonesia — the defensible choice, and the wedge against Remofirst/Skuad's partner networks.</p>
@@ -1282,7 +1352,7 @@ SUB['ops/run']=()=>`
 <div class="card"><h4 style="margin-top:0">Roles</h4><p class="mini">Payroll specialist → administrator → lead; compliance & legal (in-house + local counsel); onboarding/HR ops; client success; finance/treasury. At small scale one person wears several hats — the key-person risk we know (Faishal lesson).</p></div>
 <div class="card"><h4 style="margin-top:0">The ratio that sets the cost model</h4><p class="mini">The key operating metric is the <b>payroll-to-headcount ratio</b>. Benchmarks span widely — ~633 employees/specialist (KPMG) to ~1,425 (Deloitte) — the spread <i>is</i> the automation opportunity. At our small scale, target ~1 admin per 75–100, moving toward the high end as AI preps the registers.</p></div></div>
 <div class="callout"><b>The one control that keeps it honest — maker-checker / four-eyes</b><p>Segregation of duties: the person who edits the employee master file is never the one who runs the final payroll. A "maker" initiates, a separate "checker" approves — so successful fraud now requires collusion. Every action is logged (user, timestamp) into a tamper-proof audit trail. The SLA gold standard is <b>99.5–99.9% on-time-and-accurate</b> each cycle. Non-negotiable at any scale.</p></div>
-${docBundle(['ops07','playbook08','msa'],'Open the operating-model source, coordination playbook, and MSA skeleton directly.')}
+${docBundle(['ops07','setup06b','playbook08','playbook08a','ops07d1','msa'],'Open the operating-model source, contract-stack source, coordination/escalation playbooks, support deep dive, and MSA skeleton directly.')}
 ${vid('https://www.youtube.com/watch?v=b0T5N7h7o3Y','ACH Rules & Regulations Explained','YouTube · how the disbursement rails + compliance work')}
 ${res('https://www.deel.com/blog/owned-entity-vs-in-country-partner/','Analysis','Deel — owned entity vs in-country partner','The core structural fork, from the market leader.')}
 ${res('https://blog.xtrm.com/posts/maker-checker-process','Concept','XTRM — the maker-checker process','Four-eyes + tamper-proof audit trail, explained.')}
@@ -1365,7 +1435,7 @@ ${simBox()}
 </div>
 <div class="callout green"><b>Quiz logic</b><p>The game is not separate marketing material. It is the practical checkpoint that turns the LMS from a reading path into a university-style module: study, simulate, then calculate the business model.</p></div>`;
 
-/* ===== 9 · UNIT ECONOMICS ===== */
+/* ===== 10 · UNIT ECONOMICS ===== */
 SUB['econ/pl']=()=>`
 ${simBox()}
 <p class="lead">This is a service business — Dickson funds ops, not just software. So the model is an <b>ops P&L</b>, not a SaaS P&L. But the margin structure is software-like once the entity's fixed cost is amortised.</p>
@@ -1401,7 +1471,7 @@ SUB['econ/calc']=()=>`
 <div class="calc" id="calcOut"></div></div>
 <p class="mini" style="margin-top:8px">FX: IDR/USD 16,150 (edit <span class="mono">const FX</span> in code). PPh 21 uses a simplified TER-A/B/C band table — directional, not filing-grade.</p>`;
 
-/* ===== 10 · PAYMENTS (Airwallex) ===== */
+/* ===== 11 · PAYMENTS (Airwallex) ===== */
 SUB['pay/flow']=()=>`
 <p class="lead">The global model needs a global collection rail. Clients pay in their own currency; workers and statutory bodies must be paid in IDR. Airwallex is the spine that connects the two — collect anywhere, convert, pay Indonesia.</p>
 <div class="moneyflow">
@@ -1433,8 +1503,21 @@ SUB['pay/margin']=()=>`
 <div class="grid3"><div class="stat gold"><div class="v">~0.5%</div><div class="k">Airwallex FX over interbank (major pairs)</div></div><div class="stat green"><div class="v">1–3%</div><div class="k">what EORs typically charge clients on FX</div></div><div class="stat blue"><div class="v">25–30%</div><div class="k">of Deel's revenue is fintech/FX</div></div></div>
 <p>If Airwallex converts at ~0.5% and you quote the client a transparent ~1.5–2% all-in FX, the spread is margin on every payroll cycle — on top of the platform fee. On a $50k salary a 2% margin ≈ $1,000/yr; across a book of employees it compounds into a second revenue line. Plus the float between receipt and conversion.</p>
 <div class="callout"><b>Do it honestly</b><p>Transparent FX is also a wedge against Deel's hidden 0.6–2% markup. Quote one clear all-in rate, capture the spread openly, and it becomes a feature ("no surprise FX") rather than the complaint it is for the incumbents.</p></div>`;
+SUB['pay/ai']=()=>`
+<p class="lead"><b>11A is the AI ops stack child under Payments & Airwallex.</b> It evaluates T:0, LemonLime, Airwallex AgentOS/Airi, and the broader idea of an AI-native back office. The right order is rails first, then sandboxed automation.</p>
+${docBundle(['pay11','pay11a'],'Read the payments rail first, then the AI ops assessment as a child memo.')}
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">T:0</h4><p class="mini">Possible fit for SG-side finance ops: invoicing, deposits, FX, runway and board metrics. Not a day-one substitute for Indonesian statutory accounting.</p></div>
+ <div class="card"><h4 style="margin-top:0">LemonLime</h4><p class="mini">Possible docs/SOP knowledge layer. Test with fake data and the hardest 07D.1 weird-file questions before touching real PII.</p></div>
+ <div class="card"><h4 style="margin-top:0">AgentOS / Airwallex</h4><p class="mini">Track for future payout/reporting automation. Good strategic fit, but concentration risk if rails, finance brain and books all sit with one vendor.</p></div>
+</div>
+<div class="callout red"><b>Sandbox-first rule</b><p>No employee PII, payroll mailbox, KTP/NIK, salary, bank data or health data goes into an early-stage AI tool. The first experiment is docs-only, fake-data-only, benchmarked against the actual 07A-E and 07D.1 SOPs.</p></div>
+<div class="tablewrap"><table><tr><th>Tool</th><th>First experiment</th><th>Kill condition</th></tr>
+<tr><td>T:0</td><td>Run SG commercial books in parallel with manual truth for one quarter</td><td>Cannot separate custody money from fee money clearly</td></tr>
+<tr><td>LemonLime</td><td>Ingest SOPs only; answer the 10 hardest people-ops edge cases</td><td>Wrong answer on statutory, termination, or PII handling</td></tr>
+<tr><td>AgentOS</td><td>Monitor for payroll-disbursement automation hooks</td><td>Requires unsafe access or loses approval auditability</td></tr></table></div>`;
 
-/* ===== 11 · QUALITY, RISK & CONTROLS ===== */
+/* ===== 12 · QUALITY, RISK & CONTROLS ===== */
 SUB['quality/modes']=()=>`
 <p class="lead">Quality in payroll has a precise meaning: <b>accurate, on-time, compliant, every single cycle</b>. Here's where the as-is breaks and who's on the hook.</p>
 <div class="tablewrap"><table><tr><th>Failure mode</th><th>Who's on the hook</th></tr>
@@ -1570,7 +1653,7 @@ ${res('https://www.deel.com/blog/how-much-does-an-eor-cost/','Guide','Deel — h
 ${res('https://emergingeconomy.substack.com/p/the-arbitrage-economy-earning-globally','Substack','"The Arbitrage Economy: Earning Globally, Living Locally"','~42–48M remote earners; the macro tailwind.')}
 ${res('https://statrys.com/sg/reviews/airwallex-vs-aspire-app','Compare','Airwallex vs Aspire','Payments rail selection for SEA.')}
 ${res('https://www.omnius.so/blog/programmatic-seo-case-study','Case study','Programmatic SEO — the EOR growth motion','67 → 2,100 signups, worked end to end.')}
-<div class="callout"><b>Companion documents</b><p>The enhanced companion pack in <span class="mono">Navv_EOR_Companion_Reports_ENHANCED_DOCX_2026-07-07/</span> is the granular research layer behind this OS: 13 core reports, glossary, 07A-E operations series, MSA template skeleton, Claude audit, and Drive-comment response map. This LMS is aligned to the 8 Jul 2026 corrections: KBLI 78101/78300, v3.4 economics, expanded SEA/APAC buyer geography, Airwallex/Xendit payment posture, MSA/SOW split, and proof-first operating doctrine. Regulatory items still need a formal legal opinion before commitment.</p></div>`;
+<div class="callout"><b>Companion documents</b><p>The enhanced companion pack in <span class="mono">Navv_EOR_Companion_Reports_ENHANCED_DOCX_2026-07-07/</span> is the granular research layer behind this OS: canonical 01-15 reports and artifacts, 06A/06B setup children, 07A-E operations lifecycle, nested 07D.1 support deep dive, 08A escalation/dunning, 11A AI ops assessment, glossary, MSA skeleton, audit, and Drive-comment response map. This LMS is aligned to the 8 Jul 2026 corrections: KBLI 78101/78300, v3.4 economics, expanded SEA/APAC buyer geography, Airwallex/Xendit payment posture, MSA/SOW split, and proof-first operating doctrine. Regulatory items still need a formal legal opinion before commitment.</p></div>`;
 
 /* ================= SWIMLANE RENDERER ================= */
 function renderSwimlane(){
@@ -1700,6 +1783,16 @@ SUB['playbook/clock']=()=>`
 <div class="timeline">
 ${[['T-10','Collect payroll changes','Leave, OT, allowance, joiner/leaver, dependent changes'],['T-7','Client pre-funds the invoice','No funds → escalate before cutoff. The EOR never fronts payroll'],['T-5','Payroll cutoff / freeze inputs','Anything after this rolls to next cycle'],['T-4','Payroll calculation','Gross-to-net: BPJS, PPh 21 TER → payroll register'],['T-3','Maker-checker review','Register approved before any money moves'],['T-2','Finance approval / payout prep','Bank file built, second approver releases'],['T','Salary paid + payslip issued','The trust moment — on time, correct'],['T+10 / +15 / +20','Statutory deadlines','BPJS Kesehatan 10th · BPJS-TK + PPh 21 deposit 15th · SPT Masa 20th'],['T+21','Monthly evidence pack sent','Payslip + BPJS proof + PPh 21 proof + reconciliation + change log']].map(t=>`<div class="tl"><div class="d">${t[0]}</div><div class="t">${t[1]}</div><div class="x">${t[2]}</div></div>`).join('')}</div>
 <div class="callout"><b>Why anchor to T</b><p>A fixed relative clock means the same checklist runs every month regardless of which calendar day payday falls on — the single biggest driver of the 99.5–99.9% accuracy SLA, and the thing that survives a key person being away.</p></div>`;
+SUB['playbook/esc']=()=>`
+<p class="lead"><b>08A is the escalation and dunning child under the Coordination Playbook.</b> The parent tells you who does what in normal operations; 08A tells you what happens when communication, client behavior, or money breaks.</p>
+${docBundle(['playbook08','playbook08a'],'Open the coordination parent and the escalation/dunning child.')}
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">Channel rule</h4><p class="mini">WhatsApp is intake, never the system of record. Anything material gets transcribed to the HRIS/ticket record within 24 hours.</p></div>
+ <div class="card"><h4 style="margin-top:0">Escalation rule</h4><p class="mini">Money, dignity/public conflict, statute-vs-client instruction, and weird files auto-escalate. The queue should not decide these cases.</p></div>
+ <div class="card"><h4 style="margin-top:0">Dunning red line</h4><p class="mini">Suspension throttles service. It never threatens wages. Payroll continues from deposit/reserve while the client default process runs.</p></div>
+</div>
+<div class="timeline">
+${[['D0-3','Soft WhatsApp reminder','Warm AM nudge; most invoices collect here.'],['D7','Statement + AP call','Resend invoice with faktur pajak / paperwork objections pre-killed.'],['D14','Director escalation','Written suspension notice; reassure payroll continues.'],['D21','Stop-loss','Freeze new hires and non-payroll services.'],['D30','Somasi','Formal default notice sequence while deposit funds payroll.'],['D45+','SIAC / enforcement path','Commercial dispute route; statutory wage duties remain protected.']].map(t=>`<div class="tl"><div class="d">${t[0]}</div><div class="t">${t[1]}</div><div class="x">${t[2]}</div></div>`).join('')}</div>`;
 SUB['playbook/termination']=()=>`
 <p class="lead">Termination is the highest-risk stage and must <b>never</b> be a one-click button. The client may <i>request</i> it; the EOR, as Indonesian legal employer, <i>decides and runs</i> the lawful process — branched by legal ground and required evidence.</p>
 <div class="moneyflow">
