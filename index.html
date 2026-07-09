@@ -308,6 +308,15 @@ tr:hover td{background:rgba(255,255,255,.04);}
 .learnitem b{color:var(--text);}
 .riskflags{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0 3px;}
 .riskflags span{font-size:11px;font-weight:700;color:var(--amberink);background:var(--amberbg);border:1px solid rgba(251,191,36,.18);border-radius:999px;padding:5px 8px;}
+.riskflags span.info{color:var(--blueink);background:var(--bluebg);border-color:rgba(122,162,255,.20);}
+.riskflags span.risk{color:var(--amberink);background:var(--amberbg);border-color:rgba(251,191,36,.20);}
+.riskflags span.blocked{color:var(--redink);background:var(--redbg);border-color:rgba(251,113,133,.30);}
+.quoteblocked{font-size:12.5px;font-weight:800;color:var(--redink);background:var(--redbg);border:1px solid rgba(251,113,133,.42);border-radius:10px;padding:10px 13px;margin:0 0 12px;}
+.pspresets{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:12px 0 6px;}
+.pspresets-lbl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.pspreset{font-size:11.5px;font-weight:700;color:var(--text);background:rgba(255,255,255,.04);border:1px solid var(--gline);border-radius:999px;padding:6px 12px;cursor:pointer;transition:border-color .15s,background .15s;}
+.pspreset:hover{border-color:var(--blueink);}
+.pspreset.active{background:var(--bluebg);color:var(--blueink);border-color:var(--blueink);}
 .sourcegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
 
 .hero{background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid var(--gline);border-radius:20px;padding:32px 32px;color:#fff;margin-bottom:20px;backdrop-filter:blur(24px) saturate(1.4);box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);position:relative;overflow:hidden;}
@@ -801,6 +810,47 @@ function ecoModel(){const FEE=249,FIX=3900,ADM=1100,PER=18,CAP=75;const ns=[0,10
 const TER={A:[[5400000,0],[6300000,0.0075],[6750000,0.01],[7500000,0.0125],[8550000,0.015],[9650000,0.0175],[10050000,0.02],[10700000,0.025],[11600000,0.035],[12500000,0.04],[13750000,0.05],[15100000,0.06],[16800000,0.07],[19750000,0.09],[24150000,0.11],[26450000,0.12],[28000000,0.13],[30050000,0.14],[32400000,0.15],[35400000,0.16],[39100000,0.17],[43850000,0.18],[47800000,0.19],[51400000,0.2],[56300000,0.21],[62200000,0.22],[68600000,0.23],[77500000,0.24],[89000000,0.25],[9e9,0.3]],
  B:[[6200000,0],[7100000,0.0075],[7500000,0.01],[8250000,0.0125],[9200000,0.015],[10750000,0.0175],[11250000,0.02],[11600000,0.025],[12600000,0.03],[13600000,0.04],[14950000,0.05],[16400000,0.06],[18450000,0.07],[21850000,0.09],[26000000,0.11],[27700000,0.12],[29350000,0.13],[31450000,0.14],[33950000,0.15],[37100000,0.16],[41100000,0.17],[45800000,0.18],[49500000,0.19],[53800000,0.2],[9e9,0.3]],
  C:[[6600000,0],[7800000,0.0075],[8250000,0.01],[9200000,0.0125],[10950000,0.015],[11200000,0.0175],[12050000,0.02],[12950000,0.025],[14150000,0.03],[15550000,0.04],[17050000,0.05],[19500000,0.06],[22700000,0.07],[26600000,0.09],[28100000,0.11],[30100000,0.12],[32600000,0.13],[35400000,0.14],[38900000,0.15],[9e9,0.3]]};
+/* Single source of truth for 2026 payroll constants — next BPJS/JP/FX update is a one-object edit.
+   Each rate carries its source and effective date so a reviewer can version it (09A rate-table governance). */
+const PAYROLL_RATES_2026={
+ fx:{idrPerUsd:16150,note:'Directional planning FX; live rate is set by Airwallex/bank at payout.',effectiveDate:'2026-01'},
+ jpCeiling:{value:11086300,source:'BPJS circular B/1226/022026',effectiveDate:'2026-03'},
+ kesCap:{value:12000000,source:'Perpres 64/2020 (BPJS Kesehatan)',effectiveDate:'2020-07'},
+ employer:{jht:.037,jp:.02,jkm:.003,kes:.04,source:'https://www.bpjsketenagakerjaan.go.id/artikel/18913',effectiveDate:'2026-01'},
+ employee:{jht:.02,jp:.01,kes:.01,source:'https://www.bpjsketenagakerjaan.go.id/artikel/18913',effectiveDate:'2026-01'},
+ jkkTiers:[.0024,.0054,.0089,.0127,.0174],
+ tapera:{employer:.005,employee:.025,active:false,source:'PP 21/2024',effectiveDate:'watch-2027',note:'Watch-only; NOT in the base 2026 payroll model until private-sector timing is confirmed.'},
+ ter:{table:TER,grade:'directional, not filing-grade',fallbackRate:.3,source:'https://kalkulator.pajak.go.id/ (PMK 168/2023 monthly TER)',effectiveDate:'2024-01'}
+};
+/* Highest sampled monthly-gross bracket per TER category. Above it the coded table uses a flat 30% fallback
+   (official schedule tops out ~34% above ~Rp1.4bn), so the simulator warns and points to the DJP calculator. */
+const TER_TOP_SAMPLED={A:89000000,B:53800000,C:38900000};
+/* Console-only regression pins for three canonical 09A cases (no framework). Runs once when the sim first renders. */
+function runSelfTests(){
+ try{
+  const PR=PAYROLL_RATES_2026,jkk=PR.jkkTiers[0];
+  const cases=[
+   {n:'A · PKWTT senior eng Rp35M TER B t24 std',base:35000000,cat:'B',ten:24,type:'PKWTT',su:1,sm:1,exp:{pph:5600000,employerBpjs:2185726,net:28469137,exit:105000000}},
+   {n:'B · PKWT QA Rp15M TER A t12',base:15000000,cat:'A',ten:12,type:'PKWT',su:0,sm:0,exp:{pph:900000,employerBpjs:1337726,net:13569137,exit:15000000}},
+   {n:'C · PKWTT mid Rp12M TER A t6 std',base:12000000,cat:'A',ten:6,type:'PKWTT',su:1,sm:1,exp:{pph:480000,employerBpjs:1210526,net:11049137,exit:12000000}}
+  ];
+  let pass=0,fail=0;
+  cases.forEach(c=>{
+   const wageBase=c.base,statBase=wageBase,jpBase=Math.min(statBase,PR.jpCeiling.value),kesBase=Math.min(statBase,PR.kesCap.value);
+   const employerBpjs=Math.round(statBase*PR.employer.jht+jpBase*PR.employer.jp+statBase*jkk+statBase*PR.employer.jkm+kesBase*PR.employer.kes);
+   const employeeBpjs=statBase*PR.employee.jht+jpBase*PR.employee.jp+kesBase*PR.employee.kes;
+   const pph=Math.round(terRate(c.cat,wageBase)*wageBase);
+   const net=Math.round(wageBase-employeeBpjs-terRate(c.cat,wageBase)*wageBase);
+   const up=upMonths(c.ten),upmk=upmkMonths(c.ten);
+   const exit=c.type==='PKWT'?Math.round((c.ten/12)*wageBase):Math.round((up*c.su+upmk*c.sm)*wageBase);
+   const got={pph,employerBpjs,net,exit};
+   const ok=Object.keys(c.exp).every(k=>got[k]===c.exp[k]);
+   ok?pass++:(fail++,console.warn('[payroll self-test FAIL]',c.n,'\n  expected',c.exp,'\n  got     ',got));
+  });
+  console.info('[payroll self-tests] '+pass+'/'+(pass+fail)+' cases pass'+(fail?' — '+fail+' FAILED':' ✓'));
+  return fail===0;
+ }catch(e){console.warn('[payroll self-tests] error',e);return false;}
+}
 function terRate(c,g){const t=TER[c]||TER.A;for(const[cap,r]of t){if(g<=cap)return r;}return .3;}
 function fmt(n){return 'Rp'+Math.round(n).toLocaleString('id-ID');}
 function runCalc(){const out=document.getElementById('calcOut');if(!out)return;
@@ -836,6 +886,15 @@ const EXIT_PRESETS={
  retire:{name:'Retirement',up:1.75,upmk:1,pisah:false,note:'High-liability preset; validate against company policy and insurance/benefit offset.'},
  death:{name:'Death / prolonged illness threshold',up:2,upmk:1,pisah:false,note:'2× UP + 1× UPMK + UPH; family/beneficiary workflow applies.'}
 };
+/* 09A canonical teaching cases — the sim opens on Case A and these buttons reload each one. */
+const PS_PRESETS={
+ A:{psBase:35000000,psFixed:0,psBenefits:0,psMinWage:0,psType:'PKWTT',psTer:'B',psJkk:'0.0024',psTenure:24,psFee:249,psExit:'standard'},
+ B:{psBase:15000000,psFixed:0,psBenefits:0,psMinWage:0,psType:'PKWT',psTer:'A',psJkk:'0.0024',psTenure:12,psFee:249,psExit:'standard'},
+ C:{psBase:12000000,psFixed:2000000,psBenefits:1000000,psMinWage:0,psType:'PKWTT',psTer:'A',psJkk:'0.0024',psTenure:6,psFee:249,psExit:'effloss'}
+};
+function loadPreset(k){const p=PS_PRESETS[k];if(!p)return;for(const id in p){const el=document.getElementById(id);if(el)el.value=p[id];}
+ document.querySelectorAll('.pspreset').forEach(b=>b.classList.toggle('active',b.getAttribute('data-k')===k));
+ runPayrollSim();}
 function runPayrollSim(){
  const out=document.getElementById('payrollSimOut');if(!out)return;
  const base=getN('psBase',25000000),fixed=getN('psFixed',0),benefits=getN('psBenefits',0),minWage=getN('psMinWage',0);
@@ -845,11 +904,12 @@ function runPayrollSim(){
  const scenarioKey=(document.getElementById('psExit')||{}).value||'standard',scenario=EXIT_PRESETS[scenarioKey]||EXIT_PRESETS.standard;
  const manualUph=getN('psUph',0),manualPisah=getN('psPisah',0),tapera=!!document.getElementById('psTapera')?.checked;
  setT('psTenureV',tenure+' mo');setT('psDepositV',depositMonths+' mo');setT('psReserveV',pct(reservePct));setT('psFxBufferV',pct(fxPct));
- const jpBase=Math.min(statBase,11086300),kesBase=Math.min(statBase,12000000);
- const erJht=statBase*.037,erJp=jpBase*.02,erJkk=statBase*jkk,erJkm=statBase*.003,erKes=kesBase*.04,employerBpjs=erJht+erJp+erJkk+erJkm+erKes;
- const eeJht=statBase*.02,eeJp=jpBase*.01,eeKes=kesBase*.01,employeeBpjs=eeJht+eeJp+eeKes;
- const ter=terRate(cat,wageBase),pph=ter*wageBase;
- const taperaEmployer=tapera?statBase*.005:0,taperaEmployee=tapera?statBase*.025:0;
+ const PR=PAYROLL_RATES_2026;if(!window.__ptSelfTested){window.__ptSelfTested=1;runSelfTests();}
+ const jpBase=Math.min(statBase,PR.jpCeiling.value),kesBase=Math.min(statBase,PR.kesCap.value);
+ const erJht=statBase*PR.employer.jht,erJp=jpBase*PR.employer.jp,erJkk=statBase*jkk,erJkm=statBase*PR.employer.jkm,erKes=kesBase*PR.employer.kes,employerBpjs=erJht+erJp+erJkk+erJkm+erKes;
+ const eeJht=statBase*PR.employee.jht,eeJp=jpBase*PR.employee.jp,eeKes=kesBase*PR.employee.kes,employeeBpjs=eeJht+eeJp+eeKes;
+ const ter=terRate(cat,wageBase),pph=ter*wageBase,terOutOfBand=wageBase>(TER_TOP_SAMPLED[cat]||9e9);
+ const taperaEmployer=tapera?statBase*PR.tapera.employer:0,taperaEmployee=tapera?statBase*PR.tapera.employee:0;
  const net=wageBase-employeeBpjs-pph-taperaEmployee;
  const thrEntitlement=tenure>=1?(Math.min(tenure,12)/12)*wageBase:0,thrAccrual=wageBase/12;
  const pkwtComp=empType==='PKWT'&&tenure>=1?(tenure/12)*wageBase:0;
@@ -859,16 +919,19 @@ function runPayrollSim(){
  const exitReserve=empType==='PKWT'?wageBase/12:wageBase*reservePct;
  const feeIdr=feeUsd*fx,passThrough=wageBase+employerBpjs+thrAccrual+exitReserve+benefits+taperaEmployer,fxBuffer=passThrough*fxPct,monthlyInvoice=passThrough+feeIdr+fxBuffer,deposit=monthlyInvoice*depositMonths;
  const flags=[];
- if(minWage&&wageBase<minWage)flags.push('Below entered local minimum wage: quote cannot proceed as-is.');
- if(fixed>0)flags.push('Fixed allowance included in BPJS, THR and exit wage base.');
- if(wageBase>11086300)flags.push('JP ceiling triggered: pension contribution stops at Rp11.0863M base.');
- if(wageBase>12000000)flags.push('BPJS Kesehatan cap triggered at Rp12M.');
- if(tenure>=36)flags.push('UPMK service-pay threshold triggered.');
- if(empType==='PKWT')flags.push('PKWT path: compensation accrues; probation is not allowed.');
- if(empType==='PKWTT')flags.push('PKWTT path: PHK reason and evidence drive the multiplier.');
- flags.push('TER is Jan-Nov withholding; December still needs annual true-up.');
- if(tapera)flags.push('Tapera shown only as watch-item sensitivity, not base 2026 payroll.');
- out.innerHTML=`<div class="resultgrid">
+ if(minWage&&wageBase<minWage)flags.push({t:'Below entered local minimum wage — quote is BLOCKED until the wage base is corrected.',sev:'blocked'});
+ if(fixed>0)flags.push({t:'Fixed allowance included in BPJS, THR and exit wage base.',sev:'info'});
+ if(wageBase>PR.jpCeiling.value)flags.push({t:'JP ceiling triggered: pension contribution stops at Rp11.0863M base.',sev:'info'});
+ if(wageBase>PR.kesCap.value)flags.push({t:'BPJS Kesehatan cap triggered at Rp12M.',sev:'info'});
+ if(tenure>=36)flags.push({t:'UPMK service-pay threshold triggered.',sev:'info'});
+ if(empType==='PKWT')flags.push({t:'PKWT path: compensation accrues; probation is not allowed.',sev:'risk'});
+ if(empType==='PKWTT')flags.push({t:'PKWTT path: PHK reason and evidence drive the multiplier.',sev:'risk'});
+ flags.push({t:'TER table is directional, not filing-grade — validate PPh 21 on the DJP calculator before filing.',sev:'info'});
+ flags.push({t:'TER is Jan–Nov withholding; December still needs the annual true-up.',sev:'info'});
+ if(terOutOfBand)flags.push({t:'Gross is above the sampled TER-'+cat+' brackets: the model uses a flat 30% fallback (official rates rise toward 34% at the top). Verify this case on the DJP calculator.',sev:'risk'});
+ if(tapera)flags.push({t:'Tapera shown only as watch-item sensitivity, not base 2026 payroll.',sev:'info'});
+ const blocked=flags.some(f=>f.sev==='blocked');
+ out.innerHTML=`${blocked?`<div class="quoteblocked">⛔ Quote blocked — an input violates a hard constraint (wage base below the entered minimum wage). Correct the wage base before this quote can be used.</div>`:''}<div class="resultgrid">
   <div class="resultcard"><div class="rk">Employee net pay</div><div class="rv">${fmt(net)}</div><div class="rx">Gross minus employee BPJS ${fmt(employeeBpjs)}, TER-${cat} PPh 21 ${fmt(pph)}${tapera?`, Tapera watch ${fmt(taperaEmployee)}`:''}.</div></div>
   <div class="resultcard"><div class="rk">Client monthly estimate</div><div class="rv">${fmt(monthlyInvoice)}</div><div class="rx">Gross + employer load + THR + exit reserve + benefits + fee + FX buffer.</div></div>
   <div class="resultcard"><div class="rk">Employer BPJS</div><div class="rv">${fmt(employerBpjs)}</div><div class="rx">JHT ${fmt(erJht)}, JP ${fmt(erJp)}, JKK ${fmt(erJkk)}, JKM ${fmt(erJkm)}, Kesehatan ${fmt(erKes)}.</div></div>
@@ -876,7 +939,7 @@ function runPayrollSim(){
   <div class="resultcard"><div class="rk">Exit exposure now</div><div class="rv">${fmt(exitExposure)}</div><div class="rx">${empType==='PKWT'?'PKWT compensation to date.':scenario.name+': '+scenario.note}</div></div>
   <div class="resultcard"><div class="rk">Funding guardrail</div><div class="rv">${fmt(deposit)}</div><div class="rx">${depositMonths} month deposit on loaded monthly estimate. Deposit is risk collateral, not revenue.</div></div>
  </div>
- <div class="riskflags">${flags.map(f=>`<span>${f}</span>`).join('')}</div>
+ <div class="riskflags">${flags.map(f=>`<span class="${f.sev}">${f.t}</span>`).join('')}</div>
  <div class="chartbox"><h4>Cost waterfall from one salary</h4><canvas id="ch_payroll_waterfall"></canvas><div class="src">Driven by the fields on the left. Watch how caps, fixed allowances, tenure and exit type move the picture.</div></div>
  <div class="learnlist">
   <div class="learnitem"><b>What moved net pay?</b> The worker sees employee BPJS and PPh 21 TER; employer BPJS and reserves are client-side cost, not employee deductions.</div>
@@ -1507,24 +1570,26 @@ SUB['compliance/simcalc']=()=>`
 <p class="lead">A controlled sandbox for Indonesia EOR payroll economics: change salary, allowances, BPJS tier, TER category, tenure, contract type and deposit policy; then read what changed and why.</p>
 ${docBundle(['compliance09','compliance09a','compliance09b','econ10','ops07c'],'The simulator synthesises the compliance parent, validation lab, simulator spec, unit economics and monthly payroll-loop report.')}
 <div class="callout blue"><b>Boundary</b><p>This is a source-backed learning and quote-control model, not a filing engine. It excludes overtime, daily-worker TER, exact December annual tax, irregular bonuses, expatriate cases, portal state, and legal advice on PHK grounds. Use DJP/BPJS/counsel validation before live quoting.</p></div>
+<div class="pspresets"><span class="pspresets-lbl">09A cases:</span><button class="pspreset active" data-k="A" onclick="loadPreset('A')">A · PKWTT senior eng · cap lesson</button><button class="pspreset" data-k="B" onclick="loadPreset('B')">B · PKWT QA · kompensasi lesson</button><button class="pspreset" data-k="C" onclick="loadPreset('C')">C · mid-cycle change · proration</button></div>
 <div class="simgrid">
  <div class="calc" oninput="runPayrollSim()" onchange="runPayrollSim()">
   <div style="font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Payroll variables</div>
   <div class="simform">
-   <label>Base salary IDR <span class="info-dot" title="Monthly basic salary. This plus fixed allowance forms the statutory wage base.">(i)</span><input id="psBase" type="number" value="25000000" min="0" step="500000"></label>
+   <label>Base salary IDR <span class="info-dot" title="Monthly basic salary. This plus fixed allowance forms the statutory wage base.">(i)</span><input id="psBase" type="number" value="35000000" min="0" step="500000"></label>
    <label>Fixed allowance IDR <span class="info-dot" title="Tunjangan tetap is included in BPJS, THR and severance wage base.">(i)</span><input id="psFixed" type="number" value="0" min="0" step="250000"></label>
-   <label>Benefits/reimbursements IDR <span class="info-dot" title="Displayed as client pass-through unless reclassified as fixed allowance.">(i)</span><input id="psBenefits" type="number" value="1000000" min="0" step="250000"></label>
+   <label>Benefits/reimbursements IDR <span class="info-dot" title="Displayed as client pass-through unless reclassified as fixed allowance.">(i)</span><input id="psBenefits" type="number" value="0" min="0" step="250000"></label>
    <label>Local minimum wage floor <span class="info-dot" title="Optional manual check. If entered above wage base, the simulator flags the quote and uses the floor for BPJS display.">(i)</span><input id="psMinWage" type="number" value="0" min="0" step="100000"></label>
    <label>Employee type <span class="info-dot" title="PKWT accrues compensation; PKWTT uses severance scenarios.">(i)</span><select id="psType"><option value="PKWTT">PKWTT · permanent</option><option value="PKWT">PKWT · fixed term</option></select></label>
-   <label>TER category <span class="info-dot" title="A/B/C from PTKP status. Use DJP calculator for filing-grade validation.">(i)</span><select id="psTer"><option value="A">A · TK/0, TK/1, K/0</option><option value="B">B · TK/2, TK/3, K/1, K/2</option><option value="C">C · K/3</option></select></label>
+   <label>TER category <span class="info-dot" title="A/B/C from PTKP status. Use DJP calculator for filing-grade validation.">(i)</span><select id="psTer"><option value="A">A · TK/0, TK/1, K/0</option><option value="B" selected>B · TK/2, TK/3, K/1, K/2</option><option value="C">C · K/3</option></select></label>
    <label>JKK risk tier <span class="info-dot" title="BPJS work-accident class. Office/tech is often low, but entity/role classification must be confirmed.">(i)</span><select id="psJkk"><option value="0.0024">Very low · 0.24%</option><option value="0.0054">Low · 0.54%</option><option value="0.0089">Medium · 0.89%</option><option value="0.0127">High · 1.27%</option><option value="0.0174">Very high · 1.74%</option></select></label>
-   <label>Tenure <span id="psTenureV">12 mo</span> <span class="info-dot" title="Moves THR entitlement, PKWT compensation, UP and UPMK.">(i)</span><input id="psTenure" type="range" value="12" min="0" max="120" step="1"></label>
+   <label>Tenure <span id="psTenureV">12 mo</span> <span class="info-dot" title="Moves THR entitlement, PKWT compensation, UP and UPMK.">(i)</span><input id="psTenure" type="range" value="24" min="0" max="120" step="1"></label>
    <label>Navv fee USD/mo <span class="info-dot" title="Fee is revenue; statutory payroll lines are pass-through or reserves.">(i)</span><input id="psFee" type="number" value="249" min="0" step="10"></label>
    <label>FX IDR/USD <span class="info-dot" title="Used only to convert the USD fee into IDR for the invoice view.">(i)</span><input id="psFx" type="number" value="16150" min="0" step="50"></label>
    <label>FX buffer <span id="psFxBufferV">1.5%</span> <span class="info-dot" title="Transparent quote buffer against currency movement; not a hidden tax.">(i)</span><input id="psFxBuffer" type="range" value="1.5" min="0" max="4" step=".25"></label>
    <label>Deposit <span id="psDepositV">1 mo</span> <span class="info-dot" title="Funding guardrail for payroll, THR and exit exposure. It is not revenue.">(i)</span><input id="psDeposit" type="range" value="1" min="0" max="3" step=".25"></label>
    <label>PKWTT reserve <span id="psReserveV">4.0%</span> <span class="info-dot" title="Planning reserve only; real settlement depends on legal ground and evidence.">(i)</span><input id="psReserve" type="range" value="4" min="0" max="12" step=".5"></label>
    <label>Exit scenario <span class="info-dot" title="Scenario presets from PP 35/2021 logic; counsel decides whether the ground is valid.">(i)</span><select id="psExit"><option value="standard">Standard PHK · 1×/1×</option><option value="effloss">Efficiency/losses · 0.5×/1×</option><option value="violation">Violation after SP · 0.5×/1×</option><option value="resign">Resignation · UPH + pisah</option><option value="retire">Retirement · 1.75×/1×</option><option value="death">Death/illness · 2×/1×</option></select></label>
+   <div class="full" style="font-size:11px;color:var(--amberink);background:var(--amberbg);border-radius:8px;padding:6px 9px;margin-top:-2px">⚖ Selecting a scenario does not create a valid PHK ground — that is a counsel decision. The presets only compute the PP 35/2021 payout math once a ground is validated.</div>
    <label>Manual UPH IDR <span class="info-dot" title="Unused leave, return cost and other compensation of rights.">(i)</span><input id="psUph" type="number" value="0" min="0" step="250000"></label>
    <label>Uang pisah IDR <span class="info-dot" title="Only shown in scenarios where policy/contract/PP/PKB uses separation pay.">(i)</span><input id="psPisah" type="number" value="0" min="0" step="250000"></label>
    <label class="full"><input id="psTapera" type="checkbox"> Tapera sensitivity only <span class="info-dot" title="Not in the base 2026 model; show as watch-item sensitivity until private-sector timing is confirmed.">(i)</span></label>
@@ -2013,7 +2078,7 @@ const GLOSSARY=[
 {c:'biz',t:'Owned-entity model',d:'Running EOR services through your own locally incorporated entity.',w:'Control, better margin, cleaner liability — but capital + ongoing compliance.'},
 {c:'biz',t:'In-Country Partner (ICP) / Aggregator',d:'A local licensed entity a platform uses to employ workers where it lacks its own entity; an aggregator stitches many together.',w:'You inherit the partner compliance quality and licensing scope.'},
 {c:'biz',t:'Permanent Establishment (PE) / BUT',d:'A taxable business presence a foreign company can inadvertently create, triggering local corporate tax.',w:'A core EOR value is avoiding PE — but a poorly structured EOR can create the very PE it was meant to avoid.'},
-{c:'biz',t:'Misclassification',d:'Treating a worker as a contractor (or a permanent employee as fixed-term) when the law says otherwise.',w:'Indonesia biggest EOR risk: a defective PKWT can be deemed permanent; back-pay + severance + BPJS land on the EOR.'},
+{c:'biz',t:'Misclassification',d:'Treating a worker as a contractor (or a permanent employee as fixed-term) when the law says otherwise.',w:'Indonesia biggest EOR risk: a defective PKWT is a reclassification exposure — it can be challenged as permanent (counsel confirms), and if so back-pay + severance + BPJS land on the EOR. Not an automatic, settled conversion.'},
 {c:'biz',t:'Loaded / fully-burdened cost',d:'Total cost to employ: gross salary plus all employer contributions, allowances, accruals and fees.',w:'The number you quote and price against — bare salary understates it badly.'},
 {c:'biz',t:'Burden rate',d:'The percentage uplift over base salary for employer statutory + benefit costs.',w:'Your margin lives or dies on an accurate Indonesian burden rate (~15–18%).'},
 {c:'biz',t:'Pass-through cost',d:'A cost the EOR incurs on the client behalf and bills onward at cost, without markup.',w:'Clean pass-through vs marked-up-fee separation builds trust and keeps the taxable service fee distinct.'},

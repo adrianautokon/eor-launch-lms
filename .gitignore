@@ -22,3 +22,7 @@ _tmp_*.txt
 CURSOR-*.md
 
 _chart.umd.min.js
+
+# Reference docs / handoffs — kept locally, never shipped
+Navv_EOR_Operational_Research_Brief_2026-07-07.md
+CLAUDE_REVIEW_HANDOFF_*.md
