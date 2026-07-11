@@ -337,6 +337,12 @@ tr:hover td{background:rgba(255,255,255,.04);}
 .timeline .tl .x{font-size:12.5px;color:var(--muted);}
 .mini{font-size:12.5px;color:var(--text2);margin-top:4px;}
 .flag{font-size:11.5px;color:var(--amberink);background:var(--amberbg);border-radius:8px;padding:8px 11px;margin:8px 0;}
+.quiz{background:rgba(122,162,255,.06);border:1px solid rgba(122,162,255,.22);border-radius:12px;padding:0;margin:12px 0;}
+.quiz summary{cursor:pointer;padding:12px 15px;font-size:13.5px;font-weight:650;color:var(--blueink);list-style:none;}
+.quiz summary::before{content:'🧠 ';}
+.quiz[open] summary{border-bottom:1px dashed var(--gline);}
+.quiz .qa{padding:11px 15px;font-size:13px;color:var(--text2);}
+.quiz .qa b{color:var(--text);}
 
 @media(max-width:760px){
   .app{grid-template-columns:1fr;}
@@ -414,17 +420,18 @@ const MODS=[
  {id:'competition',ix:'4',group:'The Case',nav:'Competition',subs:[['landscape','The landscape'],['win','How we win'],['profiles','Profiles']]},
  {id:'whateor',ix:'5',group:'The Machine',nav:'What Is an EOR',subs:[['def','Definition + the test'],['tax','EOR vs PEO vs the rest'],['split','EOR holds / client keeps'],['chain','The value chain'],['myths','Liability myths']]},
  {id:'setup',ix:'6',group:'The Machine',nav:'Legal & Setup',subs:[['seq','Setup overview'],['entityseq','06A · Entity sequence'],['contract','06B · Contract stack'],['entity','Entity: PT vs PT PMA'],['lic','Licences & registrations'],['risk','Permenaker 7/2026 risk'],['memos','Counsel memos'],['check','Setup checklist']]},
- {id:'ops',ix:'7',group:'The Machine',nav:'Operations Lifecycle',subs:[['overview','Lifecycle overview'],['series','07A-E lifecycle series'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s3','3 · File & remit'],['s4','4 · Support'],['s4deep','4.1 · People ops deep dive'],['s5','5 · Offboard'],['first10','First-10 runbook'],['run','How it is run']]},
+ {id:'ops',ix:'7',group:'The Machine',nav:'Operations Lifecycle',subs:[['overview','Lifecycle overview'],['series','07A-E lifecycle series'],['s0','0 · Quote & sign'],['s1','1 · Onboard'],['s2','2 · Payroll loop'],['s2close','2.1 · Month-close & evidence pack'],['s3','3 · File & remit'],['s4','4 · Support'],['s4deep','4.1 · People ops deep dive'],['s5','5 · Offboard'],['first10','First-10 runbook'],['run','How it is run']]},
  {id:'playbook',ix:'8',group:'The Machine',nav:'Coordination Playbook',subs:[['swimlane','End-to-end swimlane'],['triangle','The legal triangle'],['raci','RACI across the lifecycle'],['manpower','EOR team & hiring ladder'],['clock','The monthly payroll clock'],['esc','08A · Escalation & dunning'],['termination','Termination decision tree'],['rolerisk','Role-risk taxonomy'],['thr','THR as a monthly liability'],['memos','Counsel memo checklist']]},
  {id:'compliance',ix:'9',group:'The Machine',nav:'Compliance Deep-Dive',subs:[['cal','Deadline calendar'],['stack','Employer cost stack'],['bpjs','BPJS'],['pph','PPh 21 & TER'],['lab','Payroll validation lab'],['simcalc','Payroll simulator lab'],['thr','THR'],['sev','Severance'],['term','Termination workflow']]},
  {id:'sim',ix:'9.5',group:'The Machine',nav:'EOR Desk Sim',subs:[['play','Play the module quiz']]},
- {id:'econ',ix:'10',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator']]},
- {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line'],['ai','11A · AI ops stack']]},
- {id:'quality',ix:'12',group:'The Machine',nav:'Quality, Risk & Controls',subs:[['modes','Failure modes'],['nums','The benchmark numbers'],['ctrl','The controls'],['seam','Trust vs reliability']]},
+ {id:'econ',ix:'10',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator'],['minutes','10A · Minutes instrumentation']]},
+ {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line'],['ai','11A · AI ops stack'],['backlog','11B · Automation backlog']]},
+ {id:'quality',ix:'12',group:'The Machine',nav:'Quality, Risk & Controls',subs:[['modes','Failure modes'],['nums','The benchmark numbers'],['ctrl','The controls'],['seam','Trust vs reliability'],['incident','12B · Incident runbooks & continuity']]},
  {id:'gtm',ix:'13',group:'Execute',nav:'Go-to-Market',subs:[['icp','The advanced-market ICP'],['sg','Singapore beachhead'],['roles','Role-risk taxonomy'],['pseo','Programmatic SEO engine'],['wedges','Conversion wedges'],['pricing','Pricing posture'],['check','GTM checklist']]},
  {id:'roadmap',ix:'14',group:'Execute',nav:'Launch Roadmap',subs:[['phases','The four phases'],['gates','The gates'],['check','Execution checklist']]},
- {id:'resources',ix:'15',group:'Execute',nav:'Resources & Learn',subs:[['video','Videos'],['thesis','The thesis'],['reg','Regulation & payroll'],['biz','EOR business & payments']]},
+ {id:'resources',ix:'15',group:'Execute',nav:'Resources & Learn',subs:[['video','Videos'],['thesis','The thesis'],['reg','Regulation & payroll'],['biz','EOR business & payments'],['templates','15A · Template library']]},
  {id:'glossary',ix:'16',group:'Execute',nav:'Glossary',subs:[['biz','EOR business terms'],['contract','Contract-stack terms'],['law','Employment law'],['tax','Tax & statutory'],['entity','Entity & licensing'],['docs','Documents & IDs']]},
+ {id:'bridge',ix:'17',group:'Execute',nav:'Ops → Product Bridge',subs:[['why','Why this module exists'],['ladder','The autonomy ladder'],['taxonomy','Six automation types'],['map','The automation map'],['reality','The Indonesia reality'],['horizons','Three horizons'],['register','The requirements register'],['diagrams','16A · SSDs & swimlanes']]},
 ];
 const SUB={}, COMP={}, CHARTS={};
 const COMPLIST=['statusquo','remofirst','skuad','emerhub','recruitgo','raintech','glints','incorp','aspire','multiplier','deel','remote','oyster','atlas'];
@@ -494,7 +501,7 @@ function buildModule(m){
 }
 const SUBNAV_GROUPS={
  setup:[['Structure & sequence',['seq']],['Entity & licences',['entity','lic']],['Risk & counsel',['risk']],['Execution',['check']]],
- ops:[['Overview',['overview','series']],['Lifecycle stages',['s0','s1','s2','s3','s4','s5']],['Runbook',['first10','run']]],
+ ops:[['Overview',['overview','series']],['Lifecycle stages',['s0','s1','s2','s2close','s3','s4','s5']],['Runbook',['first10','run']]],
  compliance:[['Calendar & costs',['cal','stack']],['Contributions & tax',['bpjs','pph','lab','simcalc']],['Holiday pay & exit',['thr','sev','term']]],
  gtm:[['Market & ICP',['icp','sg','roles']],['Acquisition',['pseo','wedges']],['Monetisation',['pricing','check']]]
 };
@@ -565,6 +572,7 @@ const DOCS={
  ops07a:'https://docs.google.com/document/d/19s2OE1YCA39Ckfq1FxT7-exX63Me93Wu/edit?rtpof=true&sd=true',
  ops07b:'https://docs.google.com/document/d/15DIbsKF-wqaynsLCMZH_E7Dp0aI4iUro/edit?rtpof=true&sd=true',
  ops07c:'https://docs.google.com/document/d/1wC7Cg9qIQEZkdyaUWZCSZg2Iu_5FoHe9/edit?rtpof=true&sd=true',
+ ops07c1:'https://docs.google.com/document/d/1vrl6x3CyIkZmUI_OSd6q-yATSU-ktpIg/edit?rtpof=true&sd=true',
  ops07d:'https://docs.google.com/document/d/1nu3cTlbi_Yj1i25mT6V2prACzI9Fv2pi/edit?rtpof=true&sd=true',
  ops07d1:'https://docs.google.com/document/d/1atqkppy4YjkGqBmzmd4bNRbr5qtaYVOb/edit?rtpof=true&sd=true',
  ops07e:'https://docs.google.com/document/d/1OUe7-URAYx94J6nPeDu_mKIWjdi7zzC6/edit?rtpof=true&sd=true',
@@ -575,14 +583,20 @@ const DOCS={
  compliance09a:'https://docs.google.com/document/d/1MZxjFXyvaGBkLfGU9d-wzAFmli0fGqmQ/edit?rtpof=true&sd=true',
  compliance09b:'https://docs.google.com/document/d/1YZsjFEKrM4WS_F0MIvZ53bDiGxgYYEw4/edit?rtpof=true&sd=true',
  econ10:'https://docs.google.com/document/d/1MeuTHwtxuFUjs3xTcTb7GpQ5-xDrDCsi/edit?rtpof=true&sd=true',
+ econ10a:'https://docs.google.com/document/d/1aXmgWrq2_zqo4C5BLnxzeYHAVjnluDj4/edit?rtpof=true&sd=true',
  pay11:'https://docs.google.com/document/d/1LvAiVsBnvNxdlEtJNXMVbSNNbXfDKOZk/edit?rtpof=true&sd=true',
  pay11a:'https://docs.google.com/document/d/10FQMml7QPnZ-E0Y0As2WciH9t0RVY2C9/edit?rtpof=true&sd=true',
+ pay11b:'https://docs.google.com/document/d/1py5Crpq0FFhVvXzIBKzrA3OyYK_P6P59/edit?rtpof=true&sd=true',
  quality12:'https://docs.google.com/document/d/18h_wI_EVqQ8EyZBgeblt9twcsU8SsHaR/edit?rtpof=true&sd=true',
  quality12a:'https://docs.google.com/document/d/1sJ0-LB8QsRJvcFftG7g_FDaE7WS_vzZO/edit?rtpof=true&sd=true',
+ qual12b:'https://docs.google.com/document/d/1s5frcVClLLHN71yGtzQMeQk_2zgRurgs/edit?rtpof=true&sd=true',
  gtm13:'https://docs.google.com/document/d/1nJg8I3LHSWvQlK5yJFk51_ntUWOwAcyR/edit?rtpof=true&sd=true',
  gtm13a:'https://docs.google.com/document/d/1o2336F1DAgQN47c0-UiJTiWXnVP2MDEQ/edit?rtpof=true&sd=true',
  glossary14:'https://docs.google.com/document/d/1vQLn_gfu8kmuSoXiGuljhTJxUfnmi-DL/edit?rtpof=true&sd=true',
- msa:'https://docs.google.com/document/d/1rZ38eIlW9u1A0gy6KKxD_RaJQr6wF7T-/edit?rtpof=true&sd=true'
+ msa:'https://docs.google.com/document/d/1rZ38eIlW9u1A0gy6KKxD_RaJQr6wF7T-/edit?rtpof=true&sd=true',
+ ref15a:'https://docs.google.com/document/d/1KtX03Og02kNH3rfX_6iuzM4wVCfi9GBP/edit?rtpof=true&sd=true',
+ bridge16:'https://docs.google.com/document/d/1vqWcSOjbKSiMG7JzwJqPRfUQudLQBrAl/edit?rtpof=true&sd=true',
+ bridge16a:'https://docs.google.com/document/d/1YPHStVtpWInnRlnIwo6bJkRXe-ozLs5v/edit?rtpof=true&sd=true'
 };
 const DOC_TITLES={
  d01:'01 Opportunity',
@@ -599,6 +613,7 @@ const DOC_TITLES={
  ops07a:'07A Quote & Sign',
  ops07b:'07B Onboarding',
  ops07c:'07C Payroll & Filing',
+ ops07c1:'07C.1 Month-Close & Evidence Pack',
  ops07d:'07D Support & Change',
  ops07d1:'07D.1 Support People Ops Deep Dive',
  ops07e:'07E Offboarding',
@@ -609,19 +624,26 @@ const DOC_TITLES={
  compliance09a:'09A Payroll Validation Lab',
  compliance09b:'09B Payroll Simulator Spec',
  econ10:'10 Unit Economics',
+ econ10a:'10A Minutes Instrumentation Spec',
  pay11:'11 Payments / Airwallex',
  pay11a:'11A AI Ops Stack Assessment',
+ pay11b:'11B Automation Backlog',
  quality12:'12 Quality Risk Controls',
  quality12a:'12A PDP Data Architecture & AI Boundary',
+ qual12b:'12B Incident Runbooks & Continuity',
  gtm13:'13 Go To Market',
  gtm13a:'13A Primary Research Lab',
  glossary14:'14 Glossary',
- msa:'15 MSA Template Skeleton'
+ msa:'15 MSA Template Skeleton',
+ ref15a:'15A Template Library (Batch 1)',
+ bridge16:'16 Ops → Product & Tech Bridge',
+ bridge16a:'16A Automation Map — SSDs & Swimlanes'
 };
 function docUrl(key){return DOCS[key]||DRIVE;}
 function driveBox(doc,why='Open the full DOCX source pack for details, diagrams, and audit trail.',url=DRIVE,label='Open Drive ↗'){
   return `<div class="drivebox"><div><div class="dt">${doc}</div><div class="dd">${why}</div></div><a href="${url}" target="_blank" rel="noopener">${label}</a></div>`;
 }
+function quiz(q,a){return `<details class="quiz"><summary>Check yourself — ${q}</summary><div class="qa">${a}</div></details>`;}
 function docBundle(keys,why='Open the specific companion documents behind this LMS section.'){
   return `<div class="drivebox"><div><div class="dt">Source documents</div><div class="dd">${why}</div></div><div class="doclinks">${keys.map(k=>`<a href="${docUrl(k)}" target="_blank" rel="noopener">${DOC_TITLES[k]||k} ↗</a>`).join('')}</div></div>`;
 }
@@ -654,7 +676,8 @@ const INTRO={
  roadmap:'Gate 0–3 launch model — legal clearance before capital, first clients, flawless payroll cycles, then productisation only when ops are proven.',
  resources:'Curated, verified reading + video. Watch the payroll/tax ones before you run a real cycle.',
  playbook:'The coordination playbook — who does what, when, and to whom. A detailed swimlane, RACI, the manpower ladder, the monthly clock, and the termination tree.',
- glossary:'Every term, defined — with the contract terminology front and centre. Search across all terms.'
+ glossary:'Every term, defined — with the contract terminology front and centre. Search across all terms.',
+ bridge:'You\'ve run the desk (07), measured it (10A), automated it (11B) — this is where it all goes. A research BRD, deliberately pre-PRD: the autonomy ladder, the automation taxonomy, the Indonesia integration reality, and the three horizons.'
 };
 function moduleIntro(id){return INTRO[id]?`<p class="sub0">${INTRO[id]}</p>`:'';}
 
@@ -689,6 +712,13 @@ ${driveBox('Full Google Drive source pack','Use this when a learner wants the fu
  <div class="pathcard" onclick="go('gtm','sg')"><div class="pl">Go-to-market</div><div class="pt">Singapore-first beachhead</div><div class="pd">ICP, role-risk taxonomy, pSEO wedges, and pricing posture.</div></div>
  <div class="pathcard" onclick="go('econ','calc')"><div class="pl">Unit economics</div><div class="pt">Ops P&L + cost calculator</div><div class="pd">Staffing ladder, break-even, and live per-seat economics.</div></div>
  <div class="pathcard" onclick="go('roadmap','phases')"><div class="pl">Launch roadmap</div><div class="pt">Gate 0–3 execution model</div><div class="pd">Legal clearance → entity → first clients → systemise. Productise only when ops are proven.</div></div>
+ <div class="pathcard" onclick="go('bridge','why')"><div class="pl">Ops → Product bridge</div><div class="pt">The autonomy ladder & the BRD</div><div class="pd">Run it, measure it, automate it — then see where it all goes. The closing module.</div></div>
+</div>
+<h3>Suggested paths by role</h3>
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">People PIC (operator)</h4><p class="mini">07A→07E lifecycle → <b>07C.1 month-close</b> → <b>10A minutes</b> → <b>15A instruments</b> → <b>12B runbooks</b> → <b>11B backlog</b> → <b>16 bridge</b>. Measurement before automation; instruments before incidents; the bridge last.</p><p class="mini"><a onclick="go('ops','s0')">Start at 07A →</a></p></div>
+ <div class="card"><h4 style="margin-top:0">Founder</h4><p class="mini">The wedge trilogy: <b>10A minutes</b> → <b>11B backlog</b> → <b>16 bridge</b> — then 12B §3 continuity roles. The venture KPI, the queue it feeds, and where it all goes.</p><p class="mini"><a onclick="go('econ','minutes')">Start at 10A →</a></p></div>
+ <div class="card"><h4 style="margin-top:0">Counsel</h4><p class="mini">06 legal setup → 06A–06D children → 15 MSA → <b>15A template library</b> (the 06C gate) → 09 compliance → 12A PDP boundary.</p><p class="mini"><a onclick="go('setup','seq')">Start at 06 →</a></p></div>
 </div>
 <h3>Latest companion-pack alignment</h3>
 <div class="grid3">
@@ -1361,6 +1391,7 @@ SUB['ops/s1']=()=>`
 <p><span class="pill why">Theory</span>Onboarding has two layers: the <b>legal/compliance layer</b> (identity, right-to-work, contract, statutory registration — what makes employment <i>lawful</i>) and the <b>experience layer</b> (culture, ramp). EOR liability lives in the first. Three concepts carry it: <b>identity/right-to-work verification</b> (the KYC of employment — in Indonesia, KTP/NIK which now doubles as the tax ID), the <b>employment contract</b> (fixed-term PKWT vs permanent PKWTT, with 9 mandatory clauses), and <b>IP assignment</b> (copyright can pass by a work-for-hire clause, but inventions need an <i>explicit</i> assignment — so tech hires sign a Confidential Information & Inventions Assignment before day one).</p>
 <p><span class="pill info">Mechanics · day-0 to day-30</span>Preboard: collect docs, verify identity, issue contract + IP agreement, register with BPJS + tax, provision access — so day one is culture, not forms. Day 1: welcome, systems, a buddy (56% of new hires say a buddy speeds productivity). Days 2–30: absorb the work, manager check-ins (new hires are 3.4× more likely to rate onboarding successful with an active manager), close with a 30-day review. Strong onboarding lifts retention ~82%.</p>
 <p class="mini"><span class="pill risk">Indonesia specifics</span>PKWT must be written, in Bahasa, and recorded within the statutory deadline; treat late/missing recording as a serious control defect, not casual admin. Both BPJS registrations should be completed in the onboarding window; no probation on a PKWT.</p></div></div>
+<div class="callout"><b>The LATE-PACK PATH — T-14 → T-1 is the standard path, not a hard gate</b><p>Day-1 lawful minimum: accepted offer in writing + KTP/NIK + bank details + PDP consent. Contract signing completes within the PKWT written-form and recording clocks; <b>BPJS registrations must close before the first payroll cutoff</b>; the master-file completeness gate moves from T-1 to <b>D+7 maximum, logged as an exception</b> — no employee ever enters a payroll run with an incomplete statutory file. Price it as the 07A 48-hour-rush path; a client who is always late is an 08A risk signal.</p></div>
 ${ssd('07B SSD · Onboarding',['Client','Employee','Navv OS','Navv ID PT','Disnaker','BPJS/Coretax'],[
 ['Navv OS','Employee','Collect KTP/NIK, NPWP/NIK, bank, BPJS status, dependents, emergency contact','Gate: master-data completeness.'],
 ['Navv OS','Client','Confirm role, manager, start date, devices, work protocol and no-authority instructions','Gate: client obligations accepted.'],
@@ -1404,6 +1435,40 @@ ${vid('https://www.youtube.com/watch?v=Gg13_s25WRg','Perhitungan Gaji Lengkap: P
 ${res('https://www.adp.com/resources/articles-and-insights/articles/p/payroll-processing.aspx','Concept','ADP — what payroll processing is','The canonical 3-phase (pre/process/post) definition.')}
 ${res('https://www.accountingtools.com/articles/payroll-register','Concept','AccountingTools — the payroll register','The approved control artifact at the heart of the run.')}
 ${res('https://www.lano.io/academy/payroll/basics/payroll-processing','Reference','Lano — stages of payroll processing','Named-source academy walk-through.')}`;
+
+SUB['ops/s2close']=()=>{const gates=['A.1 · Funding locked before cutoff (pause-work trigger armed at T-5)','A.1 · Register locked at T-3 with a maker+checker diff, not a re-read','A.1 · Bank file hashed at T-1; hash matches the released file','A.1 · Payday executed at T0; disbursement proof archived','A.2 · PPh 21 deposited — NTPN captured, not just "transferred"','A.2 · e-Bupot / SPT Masa filed — filing receipt archived','A.2 · BPJS Kesehatan paid — EDABU receipt archived','A.2 · BPJS-TK paid — SIPP receipt archived','A.3 · Evidence pack assembled and sent by T+21','A.3 · Reconciliation run at T+22 — zero-diff or exceptions logged','A.3 · Every gate carries initials — month signed closed'];
+ return `
+<p class="lead"><b>A month is not closed because payday happened.</b> It is closed when every gate carries initials and proof. Payday is one gate of eleven — the loud one. The quiet ones are where debt flags are born.</p>
+<h4>The four distinct proofs — never conflate them</h4>
+<div class="grid2">
+ <div class="card"><h4 style="margin-top:0">1 · Deposit proof</h4><p class="mini">Money left our account toward the state (PPh 21 e-Billing, BPJS VA). A bank debit is <b>not</b> a filing. Artifact: NTPN / payment receipt.</p></div>
+ <div class="card"><h4 style="margin-top:0">2 · Filing proof</h4><p class="mini">The return was lodged and accepted (e-Bupot 21, SPT Masa, EDABU/SIPP submission). Deposit without filing = compliant-looking, non-compliant. Artifact: filing receipt / status.</p></div>
+ <div class="card"><h4 style="margin-top:0">3 · Pack-sent proof</h4><p class="mini">The client evidence pack actually left the building by T+21 — with a send record. An assembled-but-unsent pack protects nobody. Artifact: send log.</p></div>
+ <div class="card"><h4 style="margin-top:0">4 · Reconciliation</h4><p class="mini">Register vs bank vs portals vs invoice agree to zero-diff (or every diff has an owner and a date). Artifact: signed reconciliation.</p></div>
+</div>
+<div class="callout red"><b>Why conflating them hurts</b><p>Each proof fails by a different mechanism: a deposit can bounce a VA, a filing can be rejected after the money moved, a pack can sit in drafts, a reconciliation can be skipped "because payday went fine." Treating any one as evidence of the others is exactly how a debt flag is born months later.</p></div>
+<h4>The close clock — T-12 → T+22</h4>
+<div class="timeline">
+${[['T-12','Invoices out','Client billing leaves before anything else moves'],['T-5','Funding gate','No funds → pause-work trigger. The EOR never fronts payroll'],['T-3','Register locked','Maker + checker sign a diff against last cycle, not a fresh spreadsheet'],['T-1','Bank file hash','The released file must match the approved file — hash it'],['T0','Payday','Salary + payslips land. One gate, not the close'],['Day 4','Fine clock starts','Late wages accrue 5%/day (PP 36/2021 Art 61) — the fine is Navv\'s cost, never the employee\'s problem'],['~10th–15th','PPh 21 deposit + NTPN','Deposit proof captured, distinct from the filing'],['10th / 15th','BPJS paid','EDABU (Kesehatan) + SIPP (TK) receipts archived'],['20th','e-Bupot / SPT Masa filed','Filing proof captured, distinct from the deposit'],['T+21','Evidence pack sent','The client-facing proof bundle leaves, with a send record'],['T+22','Reconcile zero-diff','Register vs bank vs portals vs invoice — then the month is signed closed']].map(t=>`<div class="tl"><div class="d">${t[0]}</div><div class="t">${t[1]}</div><div class="x">${t[2]}</div></div>`).join('')}</div>
+<h4>The evidence pack — the pack IS the product</h4>
+<p class="mini">It is the renewal engine and the future client-portal read-model: what a nervous foreign employer is actually paying for. Nine sections, assembled from artifacts the close already produced (the authoritative ToC lives in 07C.1):</p>
+<ol style="font-size:13px">
+<li>Cover & period summary — seats, gross, exceptions count</li>
+<li>Payroll register — locked, maker+checker initials</li>
+<li>Payment proof — bank file hash + disbursement confirmation</li>
+<li>Payslip index — issued, per employee</li>
+<li>PPh 21 deposit proof — NTPN</li>
+<li>Filing proof — e-Bupot 21 / SPT Masa status</li>
+<li>BPJS receipts — EDABU + SIPP</li>
+<li>Reconciliation — zero-diff statement or exception list with owners</li>
+<li>Change & exception log — carried into next cycle</li>
+</ol>
+<div class="flag">⚠ PDP hygiene for the pack: no KTP/NIK images, no full account numbers, all identifiers masked to last-4. The pack proves compliance without shipping personal data around.</div>
+${docBundle(['ops07c','ops07c1'],'Read the payroll clock first, then the month-close artifacts that make it signable.')}
+<h4>Practice a close</h4>
+<p class="mini">Tick the gates as you walk a real (or dry-run) month. A.1 = money gates · A.2 = statutory gates · A.3 = close gates.</p>
+<ul class="check" data-mod="opsclose">${gates.map((t,i)=>`<li class="${checked('opsclose',i)?'on':''}" onclick="toggleCheck('opsclose',${i});this.classList.toggle('on')"><span class="box">✓</span><span class="txt">${t}</span></li>`).join('')}</ul>
+${quiz('Payday landed and everyone got paid. Is the month closed?','<b>No.</b> Payday is one gate. Still open: the PPh 21 <b>deposit proof</b> (NTPN), the <b>filing proof</b> (e-Bupot/SPT accepted — deposit ≠ filing), BPJS receipts on both portals, the <b>evidence pack sent</b> by T+21, and the <b>zero-diff reconciliation</b> at T+22. Four distinct proofs, and none of them is "the money left."')}`;};
 
 SUB['ops/s3']=()=>`
 <div class="stage"><div class="stage-h warn"><div class="stage-n">3</div><div class="stage-t">Statutory filing & remittance — the trust duty ⚠</div></div><div class="stage-b">
@@ -1456,11 +1521,13 @@ ${driveBox('07D1_Support_People_Ops_Deep_Dive.docx','Open the granular support a
  <div class="card"><h4 style="margin-top:0">Weird files</h4><p class="mini">Ghosting, no-notice resignation, client non-payment, bad documentation, fake sick notes, pinjol collectors, death, detention, moonlighting and viral posts.</p></div>
 </div>
 <div class="callout blue"><b>Why it stays under 07D</b><p>This material is too operationally important to bury in an appendix, but it is still support/change management. Keeping it as 07D.1 preserves the five-stage lifecycle and gives the deep playbook a clear home.</p></div>
-<div class="tablewrap"><table><tr><th>Support domain</th><th>Default owner</th><th>Handoff trigger</th></tr>
-<tr><td>Leave / holiday / travel / benefits</td><td>People Ops PIC</td><td>Payroll impact or legal ambiguity</td></tr>
-<tr><td>Devices / IT access</td><td>People Ops + Client IT</td><td>Exit, security risk, or asset dispute</td></tr>
-<tr><td>Claims / reimbursements</td><td>People Ops + Finance</td><td>Fraud signal, policy exception, or off-cycle pay</td></tr>
-<tr><td>Weird files</td><td>Ops Lead</td><td>Counsel, escalation, or 07E offboarding path</td></tr></table></div>`;
+<div class="tablewrap"><table><tr><th>Support domain</th><th>10A class code</th><th>Default owner</th><th>Handoff trigger</th></tr>
+<tr><td>Leave / holiday / travel / benefits</td><td class="mono">LEV · HOL · TRV · BEN</td><td>People Ops PIC</td><td>Payroll impact or legal ambiguity</td></tr>
+<tr><td>Devices / IT access</td><td class="mono">DEV · ITA</td><td>People Ops + Client IT</td><td>Exit, security risk, or asset dispute</td></tr>
+<tr><td>Claims / reimbursements</td><td class="mono">CLM</td><td>People Ops + Finance</td><td>Fraud signal, policy exception, or off-cycle pay</td></tr>
+<tr><td>Letters desk</td><td class="mono">LTR</td><td>People Ops PIC</td><td>Counsel-gated instruments (15A batch)</td></tr>
+<tr><td>Weird files</td><td class="mono">WRD-*</td><td>Ops Lead</td><td>Counsel, escalation, or 07E offboarding path</td></tr></table></div>
+<p class="mini">Every ticket carries its 10A class code and minutes — <b>logging is part of the task, not an admin afterthought.</b> The codes feed the <a onclick="go('econ','minutes')">minutes instrumentation</a> Pareto.</p>`;
 
 SUB['ops/s5']=()=>`
 <div class="stage"><div class="stage-h danger"><div class="stage-n">5</div><div class="stage-t">Offboarding & termination — the highest-risk stage ⚠</div></div><div class="stage-b">
@@ -1653,7 +1720,8 @@ ${simBox()}
  <div class="card"><h4 style="margin-top:0">What it reinforces</h4><p class="mini">The sim should test the same gates the LMS teaches: role-risk classification, funding-before-payroll, maker-checker review, filing proof, support escalation and counsel-before-termination.</p></div>
  <div class="card"><h4 style="margin-top:0">How to use the result</h4><p class="mini">Treat score/mistakes as a diagnostic. If a learner misses funding, filing or termination questions, send them back to Operations, Compliance or the Coordination Playbook before Unit Economics.</p></div>
 </div>
-<div class="callout green"><b>Quiz logic</b><p>The game is not separate marketing material. It is the practical checkpoint that turns the LMS from a reading path into a university-style module: study, simulate, then calculate the business model.</p></div>`;
+<div class="callout green"><b>Quiz logic</b><p>The game is not separate marketing material. It is the practical checkpoint that turns the LMS from a reading path into a university-style module: study, simulate, then calculate the business model.</p></div>
+<p class="mini">One more lens before you play: <b>the game's AP economy IS the minutes model (10A)</b> — every AP you spend is a minute you're learning to measure. See <a onclick="go('econ','minutes')">10A · Minutes instrumentation</a>.</p>`;
 
 /* ===== 10 · UNIT ECONOMICS ===== */
 SUB['econ/pl']=()=>`
@@ -1690,6 +1758,35 @@ SUB['econ/calc']=()=>`
 <label>Our monthly fee (USD)</label><input id="calcFee" type="number" value="249" oninput="runCalc()"></div>
 <div class="calc" id="calcOut"></div></div>
 <p class="mini" style="margin-top:8px">FX: IDR/USD 16,150 (edit <span class="mono">const FX</span> in code). PPh 21 uses a simplified TER-A/B/C band table — directional, not filing-grade.</p>`;
+
+SUB['econ/minutes']=()=>`
+<p class="lead"><b>The wedge is a number.</b> Deel charges $599/seat because its ops are human-heavy; our thesis is that an AI-leveraged desk runs a seat in a fraction of the industry's minutes. <b>MPS — minutes per seat — is the venture KPI.</b> Everything in this module's P&L ultimately reduces to it.</p>
+<div class="callout red"><b>The anti-Goodhart rule</b><p>Minutes are for <b>pricing and automation, never for individual performance</b>. The moment MPS becomes a personal scorecard, people game the log and the data dies — and with it the pricing model. This rule is a constraint in the requirements register (C-05), not a preference.</p></div>
+<h4>The three-way split — work falls by different mechanisms</h4>
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">Recurring engine</h4><p class="mini">07C classes: payroll run, variance, filings. Calendar-driven, forecastable — falls to <b>tooling</b>.</p></div>
+ <div class="card"><h4 style="margin-top:0">Ad-hoc</h4><p class="mini">07D.1 classes: leave, claims, devices, letters. Arrives via WhatsApp — falls to <b>self-service</b>.</p></div>
+ <div class="card"><h4 style="margin-top:0">Weird files</h4><p class="mini">Death in service, pinjol collectors, ghosting. Falls to <b>never</b> — a human's presence IS the service here.</p></div>
+</div>
+<h4>Class codes — each maps 1:1 to a playbook section you've already studied</h4>
+<div class="tablewrap"><table><tr><th>Family</th><th>Codes</th><th>Playbook home</th></tr>
+<tr><td>Payroll engine</td><td class="mono">PAY-RUN · PAY-VAR · PAY-FIL</td><td>07C — run, variance, filings</td></tr>
+<tr><td>Onboarding / offboarding</td><td class="mono">ONB-* · OFF-*</td><td>07B / 07E stage playbooks</td></tr>
+<tr><td>People ops</td><td class="mono">LEV · HOL · CLM · DEV · ITA · TRV · BEN</td><td>07D.1 — leave, holidays, claims, devices, IT access, travel, benefits</td></tr>
+<tr><td>Letters & weird files</td><td class="mono">LTR · WRD-*</td><td>07D.1 letters desk + weird-file protocols (15A instruments)</td></tr>
+<tr><td>Escalation & money</td><td class="mono">ESC · DUN</td><td>08A escalation & dunning</td></tr>
+<tr><td>Regulatory</td><td class="mono">REG</td><td>08B regulatory change ops</td></tr></table></div>
+<h4>The flywheel</h4>
+<div class="grid4">
+ <div class="stat blue"><div class="v">1 · Log</div><div class="k">every ticket gets a class code + minutes — logging is part of the task</div></div>
+ <div class="stat gold"><div class="v">2 · See</div><div class="k">weekly Pareto: which classes eat the desk</div></div>
+ <div class="stat green"><div class="v">3 · Automate</div><div class="k">the top class goes to the 11B backlog</div></div>
+ <div class="stat red"><div class="v">4 · Re-price</div><div class="k">measured MPS replaces assumed MPS in the quote model</div></div>
+</div>
+<div class="callout"><b>The baseline to beat</b><p>~<b>82 planning minutes/seat/month</b> (≈62 ad-hoc + ≈20 recurring) — explicitly a <i>planning estimate, to be replaced by stopwatch truth</i>. The instrumentation exists precisely so this number stops being an assumption.</p></div>
+<p class="mini">The Navv Desk sim's AP economy is this model in game form — every AP you spend there is a minute you're learning to measure. <a onclick="go('sim','play')">Play the checkpoint</a> with that lens.</p>
+${docBundle(['econ10','econ10a'],'The unit economics, then the measurement system that turns its assumptions into facts.')}
+${quiz('Five WhatsApp tickets land: (1) "my payslip amount looks wrong", (2) "I need Lebaran leave approved", (3) "laptop screen died", (4) client asks to add a new hire next month, (5) "a debt collector is calling my office about an employee". Assign the class codes.','(1) <b>PAY-VAR</b> — payroll variance, recurring engine. (2) <b>LEV</b> — leave, ad-hoc. (3) <b>DEV</b> — device, ad-hoc. (4) <b>ONB-*</b> — onboarding intake. (5) <b>WRD-*</b> — pinjol collector, a weird file: human handles it, logged but never automated.')}`;
 
 /* ===== 11 · PAYMENTS (Airwallex) ===== */
 SUB['pay/flow']=()=>`
@@ -1737,17 +1834,36 @@ ${docBundle(['pay11','pay11a'],'Read the payments rail first, then the AI ops as
 <tr><td>LemonLime</td><td>Ingest SOPs only; answer the 10 hardest people-ops edge cases</td><td>Wrong answer on statutory, termination, or PII handling</td></tr>
 <tr><td>AgentOS</td><td>Monitor for payroll-disbursement automation hooks</td><td>Requires unsafe access or loses approval auditability</td></tr></table></div>`;
 
+SUB['pay/backlog']=()=>`
+<p class="lead"><b>Automate preparation, never accountability.</b> 11B is the ranked automate-from-within queue that 10A's Pareto feeds. AI produces artifacts; named humans stay on every gate that moves money, signs a filing, or ends employment.</p>
+<div class="callout red"><b>The four never-automate items</b><p>① Payroll run approval · ② signed statutory filings & portal submission · ③ bank execution (maker-checker-releaser) · ④ termination decisions. These are the accountability floor — they never enter the backlog, at any seat count, at any eval score.</p></div>
+<h4>The ranking function</h4>
+<div class="worked"><div class="wt">Backlog score</div><div class="wl"><span>score = (minutes saved/event × events/month) ÷ build cost</span><span>gated by risk class</span></div><div class="wl tot"><span>High minutes × high frequency × cheap build wins</span><span>— but only inside its risk gate</span></div></div>
+<h4>Risk gates — what each class of automation is allowed to do</h4>
+<div class="tablewrap"><table><tr><th>Money-touching</th><th>Filing-touching</th><th>External comms</th><th>Internal prep</th></tr>
+<tr><td>Maker-checker preserved — AI may prepare the file, humans make, check and release</td><td>Human signs, AI fills — the portal submission stays personally attributed</td><td>Draft-only until <b>3 months of clean evals</b>; then still approval-gated</td><td>Free to automate — templates, trackers, classification, summaries</td></tr></table></div>
+<h4>The phase plan — gates are exit tests, never enthusiasm</h4>
+<div class="tablewrap"><table><tr><th>Phase</th><th>Seats</th><th>What ships</th></tr>
+<tr><td><b>Phase 0</b></td><td>pre-client</td><td>Templates, contract generation, WA acknowledgement, deadline tracker</td></tr>
+<tr><td><b>Phase 1</b></td><td>1–25</td><td>Register draft + variance report, payslips, evidence pack assembly</td></tr>
+<tr><td><b>Phase 2</b></td><td>25–100</td><td>Intake classification, self-serve lookups, client reporting</td></tr>
+<tr><td><b>Phase 3</b></td><td>100+</td><td>Touch-rate &lt;10% — humans on approvals and exceptions only</td></tr></table></div>
+<div class="callout"><b>The eval gate</b><p>Every automation has its target defined <b>before</b> it is built. Example: the register draft must reach <b>100% agreement with the human register over 2 full parallel-run cycles</b> before the human switches from re-building to diff-checking. No target, no build.</p></div>
+<div class="flag">⚠ Manual fallback rule: every shipped automation documents its fallback. If a tool dies inside the −3wd statutory buffer, flip to manual immediately — the deadline does not care which tool failed.</div>
+${docBundle(['pay11a','pay11b'],'The tool assessment, then the ranked queue it feeds.')}
+${quiz('The register bot disagrees with the human draft — what happens?','<b>Extend the parallel run; the human wins.</b> Disagreement means the eval gate is not passed — the bot goes back to shadow mode, the human register remains authoritative, and the discrepancy becomes a test case. The switch to diff-checking only happens after 2 full cycles of 100% agreement.')}`;
+
 /* ===== 12 · QUALITY, RISK & CONTROLS ===== */
 SUB['quality/modes']=()=>`
 <p class="lead">Quality in payroll has a precise meaning: <b>accurate, on-time, compliant, every single cycle</b>. Here's where the as-is breaks and who's on the hook.</p>
-${docBundle(['quality12','quality12a'],'Open the quality/risk parent and the PDP data architecture + AI boundary child memo.')}
+${docBundle(['quality12','quality12a','qual12b'],'Open the quality/risk parent, the PDP data architecture + AI boundary child memo, and the incident runbooks that answer them.')}
 <div class="tablewrap"><table><tr><th>Failure mode</th><th>Who's on the hook</th></tr>
 <tr><td>Misclassification (employee treated as contractor)</td><td>The client + the EOR; willful penalties + back-contributions ($40B class-action settlements in 2024)</td></tr>
 <tr><td>Permanent establishment</td><td>The client — a worker with signing authority can create a taxable presence even via an EOR</td></tr>
 <tr><td>Payroll errors</td><td>The employer — bears liability even when a processor caused it</td></tr>
 <tr><td>Late statutory filing</td><td>The EOR — automatic BPJS/tax penalties; coverage suspension</td></tr>
 <tr><td>Botched termination</td><td>The EOR (our PT) — wrongful-termination exposure; contested if client ignored advice</td></tr>
-<tr><td>Data protection</td><td>Both — payroll data is personal data (Indonesia PDP; GDPR if EU workers)</td></tr></table></div>`;
+<tr><td>Data protection</td><td>Both — payroll data is personal data (Indonesia PDP; GDPR if EU workers). The breach playbook 12A requires now exists: <a onclick="go('quality','incident')">12B · Runbook B</a></td></tr></table></div>`;
 SUB['quality/nums']=()=>`
 <p>The numbers that make getting this right worth it:</p>
 <div class="grid3"><div class="stat red"><div class="v">~$291</div><div class="k">cost of a single payroll error (EY)</div></div><div class="stat gold"><div class="v">40%</div><div class="k">of errors trace to manual data entry</div></div><div class="stat blue"><div class="v">80%</div><div class="k">first caught by the employee, not the system</div></div>
@@ -1764,6 +1880,42 @@ SUB['quality/ctrl']=()=>`
 <p>The monthly compliance evidence pack — proof of every filing — is both a control and a product. It's the artefact none of the competitors package, and it's the thing that earns a nervous foreign employer's trust.</p>`;
 SUB['quality/seam']=()=>`
 <div class="callout blue"><b>The honest read — and the seam a future to-be closes</b><p>The small owned-entity EOR wins on <b>trust and local depth</b> (a named human, in timezone) but is structurally exposed on <b>consistency and reliability</b> — spreadsheets, manual portal entry, one or two people holding deadlines in their heads. The Deel-class platform is the inverse: reliable at scale, impersonal, priced for it. That tension — local trust vs platform reliability — is exactly where AI-in-the-process earns its place: keep the named human and the trust, remove the spreadsheet fragility. We name it here; we build it later.</p></div>`;
+
+SUB['quality/incident']=()=>`
+<p class="lead">Controls reduce the odds; runbooks decide what happens when the odds lose. 12B is what we do <b>the day something breaks</b> — pre-written, because the worst time to design a procedure is during the incident.</p>
+<h4>The SEV ladder</h4>
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0;color:var(--redink)">SEV-1</h4><p class="mini"><b>Money failed to move on payday, or a personal-data breach.</b> All hands. 15-minute triage. Alternate rail decision. Comms out the same hour.</p></div>
+ <div class="card"><h4 style="margin-top:0;color:var(--amberink)">SEV-2</h4><p class="mini"><b>Statutory filing at risk</b> — portal outage or blocker inside the −3wd buffer. Escalate now; the deadline does not move.</p></div>
+ <div class="card"><h4 style="margin-top:0;color:var(--blueink)">SEV-3</h4><p class="mini"><b>Degraded but survivable</b> — a manual fallback exists and is running. Includes any gate with only one named approver (a standing SEV-3).</p></div>
+</div>
+<h4>Runbook A — payroll failure on the day</h4>
+<div class="timeline">
+${[['0 min','Freeze the half-run batch','Before touching anything. Never re-submit blind — double-pay is a worse incident than late pay'],['≤45 min','Alternate-rail decision','Backup disbursement path (e.g. Xendit) or manual transfer from the ID account'],['≤60 min','Comms out — even without a fix','Employees first, client PIC second. Silence is the only unforgivable message'],['Same day','Statutory clock check','Late wages: fines from day 4 — 5%/day days 4–8, escalating (PP 36/2021). The fine is Navv\'s cost, never the employee\'s problem'],['After','Post-mortem with a cause tag','Every incident feeds a control change or an 11B backlog item']].map(t=>`<div class="tl"><div class="d">${t[0]}</div><div class="t">${t[1]}</div><div class="x">${t[2]}</div></div>`).join('')}</div>
+<div class="grid2">
+ <div class="card"><h4 style="margin-top:0">Template 1 · Employees first (Bahasa)</h4><pre style="white-space:pre-wrap;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11.5px;color:var(--text2);background:rgba(255,255,255,.04);border-radius:9px;padding:10px 12px;margin:0">Rekan-rekan, transfer gaji bulan ini mengalami
+kendala teknis di sisi bank. Gaji Anda AMAN dan
+sedang diproses ulang — perkiraan diterima: [ETA].
+Kami akan update lagi paling lambat [jam].
+Mohon maaf atas ketidaknyamanannya. — [PIC Navv]</pre><p class="mini" style="margin-top:8px">Rules encoded: state the new ETA · promise the next update time · never blame the client. Verbatim master lives in 12B.</p></div>
+ <div class="card"><h4 style="margin-top:0">Template 2 · Client PIC second (English)</h4><pre style="white-space:pre-wrap;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11.5px;color:var(--text2);background:rgba(255,255,255,.04);border-radius:9px;padding:10px 12px;margin:0">Flagging this before you hear it elsewhere:
+today's payroll disbursement hit a banking issue.
+Employees have been informed with an ETA of [ETA].
+Funds are secure; alternate rail is [status].
+Next update to you by [time]. — [Navv AM]</pre><p class="mini" style="margin-top:8px">The order matters: employees are told before the client, and the client is told before the grapevine. Verbatim master lives in 12B.</p></div>
+</div>
+<h4>Runbook B — PDP breach</h4>
+<p class="mini"><b>Contain → classify (12A data classes) → notify → change a control.</b> The 3×24h notification duty exists (counsel's current routing answer lives in the runbook margin); client comms go out the same day; every breach ends with a post-incident control change, not just an apology. This is the breach playbook 12A requires — it now exists.</p>
+<h4>Runbook C — key-person continuity</h4>
+<div class="grid2">
+ <div class="card"><h4 style="margin-top:0">Credential vault</h4><p class="mini">Two named openers, every open logged, checked quarterly. No portal login lives in one head.</p></div>
+ <div class="card"><h4 style="margin-top:0">Backup-approver matrix</h4><p class="mini">No gate has one name only — a single-named gate is a <b>standing SEV-3</b> until fixed.</p></div>
+ <div class="card"><h4 style="margin-top:0">Minimum-viable-payroll</h4><p class="mini">The reduced procedure a competent non-specialist can run: pay the same net as last month, log every deviation, reconcile after.</p></div>
+ <div class="card"><h4 style="margin-top:0">The quarterly fire drill</h4><p class="mini">A continuity plan that has never run is a document, not a plan. Once a quarter, the backup runs a dry-run close.</p></div>
+</div>
+${docBundle(['quality12','quality12a','qual12b'],'The control system, the data boundary, and what we do the day something breaks.')}
+${quiz('Four scenarios — assign the SEV and the first action. (1) Bank rejects the payroll batch at 09:40 on payday. (2) Coretax is down and the SPT deadline is 2 working days away. (3) The payslip generator broke; payslips are being assembled by hand. (4) An employee\'s KTP scan was emailed to the wrong client.','(1) <b>SEV-1</b> — freeze the half-run batch first, never re-submit blind. (2) <b>SEV-2</b> — inside the −3wd buffer: escalate, prepare manual filing path. (3) <b>SEV-3</b> — degraded with a manual fallback running. (4) <b>SEV-1</b> (personal-data breach) — contain, classify against 12A, start the notification clock, tell the client same-day.')}
+${quiz('Payday slipped and wages will land 5 days late. What does the fine clock say?','Fines start from <b>day 4</b>: 5% per day for days 4–8, escalating after (PP 36/2021 Art 61). The fine is <b>Navv\'s cost, never the employee\'s problem</b> — and comms went out on day 0, because silence is the only unforgivable message.')}`;
 
 /* ===== 12 · GO-TO-MARKET ===== */
 SUB['gtm/icp']=()=>`
@@ -1876,6 +2028,24 @@ ${res('https://emergingeconomy.substack.com/p/the-arbitrage-economy-earning-glob
 ${res('https://statrys.com/sg/reviews/airwallex-vs-aspire-app','Compare','Airwallex vs Aspire','Payments rail selection for SEA.')}
 ${res('https://www.omnius.so/blog/programmatic-seo-case-study','Case study','Programmatic SEO — the EOR growth motion','67 → 2,100 signups, worked end to end.')}
 <div class="callout"><b>Companion documents</b><p>The enhanced companion pack in <span class="mono">Navv_EOR_Companion_Reports_ENHANCED_DOCX_2026-07-07/</span> is the granular research layer behind this OS: canonical 01-15 reports and artifacts, 06A/06B setup children, 07A-E operations lifecycle, nested 07D.1 support deep dive, 08A escalation/dunning, 11A AI ops assessment, glossary, MSA skeleton, audit, and Drive-comment response map. This LMS is aligned to the 8 Jul 2026 corrections: KBLI 78101/78300, v3.4 economics, expanded SEA/APAC buyer geography, Airwallex/Xendit payment posture, MSA/SOW split, and proof-first operating doctrine. Regulatory items still need a formal legal opinion before commitment.</p></div>`;
+
+SUB['resources/templates']=()=>`
+<div class="flag" style="font-size:13px;padding:13px 15px;border:1px solid var(--amberink)"><b>⚠ COUNSEL REVIEW PENDING</b> — these skeletons encode operational intent, not legal advice. Nothing here is sent to a real employee or client until Indonesian employment counsel clears batch 1 (the 06C gate).</div>
+<p class="lead">Nine bilingual letter/instrument skeletons — the letters desk (10A class <span class="mono">LTR</span>) made concrete. Each is a when-to-use decision, not just a document.</p>
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">SP1 / SP2 / SP3</h4><p class="mini"><b>Surat peringatan</b> — graduated written warnings. Use for documented performance/conduct issues; the sequence is the evidence trail a lawful PHK later stands on.</p></div>
+ <div class="card"><h4 style="margin-top:0">Surat Panggilan I / II</h4><p class="mini"><b>Mangkir summons</b> — the employee has stopped showing up. Two formal summonses by registered mail before any PHK path opens.</p></div>
+ <div class="card"><h4 style="margin-top:0">Surat PHK (dikualifikasikan mengundurkan diri)</h4><p class="mini">Termination qualified as resignation — only after both summonses expire unanswered. Never the first letter.</p></div>
+ <div class="card"><h4 style="margin-top:0">Somasi</h4><p class="mini">Formal default notice — the client-side dunning instrument (08A, D30). A legal escalation, not an angry email.</p></div>
+ <div class="card"><h4 style="margin-top:0">Client suspension notice</h4><p class="mini">Throttles service on default. It never threatens wages — payroll continues from deposit while the commercial dispute runs.</p></div>
+ <div class="card"><h4 style="margin-top:0">Surat Tugas</h4><p class="mini">The assignment letter — <b>the JKK anchor</b>. It is what makes a work trip an insured work activity.</p></div>
+ <div class="card"><h4 style="margin-top:0">BAST</h4><p class="mini">Berita acara serah terima — device handover record, both directions. The artifact that ends device disputes before they start.</p></div>
+ <div class="card"><h4 style="margin-top:0">Paklaring</h4><p class="mini">Employment reference letter — <b>always issued, never withheld as leverage</b>. Withholding it is both unlawful pressure and reputational poison.</p></div>
+ <div class="card"><h4 style="margin-top:0">Surat Keterangan Penghasilan</h4><p class="mini">The income letter — <b>the KPR letter</b>. Accurate always; decline inflation requests kindly. This letter is why formal employment matters to the worker.</p></div>
+</div>
+<div class="callout"><b>Standing rules</b><p>Formal letters go by <b>registered mail/courier with delivery receipt to the contract address</b> — WhatsApp copies are courtesy, never legal service. Every sent instrument is filed with its delivery proof. The letter that cannot prove it arrived might as well not exist.</p></div>
+${docBundle(['ref15a','msa'],'The operational instruments, alongside the MSA skeleton they sit beside.')}
+${quiz('An employee has been gone 6 working days after Lebaran, no contact. What goes out?','<b>Surat Panggilan I by registered mail to the contract address</b> — not a WhatsApp message (courtesy only, never legal service), and not straight to PHK. The mangkir path is summons I → summons II → only then Surat PHK dikualifikasikan mengundurkan diri, each with delivery proof filed.')}`;
 
 /* ================= SWIMLANE RENDERER ================= */
 function renderSwimlane(){
@@ -2190,6 +2360,139 @@ SUB['glossary/law']=()=>GLOSSARY.filter(t=>t.c==='law').map(gcard).join('');
 SUB['glossary/tax']=()=>GLOSSARY.filter(t=>t.c==='tax').map(gcard).join('');
 SUB['glossary/entity']=()=>GLOSSARY.filter(t=>t.c==='entity').map(gcard).join('');
 SUB['glossary/docs']=()=>GLOSSARY.filter(t=>t.c==='docs').map(gcard).join('');
+
+/* ===== 17 · OPS → PRODUCT & TECH BRIDGE (doc 16 + 16A) ===== */
+SUB['bridge/why']=()=>`
+<p class="lead">The learner arc ends here: <b>you've run the desk (07), measured it (10A), automated it (11B) — this is where it all goes.</b> Doc 16 is a <b>research BRD, deliberately pre-PRD</b>: it states business requirements, constraints and decisions — not screens, not sprints. The PRDs come out of the August deep-dive; this module is the map they're drawn on.</p>
+<div class="callout"><b>The headline thesis</b><p>The 2026 state of the art in regulated back-office AI is <b>not</b> more automation than we already plan — it's exactly our doctrine (AI prepares, humans stay accountable), with three upgrades: <b>statutory rules as effective-dated data</b>, a <b>licensed PJAP relay</b> as the only sanctioned tax automation, and an <b>instrumented approval-and-evidence ledger</b> that later becomes the product surface. <b>The moat is the governance, not the model.</b></p></div>
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">Ran it — 07</h4><p class="mini">The lifecycle playbooks made the desk runnable by hand. Manual first was the point: you can't automate what you haven't operated.</p></div>
+ <div class="card"><h4 style="margin-top:0">Measured it — 10A</h4><p class="mini">Minutes-per-seat instrumentation turned the desk into data. The Pareto tells you where automation pays.</p></div>
+ <div class="card"><h4 style="margin-top:0">Automated it — 11B</h4><p class="mini">The ranked backlog automates from within, behind risk gates and eval targets. The bridge is where that queue becomes a product.</p></div>
+</div>
+${docBundle(['bridge16','bridge16a'],'The research BRD, then its diagram layer — the autonomy ladder, taxonomy, map, horizons and register in full.')}`;
+
+SUB['bridge/ladder']=()=>`
+<p class="lead">The centerpiece of the bridge: <b>every task in the desk sits on one of four autonomy rungs — and four things sit below the ladder entirely.</b> Where a task may climb is decided by one rule, not by debate.</p>
+<div class="card" style="border-left:3px solid var(--blueink)"><h4 style="margin-top:0">L1 · ASSIST</h4><p class="mini">AI informs, the human does everything. Lookups, analysis drafts, SKB watch summaries. Zero blast radius — free to use everywhere.</p></div>
+<div class="card" style="border-left:3px solid var(--gold)"><h4 style="margin-top:0">L2 · PREPARE</h4><p class="mini">AI produces the artifact, the human reviews & executes. The register draft, contracts, letters, filing files, evidence packs. This is where most of the desk lives — and where the human reviews a <b>diff</b>, not a spreadsheet.</p></div>
+<div class="card" style="border-left:3px solid var(--amberink)"><h4 style="margin-top:0">L3 · ACT + APPROVE</h4><p class="mini">AI executes, the human approves before anything leaves. WA replies, dunning D0–D7, payslip send. The approval is the product's audit surface.</p></div>
+<div class="card" style="border-left:3px solid var(--greenink)"><h4 style="margin-top:0">L4 · AUTO IN BOUNDS</h4><p class="mini">AI acts alone inside hard rails, with sampled audits. Auto-acknowledgement, class codes, leave-balance answers, alerts. The rails are code, not policy documents.</p></div>
+<div class="callout red"><b>THE ACCOUNTABILITY FLOOR — red, never moves</b><p>Payroll run approval · signed statutory filings & portal submission · bank release · termination decisions. These are not "L5 someday." They are the floor the ladder stands on.</p></div>
+<div class="callout blue"><b>The boundary rule — memorise this one</b><p>A task may climb above L2 <b>only if it is simultaneously (a) reversible, (b) low blast radius, (c) machine-verifiable. Fail any one → it caps at L2.</b> This single rule reproduces the entire never-list and settles every future argument about "can't the AI just…".</p></div>
+<h4>Why the floor never moves — four reasons</h4>
+<div class="grid2">
+ <div class="card"><h4 style="margin-top:0">Legal attribution</h4><p class="mini">Coretax logins are personal PIC accounts; PSrE signatures are eKYC'd identities; bank mandates name humans. The state signs with people, not services.</p></div>
+ <div class="card"><h4 style="margin-top:0">Irreversibility + blast radius</h4><p class="mini">A wrong release moves money to every seat at once, and the day-4 fine clock outruns any rollback.</p></div>
+ <div class="card"><h4 style="margin-top:0">Empathy</h4><p class="mini">07D.1's weird files — death in service, pinjol collectors, sungkan dynamics — are moments where a human's presence IS the service.</p></div>
+ <div class="card"><h4 style="margin-top:0">Regulatory flux</h4><p class="mini">Post-MK-168, with a new Labor Law expected. Rules that move need a human reading them, not a model assuming them.</p></div>
+</div>`;
+
+SUB['bridge/taxonomy']=()=>`
+<p class="lead"><b>Name the type before reaching for a tool.</b> An LLM where a rule or template belongs is both wasteful and unauditable. Six types cover the whole desk:</p>
+<div class="tablewrap"><table><tr><th>Type</th><th>What it is</th><th>Where it applies</th><th>Ceiling & why</th></tr>
+<tr><td><b>T1</b> Deterministic rules</td><td>Rate tables + formulas, effective-dated</td><td>Gross-to-net, BPJS bases, TER bands, THR accrual (07C, 09)</td><td>L2/L4 — verifiable by re-computation, but the run approval stays human</td></tr>
+<tr><td><b>T2</b> Template generation</td><td>Documents from structured data</td><td>Contracts, 15A letters, payslips, evidence packs (07B, 15A)</td><td>L2 — external instruments are human-signed and physically served</td></tr>
+<tr><td><b>T3</b> Extraction & classification</td><td>Unstructured → structured; class codes</td><td>WA intake triage, document intake, 10A logging (07D, 10A)</td><td>L4 — reversible, low blast radius, auditable by sampling</td></tr>
+<tr><td><b>T4</b> Drafting & synthesis</td><td>LLM prose with judgement risk</td><td>Support answers, incident comms, SKB summaries (07D, 12B, 08B)</td><td>L3 — draft-only until 3 months clean evals, then still approval-gated</td></tr>
+<tr><td><b>T5</b> Orchestration</td><td>Multi-step flows, deadline tracking</td><td>The close clock, onboarding sequence, dunning ladder (07C.1, 08A)</td><td>L3 — the machine sequences, humans own the gates it sequences toward</td></tr>
+<tr><td><b>T6</b> Integration / API</td><td>Real external system calls</td><td>PSrE/e-Meterai, WA Business API, PJAP relay, bank APIs (16 §reality)</td><td>Varies by counterparty — the Indonesia reality section is the ceiling map</td></tr></table></div>
+${docBundle(['bridge16'],'Doc 16 carries the full taxonomy with per-type risk notes and doc references.')}`;
+
+SUB['bridge/map']=()=>`
+<p class="lead">The workflow × autonomy map: 14 workflows, each with the <b>ceiling we design to</b> (✦). Cross-reference 10A's Pareto — <b>high minutes × high ceiling = the front of 11B's queue.</b></p>
+<div class="tablewrap"><table><tr><th>Workflow</th><th>L1</th><th>L2</th><th>L3</th><th>L4</th><th>NEVER</th></tr>
+<tr><td>Quote & cost calc</td><td>·</td><td>✦ prepare</td><td></td><td></td><td></td></tr>
+<tr><td>Contract execution</td><td>·</td><td>·</td><td>·</td><td>✦ the API leg</td><td></td></tr>
+<tr><td>Payroll register</td><td>·</td><td>✦ draft + diff</td><td></td><td></td><td>run approval</td></tr>
+<tr><td>Statutory filings</td><td>·</td><td>✦ AI fills</td><td></td><td></td><td>sign + submit</td></tr>
+<tr><td>Bank disbursement</td><td>·</td><td>file prep only</td><td></td><td></td><td>✦ release is human</td></tr>
+<tr><td>Evidence pack</td><td>·</td><td>✦ assemble</td><td>send after approval</td><td></td><td></td></tr>
+<tr><td>WA support triage</td><td>escalations</td><td>·</td><td>drafted answers</td><td>✦ ack + class codes</td><td></td></tr>
+<tr><td>Leave ops</td><td>·</td><td>·</td><td>·</td><td>✦ balance answers</td><td></td></tr>
+<tr><td>Claims screen</td><td>·</td><td>✦ extract + screen</td><td></td><td></td><td></td></tr>
+<tr><td>Letters desk (15A)</td><td>·</td><td>✦ generate</td><td></td><td></td><td>signing + service</td></tr>
+<tr><td>Weird files</td><td>✦ inform only</td><td></td><td></td><td></td><td>the human IS the service</td></tr>
+<tr><td>Dunning</td><td>·</td><td>·</td><td>✦ D0–D7</td><td></td><td>somasi is counsel-gated</td></tr>
+<tr><td>Reg-change watch</td><td>analysis drafts</td><td>·</td><td>·</td><td>✦ alerts</td><td></td></tr>
+<tr><td>Terminations</td><td>case-file prep</td><td>·</td><td></td><td></td><td>✦ the decision</td></tr></table></div>
+<p class="mini">Rows where the ✦ sits in NEVER are floor items: the automatable part is preparation around them, never the act itself.</p>
+${docBundle(['bridge16','bridge16a'],'The full map with per-cell rationale lives in doc 16; the diagrams in 16A.')}`;
+
+SUB['bridge/reality']=()=>`
+<p class="lead">The Indonesia integration truth — <b>the section that saves months of wasted work.</b> Three facts decide the build order, and none of them is negotiable by wishing.</p>
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0;color:var(--redink)">No BPJS API</h4><p class="mini">EDABU and SIPP run on <b>bulk-Excel upload + portal approval</b>. Plan permanently for a human at the portal; any future API is upside, never a dependency. The automatable part is producing a perfect upload file (T2), not the submission.</p></div>
+ <div class="card"><h4 style="margin-top:0;color:var(--amberink)">Tax has a lawful ceiling</h4><p class="mini">Coretax exposes no public API; the sanctioned route is a <b>licensed PJAP relay</b> (Pajakku, KlikPajak) — the Talenta→KlikPajak→Coretax "publish" pattern. RPA on government portals is a legal gray zone with personally-attributed accounts: <b>read/pre-fill at most, never unattended submission.</b></p></div>
+ <div class="card"><h4 style="margin-top:0;color:var(--greenink)">One leg is fully automatable today</h4><p class="mini"><b>Contract execution.</b> PSrE e-signature (eKYC + liveness) and e-Meterai stamping are mature APIs with sandbox + webhooks. And <b>WhatsApp inbound support is economically free</b> — service-window messages cost $0; utility messages ≈ Rp55. <i>This is why the build starts where it starts.</i></p></div>
+</div>
+<div class="callout"><b>What this means for sequencing</b><p>The first engineering money goes to the legs with real APIs (contract execution, WA rail) and to artifact factories for the legs without them (BPJS upload files, PJAP-ready filing data). Nothing is budgeted on the assumption a government portal grows an API.</p></div>
+${docBundle(['bridge16'],'Doc 16 §reality carries the vendor specifics, pricing and the PJAP pattern in full.')}`;
+
+SUB['bridge/horizons']=()=>`
+<p class="lead">Three horizons, one pattern: <b>each horizon's internal tooling is the next horizon's product</b> — and the gates between them are 11B's phase exit tests, never enthusiasm.</p>
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">H1 · RUN <span class="tag">now → ~25 seats</span></h4><p class="mini">Thin datastore with multi-client isolation + effective-dated rates under n8n · the artifact factory (register, contracts, letters, filing files, packs) · WA triage · the contract-execution API leg · the approval & evidence ledger.</p></div>
+ <div class="card"><h4 style="margin-top:0">H2 · PLATFORM <span class="tag">25–100</span></h4><p class="mini">Client portal = <b>the evidence pack live</b> + approvals · employee self-serve on WhatsApp · the PJAP relay · the G2N engine as an internal service.</p></div>
+ <div class="card"><h4 style="margin-top:0">H3 · PRODUCT <span class="tag">100+</span></h4><p class="mini">Employer-flows + worker-flows + magic-link worker UI · wholesale/white-label for SG fintechs and global platforms.</p></div>
+</div>
+<div class="callout green"><b>The pattern, spelled out</b><p>The H1 evidence ledger becomes the H2 client portal's read-model. The H2 G2N internal service becomes the H3 white-label engine. Nothing is built twice; everything is promoted after it has run in anger.</p></div>
+${docBundle(['bridge16'],'Doc 16 §horizons carries the full capability list per horizon and the exit tests between them.')}`;
+
+SUB['bridge/register']=()=>`
+<p class="lead">The BRD core: what must be true (BR), what must never be violated (C), and what gets decided in August (D). Abridged here — the full register with acceptance criteria lives in doc 16.</p>
+<h4>Business requirements — BR-01..BR-10</h4>
+<div class="tablewrap"><table><tr><th>#</th><th>Requirement</th><th>Source</th><th>Horizon</th><th>Type</th></tr>
+<tr><td>BR-01</td><td>Thin datastore with hard multi-client isolation</td><td>16 / 12A</td><td>H1</td><td>T6</td></tr>
+<tr><td>BR-02</td><td>Statutory rules & rates as effective-dated data, never hardcoded</td><td>16 / 09</td><td>H1</td><td>T1</td></tr>
+<tr><td>BR-03</td><td>Artifact factory: register, contracts, letters, filing files, packs</td><td>07C / 15A</td><td>H1</td><td>T2</td></tr>
+<tr><td>BR-04</td><td>Approval & evidence ledger — every gate logged with who/when/what</td><td>07C.1 / 12</td><td>H1</td><td>T5</td></tr>
+<tr><td>BR-05</td><td>WA triage rail: L4 ack + class codes, L3 drafts, L1 escalation</td><td>07D / 10A</td><td>H1</td><td>T3/T4</td></tr>
+<tr><td>BR-06</td><td>Contract-execution API leg: PSrE + e-Meterai, sandbox-first</td><td>06B / 16</td><td>H1</td><td>T6</td></tr>
+<tr><td>BR-07</td><td>Client portal = evidence pack live + approvals</td><td>07C.1 / 16</td><td>H2</td><td>T5</td></tr>
+<tr><td>BR-08</td><td>Employee self-serve on WhatsApp (balances, payslips, letters)</td><td>07D.1</td><td>H2</td><td>T3/T4</td></tr>
+<tr><td>BR-09</td><td>PJAP relay integration for sanctioned tax filing</td><td>16 §reality</td><td>H2</td><td>T6</td></tr>
+<tr><td>BR-10</td><td>G2N engine as an internal service (H3: white-label surface)</td><td>09 / 16</td><td>H2→H3</td><td>T1</td></tr></table></div>
+<h4>Constraints — C-01..C-05</h4>
+<div class="tablewrap"><table><tr><th>#</th><th>Constraint</th></tr>
+<tr><td>C-01</td><td><b>PDP boundary</b> — 12A data classes govern every store and every prompt; no personal data leaves the boundary</td></tr>
+<tr><td>C-02</td><td><b>Autonomy labels</b> — every automated task carries its L1–L4 label in code and in the ledger</td></tr>
+<tr><td>C-03</td><td><b>Government-portal assumption</b> — plan permanently for a human at EDABU/SIPP/Coretax; APIs are upside</td></tr>
+<tr><td>C-04</td><td><b>Vendor concentration</b> — no single vendor holds rails + finance brain + books (the 11A warning, promoted)</td></tr>
+<tr><td>C-05</td><td><b>The anti-Goodhart rule</b> — minutes price work and rank automation; they never score individuals</td></tr></table></div>
+<h4>Decisions for the August deep-dive — D-01..D-06</h4>
+<div class="tablewrap"><table><tr><th>#</th><th>Decision</th></tr>
+<tr><td>D-01</td><td>System of record — what owns employee master data</td></tr>
+<tr><td>D-02</td><td>G2N engine placement — buy, build, or wrap</td></tr>
+<tr><td>D-03</td><td>PJAP partner — Pajakku vs KlikPajak vs other</td></tr>
+<tr><td>D-04</td><td>PSrE / e-Meterai vendor</td></tr>
+<tr><td>D-05</td><td>WA stack — BSP choice + session architecture</td></tr>
+<tr><td>D-06</td><td>Build sequencing vs hiring — engineer-first or operator-first</td></tr></table></div>
+<div class="callout"><b>The August agenda (4 weeks)</b><p>Week 1: decisions + spikes → Week 2: PRD #1 — artifact factory + evidence ledger → Week 3: PRD #2 — WA support rail → Week 4: architecture doc + the hiring decision.</p></div>
+${docBundle(['bridge16'],'The full register with acceptance criteria, owners and open questions lives in doc 16.')}`;
+
+SUB['bridge/diagrams']=()=>`
+<p class="lead">16A is the diagram layer of the bridge — target-state SSDs and swimlanes. The figures live in the DOCX; here is what each shows and why it matters.</p>
+<div class="grid2">
+ <div class="card"><h4 style="margin-top:0">The payroll swimlane</h4><p class="mini">The AI lane produces <b>every artifact</b>; humans own diff-review, checking, release, and portal submission. The load-bearing detail: <b>the human reviews a DIFF, not a spreadsheet</b> — attention goes where something changed.</p></div>
+ <div class="card"><h4 style="margin-top:0">The WA-triage SSD</h4><p class="mini">L4 acknowledgement / L3 drafted answer / L1 escalate on weird-file patterns. Rendered below as a sequence table.</p></div>
+ <div class="card"><h4 style="margin-top:0">The contract-execution SSD</h4><p class="mini">The fully-API leg: generation → PSrE eKYC signature → e-Meterai stamping → archive, with webhooks at every step.</p></div>
+ <div class="card"><h4 style="margin-top:0">The filing SSD</h4><p class="mini">The artifact factory and the submission boundary: AI produces filing-ready files; the personally-attributed human crosses the portal line.</p></div>
+</div>
+${ssd('16A target-state · WA support triage',['Employee','WA Rail (L4)','AI Desk (L3)','Human PIC','Ledger'],[
+['Employee','WA Rail (L4)','Message arrives in the service window','Auto in bounds.'],
+['WA Rail (L4)','Employee','Instant acknowledgement + expectation set','L4: reversible, low blast radius, verifiable.'],
+['WA Rail (L4)','AI Desk (L3)','Classify: 10A class code assigned (T3)','L4: sampled audits.'],
+['AI Desk (L3)','Human PIC','Drafted answer queued for approval — or L1 escalation on weird-file patterns','L3: nothing leaves unapproved.'],
+['Human PIC','Employee','Approved answer sent; weird files taken over by the human entirely','The accountability floor.'],
+['WA Rail (L4)','Ledger','Class code + minutes + approval logged','Feeds the 10A Pareto and the 11B queue.']
+],[
+['Learning output','The three autonomy levels working one ticket, with the ledger underneath.'],
+['Proof artifact','Class-coded, minute-logged, approval-stamped ticket trail.'],
+['Failure mode','An unapproved draft reaching an employee — the L3 gate exists to make this impossible.']
+],'bridge16a')}
+<div class="callout"><b>Diagram backlog — coming in August</b><p>Onboarding orchestration · offboarding · the dunning state machine · the PDP data-flow. Each lands in 16A as its PRD is drawn.</p></div>
+${docBundle(['bridge16a','bridge16'],'Open 16A for the full figures; doc 16 for the BRD they illustrate.')}`;
 
 /*__CONTENT__*/
 
