@@ -681,7 +681,7 @@ const INTRO={
  resources:'Curated, verified reading + video. Watch the payroll/tax ones before you run a real cycle.',
  playbook:'The coordination playbook — who does what, when, and to whom. A detailed swimlane, RACI, the manpower ladder, the monthly clock, and the termination tree.',
  glossary:'Every term, defined — with the contract terminology front and centre. Search across all terms.',
- bridge:'You\'ve run the desk (07), measured it (10A), automated it (11B) — this is where it all goes. A research BRD, deliberately pre-PRD: the autonomy ladder, the automation taxonomy, the Indonesia integration reality, and the three horizons.'
+ bridge:'You\'ve studied the desk's design (07), its measurement spec (10A), and its automation queue (11B) — this is where it all goes once it runs for real. A research BRD, deliberately pre-PRD: the autonomy ladder, the automation taxonomy, the Indonesia integration reality, and the three horizons.'
 };
 function moduleIntro(id){return INTRO[id]?`<p class="sub0">${INTRO[id]}</p>`:'';}
 
@@ -2367,7 +2367,7 @@ SUB['glossary/docs']=()=>GLOSSARY.filter(t=>t.c==='docs').map(gcard).join('');
 
 /* ===== 17 · OPS → PRODUCT & TECH BRIDGE (doc 16 + 16A) ===== */
 SUB['bridge/why']=()=>`
-<p class="lead">The learner arc ends here: <b>you've run the desk (07), measured it (10A), automated it (11B) — this is where it all goes.</b> Doc 16 is a <b>research BRD, deliberately pre-PRD</b>: it states business requirements, constraints and decisions — not screens, not sprints. The PRDs come out of the August deep-dive; this module is the map they're drawn on.</p>
+<p class="lead">The learner arc ends here: <b>you've studied the desk's design (07), its measurement spec (10A), and its automation queue (11B) — this is where it all goes once it runs for real.</b> Doc 16 is a <b>research BRD, deliberately pre-PRD</b>: it states business requirements, constraints and decisions — not screens, not sprints. The PRDs come out of the August deep-dive; this module is the map they're drawn on.</p>
 <div class="callout"><b>The headline thesis</b><p>The 2026 state of the art in regulated back-office AI is <b>not</b> more automation than we already plan — it's exactly our doctrine (AI prepares, humans stay accountable), with three upgrades: <b>statutory rules as effective-dated data</b>, a <b>licensed PJAP relay</b> as the only sanctioned tax automation, and an <b>instrumented approval-and-evidence ledger</b> that later becomes the product surface. <b>The moat is the governance, not the model.</b></p></div>
 <div class="grid3">
  <div class="card"><h4 style="margin-top:0">Ran it — 07</h4><p class="mini">The lifecycle playbooks made the desk runnable by hand. Manual first was the point: you can't automate what you haven't operated.</p></div>
@@ -2447,12 +2447,12 @@ SUB['bridge/register']=()=>`
 <p class="lead">The BRD core: what must be true (BR), what must never be violated (C), and what gets decided in August (D). Abridged here — the full register with acceptance criteria lives in doc 16.</p>
 <h4>Business requirements — BR-01..BR-10</h4>
 <div class="tablewrap"><table><tr><th>#</th><th>Requirement</th><th>Source</th><th>Horizon</th><th>Type</th></tr>
-<tr><td>BR-01</td><td>Thin datastore with hard multi-client isolation</td><td>16 / 12A</td><td>H1</td><td>T6</td></tr>
-<tr><td>BR-02</td><td>Statutory rules & rates as effective-dated data, never hardcoded</td><td>16 / 09</td><td>H1</td><td>T1</td></tr>
+<tr><td>BR-01</td><td>Statutory rules & rates as effective-dated data, never hardcoded</td><td>16 / 09</td><td>H1</td><td>T1</td></tr>
+<tr><td>BR-02</td><td>System of record: multi-client isolation + effective-dated history</td><td>16 / 12</td><td>H1</td><td>T6</td></tr>
 <tr><td>BR-03</td><td>Artifact factory: register, contracts, letters, filing files, packs</td><td>07C / 15A</td><td>H1</td><td>T2</td></tr>
 <tr><td>BR-04</td><td>Approval & evidence ledger — every gate logged with who/when/what</td><td>07C.1 / 12</td><td>H1</td><td>T5</td></tr>
-<tr><td>BR-05</td><td>WA triage rail: L4 ack + class codes, L3 drafts, L1 escalation</td><td>07D / 10A</td><td>H1</td><td>T3/T4</td></tr>
-<tr><td>BR-06</td><td>Contract-execution API leg: PSrE + e-Meterai, sandbox-first</td><td>06B / 16</td><td>H1</td><td>T6</td></tr>
+<tr><td>BR-05</td><td>Contract execution: PSrE + e-Meterai — technically API-capable, legally gated</td><td>07B / 06B</td><td>H1</td><td>T6</td></tr>
+<tr><td>BR-06</td><td>WA support rail: ack + class codes + drafted answers, human-approved</td><td>07D / 10A</td><td>H1→H2</td><td>T3/T4</td></tr>
 <tr><td>BR-07</td><td>Client portal = evidence pack live + approvals</td><td>07C.1 / 16</td><td>H2</td><td>T5</td></tr>
 <tr><td>BR-08</td><td>Employee self-serve on WhatsApp (balances, payslips, letters)</td><td>07D.1</td><td>H2</td><td>T3/T4</td></tr>
 <tr><td>BR-09</td><td>PJAP relay integration for sanctioned tax filing</td><td>16 §reality</td><td>H2</td><td>T6</td></tr>
@@ -2487,7 +2487,7 @@ ${docBundle(['bridge16','bridge16b'],'The bridge (analysis), then its execution 
 
 SUB['bridge/sandboxenv']=()=>`
 <p class="lead"><b>"Sandbox first" was a principle in three docs (C-01, 11A, 11B) — this is the plan.</b> Four environments, three promotion gates, and one absolute: <b>PII never moves left of PROD at all.</b></p>
-${docBundle(['bridge16b','quality12a'],'The environments and protocol live in 16B §3; the data boundary is 12A doctrine.')}
+${docBundle(['bridge16b','quality12a'],'The environments and protocol live in 16B §4; the data boundary is 12A doctrine.')}
 <div class="grid2">
  <div class="card"><h4 style="margin-top:0">SBX-DOCS · knowledge layer</h4><p class="mini">Playbook DOCX, SOPs, templates. Zero PII by construction. Home of the LemonLime and Claude knowledge trials — pass bar: ≥80% on a 20-question quiz from 07D.1 §9 + 15A, with correct doc citations.</p></div>
  <div class="card"><h4 style="margin-top:0">SBX-OPS · workflow layer</h4><p class="mini">n8n + a fixture datastore. Intake auto-ack + class-code suggestion on the 20-ticket fixture month; ≥90% correct codes earns "suggest" — never "assign".</p></div>
