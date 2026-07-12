@@ -503,7 +503,7 @@ const SUBNAV_GROUPS={
  setup:[['Structure & sequence',['seq']],['Entity & licences',['entity','lic']],['Risk & counsel',['risk']],['Execution',['check']]],
  ops:[['Overview',['overview','series']],['Lifecycle stages',['s0','s1','s2','s2close','s3','s4','s5']],['Runbook',['first10','run']]],
  compliance:[['Calendar & costs',['cal','stack']],['Contributions & tax',['bpjs','pph','lab','simcalc']],['Holiday pay & exit',['thr','sev','term']]],
- gtm:[['Market & ICP',['icp','sg','roles']],['Acquisition',['pseo','wedges']],['Monetisation',['pricing','check']]]
+ gtm:[['Market & ICP',['icp','sg','roles']],['Acquisition',['pseo','wedges','pipeline']],['Monetisation',['pricing','check']]]
 };
 function pillBtn(m,subId,label){return `<button onclick="jumpSub('${m.id}','${subId}')" id="pill-${subId}">${label}</button>`;}
 function buildSubnav(m){
@@ -681,7 +681,7 @@ const INTRO={
  resources:'Curated, verified reading + video. Watch the payroll/tax ones before you run a real cycle.',
  playbook:'The coordination playbook — who does what, when, and to whom. A detailed swimlane, RACI, the manpower ladder, the monthly clock, and the termination tree.',
  glossary:'Every term, defined — with the contract terminology front and centre. Search across all terms.',
- bridge:'You\'ve studied the desk's design (07), its measurement spec (10A), and its automation queue (11B) — this is where it all goes once it runs for real. A research BRD, deliberately pre-PRD: the autonomy ladder, the automation taxonomy, the Indonesia integration reality, and the three horizons.'
+ bridge:'You\'ve studied the desk\'s design (07), its measurement spec (10A), and its automation queue (11B) — this is where it all goes once it runs for real. A research BRD, deliberately pre-PRD: the autonomy ladder, the automation taxonomy, the Indonesia integration reality, and the three horizons.'
 };
 function moduleIntro(id){return INTRO[id]?`<p class="sub0">${INTRO[id]}</p>`:'';}
 
