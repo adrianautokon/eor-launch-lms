@@ -427,11 +427,11 @@ const MODS=[
  {id:'econ',ix:'10',group:'The Machine',nav:'Unit Economics',subs:[['pl','The ops P&L'],['be','Break-even'],['staff','Staffing ladder'],['setupcap','Setup capital'],['mvc','Minimum viable client'],['calc','Cost calculator'],['minutes','10A · Minutes instrumentation']]},
  {id:'pay',ix:'11',group:'The Machine',nav:'Payments (Airwallex)',subs:[['flow','The money flow'],['aw','Airwallex product'],['compare','Airwallex vs alternatives'],['margin','FX as a profit line'],['ai','11A · AI ops stack'],['backlog','11B · Automation backlog']]},
  {id:'quality',ix:'12',group:'The Machine',nav:'Quality, Risk & Controls',subs:[['modes','Failure modes'],['nums','The benchmark numbers'],['ctrl','The controls'],['seam','Trust vs reliability'],['incident','12B · Incident runbooks & continuity']]},
- {id:'gtm',ix:'13',group:'Execute',nav:'Go-to-Market',subs:[['icp','The advanced-market ICP'],['sg','Singapore beachhead'],['roles','Role-risk taxonomy'],['pseo','Programmatic SEO engine'],['wedges','Conversion wedges'],['pricing','Pricing posture'],['check','GTM checklist']]},
+ {id:'gtm',ix:'13',group:'Execute',nav:'Go-to-Market',subs:[['icp','The advanced-market ICP'],['sg','Singapore beachhead'],['roles','Role-risk taxonomy'],['pseo','Programmatic SEO engine'],['wedges','Conversion wedges'],['pricing','Pricing posture'],['pipeline','13B · Idea → demo pipeline'],['check','GTM checklist']]},
  {id:'roadmap',ix:'14',group:'Execute',nav:'Launch Roadmap',subs:[['phases','The four phases'],['gates','The gates'],['check','Execution checklist']]},
  {id:'resources',ix:'15',group:'Execute',nav:'Resources & Learn',subs:[['video','Videos'],['thesis','The thesis'],['reg','Regulation & payroll'],['biz','EOR business & payments'],['templates','15A · Template library']]},
  {id:'glossary',ix:'16',group:'Execute',nav:'Glossary',subs:[['biz','EOR business terms'],['contract','Contract-stack terms'],['law','Employment law'],['tax','Tax & statutory'],['entity','Entity & licensing'],['docs','Documents & IDs']]},
- {id:'bridge',ix:'17',group:'Execute',nav:'Ops → Product Bridge',subs:[['why','Why this module exists'],['ladder','The autonomy ladder'],['taxonomy','Six automation types'],['map','The automation map'],['reality','The Indonesia reality'],['horizons','Three horizons'],['register','The requirements register'],['diagrams','16A · SSDs & swimlanes']]},
+ {id:'bridge',ix:'17',group:'Execute',nav:'Ops → Product Bridge',subs:[['why','Why this module exists'],['ladder','The autonomy ladder'],['taxonomy','Six automation types'],['map','The automation map'],['reality','The Indonesia reality'],['horizons','Three horizons'],['register','The requirements register'],['plan','16B · The August plan'],['sandboxenv','Sandbox & eval environments'],['qa','Q&A: churn · LemonLime · sandbox'],['diagrams','16A · SSDs & swimlanes']]},
 ];
 const SUB={}, COMP={}, CHARTS={};
 const COMPLIST=['statusquo','remofirst','skuad','emerhub','recruitgo','raintech','glints','incorp','aspire','multiplier','deel','remote','oyster','atlas'];
@@ -596,7 +596,9 @@ const DOCS={
  msa:'https://docs.google.com/document/d/1rZ38eIlW9u1A0gy6KKxD_RaJQr6wF7T-/edit?rtpof=true&sd=true',
  ref15a:'https://docs.google.com/document/d/1KtX03Og02kNH3rfX_6iuzM4wVCfi9GBP/edit?rtpof=true&sd=true',
  bridge16:'https://docs.google.com/document/d/1vqWcSOjbKSiMG7JzwJqPRfUQudLQBrAl/edit?rtpof=true&sd=true',
- bridge16a:'https://docs.google.com/document/d/1YPHStVtpWInnRlnIwo6bJkRXe-ozLs5v/edit?rtpof=true&sd=true'
+ bridge16a:'https://docs.google.com/document/d/1YPHStVtpWInnRlnIwo6bJkRXe-ozLs5v/edit?rtpof=true&sd=true',
+ bridge16b:'https://drive.google.com/drive/folders/1KGw7TCS5PM2qZ6PRlBYHFbQlz2F4z_5m',
+ gtm13b:'https://drive.google.com/drive/folders/1KGw7TCS5PM2qZ6PRlBYHFbQlz2F4z_5m'
 };
 const DOC_TITLES={
  d01:'01 Opportunity',
@@ -637,7 +639,9 @@ const DOC_TITLES={
  msa:'15 MSA Template Skeleton',
  ref15a:'15A Template Library (Batch 1)',
  bridge16:'16 Ops → Product & Tech Bridge',
- bridge16a:'16A Automation Map — SSDs & Swimlanes'
+ bridge16a:'16A Automation Map — SSDs & Swimlanes',
+ bridge16b:'16B August Execution Plan (folder — direct link after upload)',
+ gtm13b:'13B Idea → Demo Pipeline SOP (folder — direct link after upload)'
 };
 function docUrl(key){return DOCS[key]||DRIVE;}
 function driveBox(doc,why='Open the full DOCX source pack for details, diagrams, and audit trail.',url=DRIVE,label='Open Drive ↗'){
@@ -2470,6 +2474,42 @@ SUB['bridge/register']=()=>`
 <tr><td>D-06</td><td>Build sequencing vs hiring — engineer-first or operator-first</td></tr></table></div>
 <div class="callout"><b>The August agenda (4 weeks)</b><p>Week 1: decisions + spikes → Week 2: PRD #1 — artifact factory + evidence ledger → Week 3: PRD #2 — WA support rail → Week 4: architecture doc + the hiring decision.</p></div>
 ${docBundle(['bridge16'],'The full register with acceptance criteria, owners and open questions lives in doc 16.')}`;
+
+SUB['bridge/plan']=()=>`
+<p class="lead"><b>The bridge turned into a dated plan.</b> Adrian's 11 Jul verdict, agreed: the ops plan is near max on desk research + AI — every further unit of value comes from people. 16B sequences exactly that: three workstreams, four August weeks, and one rule — <b>no PRD is finalized on planning estimates the fieldwork could have replaced.</b></p>
+${docBundle(['bridge16','bridge16b'],'The bridge (analysis), then its execution child (the plan).')}
+<div class="grid3">
+ <div class="card"><h4 style="margin-top:0">WS1 · Ground truth</h4><p class="mini"><b>Humans first.</b> Vira stopwatch interview (replaces 07D.1 §10's planning minutes with practitioner numbers) · HR-expert red-pen on the weird files + 15A letters · a Deel seat teardown mapped to BR-08/BR-10 · Glints sales call · counsel brief (Memos A/B/C) · 2 events → a 5-name design-partner shortlist.</p></div>
+ <div class="card"><h4 style="margin-top:0">WS2 · Sandbox & evals</h4><p class="mini">Synthetic fixture set (12 engineered employees, 3 clients, 20 tickets) · human-baseline month-close dry-run on the 07C.1 checklist · register parallel-runs (100% × 2 cycles) · LemonLime trial in SBX-DOCS · the promotion gate, signed once in anger.</p></div>
+ <div class="card"><h4 style="margin-top:0">WS3 · Decisions & PRDs</h4><p class="mini">Spikes for D-01 (Frappe vs Postgres) and D-02 (G2N placement) · vendor calls PJAP ×2, PSrE ×3, WA BSP · PRD #1 artifact factory + evidence ledger · PRD #2 WA rail · D-06 hire decision answered by minutes data, not mood.</p></div>
+</div>
+<div class="card"><h4 style="margin-top:0">Exit criteria — what "August done" means</h4><p class="mini">Every BR row re-scored against evidence · D-01..06 decided in writing · two PRDs · 10A carries real numbers and the fee model's support line is re-priced from them · the promotion gate exists and has been used · a Deel teardown deck exists · 15A carries the HR-expert red pen · <b>five named design-partner candidates — if this line fails, September's priority is selling, not building.</b></p></div>`;
+
+SUB['bridge/sandboxenv']=()=>`
+<p class="lead"><b>"Sandbox first" was a principle in three docs (C-01, 11A, 11B) — this is the plan.</b> Four environments, three promotion gates, and one absolute: <b>PII never moves left of PROD at all.</b></p>
+${docBundle(['bridge16b','quality12a'],'The environments and protocol live in 16B §3; the data boundary is 12A doctrine.')}
+<div class="grid2">
+ <div class="card"><h4 style="margin-top:0">SBX-DOCS · knowledge layer</h4><p class="mini">Playbook DOCX, SOPs, templates. Zero PII by construction. Home of the LemonLime and Claude knowledge trials — pass bar: ≥80% on a 20-question quiz from 07D.1 §9 + 15A, with correct doc citations.</p></div>
+ <div class="card"><h4 style="margin-top:0">SBX-OPS · workflow layer</h4><p class="mini">n8n + a fixture datastore. Intake auto-ack + class-code suggestion on the 20-ticket fixture month; ≥90% correct codes earns "suggest" — never "assign".</p></div>
+ <div class="card"><h4 style="margin-top:0">SBX-PAY · money-math layer</h4><p class="mini">Register engine vs the 09B simulator as reference. Twelve fixtures engineered to hit every edge: the Kesehatan 12jt cap, the JP ceiling, UMP-exact, mid-month joiner, leaver with severance, THR proration, sick ladder, kasbon, device deduction, LATE-PACK, one clean baseline. Answer key computed by hand once, then frozen.</p></div>
+ <div class="card"><h4 style="margin-top:0">PROD · live operations</h4><p class="mini">Real employees, real money. Does not exist until the first client does — which is exactly why the gate is built now. Entry only through: <b>eval green (11B) + manual fallback documented (12B) + autonomy label assigned (16) + PDP/DPA confirmed (12A) + named human sign-off.</b> The signed gate page is itself an evidence artifact.</p></div>
+</div>
+<p class="mini"><i>Precedent: the AutoKon phone-swap sandbox trial solved this same problem shape — synthetic actors, real workflows, promotion only on proof.</i></p>`;
+
+SUB['bridge/qa']=()=>`
+<p class="lead"><b>Dickson's three questions (12 Jul), answered as doctrine.</b> Full versions in 16B §0.</p>
+<div class="card"><h4 style="margin-top:0">"Can we drop the ops plan in and it churns out the product plan?"</h4><p class="mini"><b>Mostly done, deliberately — and the remainder cannot be churned.</b> Doc 16 IS the machine-translation: every BR traces to an ops workflow. What no AI generates from documents: the <b>decisions</b> (D-01..06 — judgment with money attached), the <b>vendor reality</b> (survives only contact with sandboxes and quotes), and the <b>evidence</b> (Vira's stopwatch, a Deel seat, a design partner). Feed an AI a hypothesis-complete plan and it returns a confident, evidence-thin plan — same air, new container. August manufactures the missing evidence.</p></div>
+<div class="card"><h4 style="margin-top:0">"Can we integrate with LemonLime?"</h4><p class="mini"><b>Yes at the knowledge layer; never in the money path.</b> In 16's taxonomy it is a T3/T4 tool — right for "what does 07D.1 say about cuti bersama?", drafting client updates, digesting packs. Wrong for the register (T1: deterministic, auditable), and its self-creating-agents promise is exactly the shape that collides with C-01 (PII red line) and C-02 (no tool silently exceeds its autonomy label). Trial runs in SBX-DOCS, synthetic/doc data only, 11A's benchmark as the bar. No DPA annex, no real data — ever.</p></div>
+<div class="card"><h4 style="margin-top:0">"Is the bridge covered? Sandboxing too?"</h4><p class="mini"><b>The bridge covered the analysis; sandboxing was a principle without a plan — until 16B.</b> The environments, fixtures, dry-run protocol and promotion gate are now specified (previous tab). What remains genuinely uncovered by any document: ground truth — which is Workstream 1's whole job.</p></div>`;
+
+SUB['gtm/pipeline']=()=>`
+<p class="lead"><b>Dickson's ask, made SOP:</b> Monday idea brief → Friday: live landing page + clickable demo + interactive Arcade tour. The pattern is already proven in-house (ListingLoop in 72h, Navv Desk, this LMS) — 13B writes it down so the AI agent can run it, with humans holding exactly four buttons.</p>
+${docBundle(['gtm13','gtm13b'],'The GTM doctrine, then the pipeline SOP that manufactures its demand artifacts.')}
+<div class="grid2">
+ <div class="card"><h4 style="margin-top:0">The five stages</h4><p class="mini"><b>0 · Idea Brief</b> (1 page; if it can't name the aha moment — STOP) → <b>1 · Landing page</b> (day 1: promise + proof + one CTA, Vercel) → <b>2 · Demo</b> (days 2–4: the shortest path to the aha, ≤3 min unassisted; calculator / workflow slice / sim by value type) → <b>3 · Arcade tour</b> (day 5: 5–7 steps, pain → click → payoff, embedded in the hero) → <b>4 · Measure</b> (CTA ≥8%, aha-completion ≥40%, watch-through ≥50%; the brief's kill criteria decide).</p></div>
+ <div class="card"><h4 style="margin-top:0">The four human buttons (L2/L3)</h4><p class="mini">1 · Positioning approval. 2 · Claims-vs-truth review (no fake logos; "concept" label if pre-product; PDP-compliant waitlist). 3 · Brand pass. 4 · The publish button. <b>Everything else the agent churns</b> — copy, code, storyboard, captions — one orchestrating prompt per stage, versioned in the repo like code.</p></div>
+</div>
+<div class="card"><h4 style="margin-top:0">Maiden run: the EOR itself</h4><p class="mini">Brief = "hire an Indonesian in 10 minutes" · Landing = the corridor page with an honesty box ("licensed entity in progress — join the design-partner list") · Demo = the true-cost calculator (11B item #4's public face, math from 09B, rates clearly dated) · Arcade = quote → contract → first payroll in 6 steps. One week; doubles as event collateral and the design-partner conversation opener.</p></div>`;
 
 SUB['bridge/diagrams']=()=>`
 <p class="lead">16A is the diagram layer of the bridge — target-state SSDs and swimlanes. The figures live in the DOCX; here is what each shows and why it matters.</p>
